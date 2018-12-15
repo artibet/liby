@@ -2,4 +2,9 @@ venv/
 .vscode/
 .idea/
 liby/__pycache__/
+
+
 mysql.conf
+liby.sock
+db.sqlite3
+
