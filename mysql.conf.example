@@ -1,0 +1,5 @@
+[client]
+database = liby
+user = root
+password = 
+default-character-set = utf8
