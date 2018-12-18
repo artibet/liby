@@ -9,8 +9,16 @@ class Country(models.Model):
     code            = models.CharField(max_length=2, unique=True)
     description     = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.description + " (" + self.code + ")"  
+
     class Meta:
-        db_table = 'country'    
+        db_table = 'country'   
+        verbose_name = 'Country'
+        verbose_name_plural = 'Countries' 
+        ordering = ['description']
+
+          
 
 
 # --------------------------------------------------------------------
@@ -34,8 +42,16 @@ class Publisher(models.Model):
 class Language(models.Model):
     description     = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.description 
+
     class Meta:
         db_table = 'language'
+        verbose_name = 'Language'
+        verbose_name_plural = 'Languages' 
+        ordering = ['description']
+
+           
 
 
 # --------------------------------------------------------------------
@@ -44,8 +60,16 @@ class Language(models.Model):
 class Category(models.Model):
     description     = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.description
+
     class Meta:
         db_table = 'category'
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories' 
+        ordering = ['description']
+
+
 
 
 # --------------------------------------------------------------------
@@ -122,3 +146,4 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'comment'
+
