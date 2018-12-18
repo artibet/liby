@@ -14,8 +14,8 @@ class Country(models.Model):
 
     class Meta:
         db_table = 'country'   
-        verbose_name = 'Country'
-        verbose_name_plural = 'Countries' 
+        verbose_name = 'Χώρα'
+        verbose_name_plural = 'Χώρες' 
         ordering = ['description']
 
           
@@ -32,8 +32,14 @@ class Publisher(models.Model):
     phone           = models.CharField(max_length=50, blank=True)
     country         = models.ForeignKey(Country, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.pub_name
+    
     class Meta:
         db_table = 'publisher'
+        verbose_name = 'Εκδοτικός Οίκος'
+        verbose_name_plural = 'Εκδοτικοί Οίκοι' 
+        ordering = ['pub_name']
 
 
 # --------------------------------------------------------------------
@@ -47,8 +53,8 @@ class Language(models.Model):
 
     class Meta:
         db_table = 'language'
-        verbose_name = 'Language'
-        verbose_name_plural = 'Languages' 
+        verbose_name = 'Γλώσσα'
+        verbose_name_plural = 'Γλώσσες' 
         ordering = ['description']
 
            
@@ -65,8 +71,8 @@ class Category(models.Model):
 
     class Meta:
         db_table = 'category'
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories' 
+        verbose_name = 'Κατηγορία Βιβλίου'
+        verbose_name_plural = 'Κατηγορίες Βιβλίων' 
         ordering = ['description']
 
 
@@ -80,8 +86,14 @@ class Author(models.Model):
     bio             = models.TextField(blank=True)
     email           = models.EmailField(max_length=100, unique=True, blank=True)
 
+    def __str__(self):
+        return author_name
+    
     class Meta:
         db_table = 'author'
+        verbose_name = 'Συγγραφέας'
+        verbose_name_plural = 'Συγγραφείς' 
+        ordering = ['author_name']
 
 
 # --------------------------------------------------------------------
@@ -105,19 +117,32 @@ class Book(models.Model):
     authors         = models.ManyToManyField(Author)
     categories      = models.ManyToManyField(Category)
     comments        = models.ManyToManyField(User, through='Comment')
+
+    def __str__(self):
+        return self.title
     
     class Meta:
         db_table = 'book'
+        verbose_name = 'Βιβλίο'
+        verbose_name_plural = 'Βιβλία' 
+        ordering = ['title']
 
 
 # --------------------------------------------------------------------
 # hold_status
 # --------------------------------------------------------------------
 class HoldStatus(models.Model):
+    id              = models.IntegerField(primary_key=True)
     description     = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.description
+    
     class Meta:
-        db_table = 'hold_status'      
+        db_table = 'hold_status'  
+        verbose_name = 'Κατάσταση Κρατήσεων'
+        verbose_name_plural = 'Καταστάσεις Κρατήσεων' 
+        ordering = ['description']    
 
 
 # --------------------------------------------------------------------
@@ -126,11 +151,17 @@ class HoldStatus(models.Model):
 class Hold(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.PROTECT)
     user            = models.ForeignKey(User, on_delete=models.PROTECT)
-    status          = models.ForeignKey(HoldStatus, on_delete=models.PROTECT)
+    status          = models.ForeignKey(HoldStatus, default=0, on_delete=models.PROTECT)
     created_at      = models.DateTimeField(auto_now_add=True)
 
+    def __str(self):
+        return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)
+    
     class Meta:
         db_table = 'hold'
+        verbose_name = 'Κράτηση'
+        verbose_name_plural = 'Κρατήσεις' 
+        ordering = ['book']  
 
 
 # --------------------------------------------------------------------
