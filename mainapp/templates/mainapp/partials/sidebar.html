@@ -1,0 +1,162 @@
+<!-- Επισκόπηση -->
+<li id="menu-dashboard" class="nav-item">
+    <a href="{% url 'dashboard' %}" class="nav-link">
+        <i class="nav-icon fa fa-dashboard"></i>
+        <p>Επισκόπηση</p>
+    </a>
+</li>
+
+<!-- Εκδόσεις -->
+<li id="menu-books" class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-book"></i>
+        <p>Εκδόσεις<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        
+        <!-- Προβολή όλων -->
+        <li id="menu-books-index" class="nav-item">
+            <a href="{% url 'books-index' %}" class="nav-link">
+                <i class="fa fa-table nav-icon"></i>
+                <p>Προβολή όλων</p>
+            </a>
+        </li>
+
+        <!-- Προσθήκη -->
+        <li id="menu-books-create" class="nav-item">
+            <a href="{% url 'books-create' %}" class="nav-link">
+                <i class="fa fa-plus nav-icon"></i>
+                <p>Προσθήκη</p>
+            </a>
+        </li>
+
+        <!-- Κατηγορίες -->
+        <li id="menu-books-categories" class="nav-item">
+            <a href="{% url 'categories-index' %}" class="nav-link">
+                <i class="fa fa-folder nav-icon"></i>
+                <p>Κατηγορίες</p>
+            </a>
+        </li>
+
+        <!-- Συγγραφείς -->
+        <li id="menu-books-authors" class="nav-item">
+            <a href="{% url 'authors-index' %}" class="nav-link">
+                <i class="fa fa-pencil-square nav-icon"></i>
+                <p>Συγγραφείς</p>
+            </a>
+        </li>
+
+        <!-- Εκδοτικοί οίκοι -->
+        <li id="menu-books-publishers" class="nav-item">
+            <a href="{% url 'publishers-index' %}" class="nav-link">
+                <i class="fa fa-building nav-icon"></i>
+                <p>Εκδοτικοί οίκοι</p>
+            </a>
+        </li>
+
+        <!-- Γλώσσες -->
+        <li id="menu-books-languages" class="nav-item">
+            <a href="{% url 'languages-index' %}" class="nav-link">
+                <i class="fa fa-globe nav-icon"></i>
+                <p>Γλώσσες</p>
+            </a>
+        </li>
+
+        <!-- Χώρες -->
+        <li id="menu-books-countries" class="nav-item">
+            <a href="{% url 'countries-index' %}" class="nav-link">
+                <i class="fa fa-flag nav-icon"></i>
+                <p>Χώρες</p>
+            </a>
+        </li>
+
+        <!-- Αναζήτηση -->
+        <li id="menu-books-search" class="nav-item">
+            <a href="{% url 'books-search' %}" class="nav-link">
+                <i class="fa fa-search nav-icon"></i>
+                <p>Αναζήτηση</p>
+            </a>
+        </li>
+        
+    </ul>
+</li>
+
+
+<!-- Προβολές -->
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-table"></i>
+        <p>Προβολές<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+
+        <!-- Κρατήσεις -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-anchor nav-icon"></i>
+                <p>Κρατήσεις</p>
+            </a>
+        </li>
+
+        <!-- Δανεισμοί -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-calendar nav-icon"></i>
+                <p>Δανεισμοί</p>
+            </a>
+        </li>
+
+        <!-- Καθηστερήσεις -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-bell nav-icon"></i>
+                <p>Καθηστερήσεις</p>
+            </a>
+        </li>
+
+        <!-- Προτάσεις -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-bullhorn nav-icon"></i>
+                <p>Προτάσεις</p>
+            </a>
+        </li>
+
+        <!-- Σχόλια χρηστών -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-comment nav-icon"></i>
+                <p>Σχόλια χρηστών</p>
+            </a>
+        </li>
+
+    </ul>
+</li>        
+
+
+<!-- Χρήστες -->
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-pie-chart"></i>
+        <p>Χρήστες<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+
+        <!-- Προβολή όλων -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-table nav-icon"></i>
+                <p>Προβολή όλων</p>
+            </a>
+        </li>
+
+        <!-- Νέος χρήστης -->
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-plus nav-icon"></i>
+                <p>Νέος χρήστης</p>
+            </a>
+        </li>
+
+    </ul>
+</li>        
