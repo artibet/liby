@@ -2,8 +2,12 @@ venv/
 .vscode/
 .idea/
 liby/__pycache__/
+
 mainapp/__pycache__/
 mainapp/migrations/__pycache__/
+
+psite/__pycache__/
+psite/migrations/__pycache__/
 
 
 mysql.conf
