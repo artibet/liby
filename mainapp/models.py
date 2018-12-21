@@ -57,7 +57,6 @@ class Language(models.Model):
         verbose_name_plural = 'Γλώσσες' 
         ordering = ['description']
 
-           
 
 
 # --------------------------------------------------------------------
@@ -107,7 +106,6 @@ class Book(models.Model):
     pages           = models.PositiveSmallIntegerField(default=0)
     published       = models.DateTimeField(default=timezone.now)
     revision        = models.PositiveSmallIntegerField(default=1)
-    num             = models.PositiveSmallIntegerField(default=1)
     abstract        = models.TextField(blank=True)
     image           = models.ImageField(max_length="255", blank=True)
     created_at      = models.DateTimeField(auto_now_add=True, null=True)
@@ -116,7 +114,8 @@ class Book(models.Model):
     # many-to-many relationships
     authors         = models.ManyToManyField(Author)
     categories      = models.ManyToManyField(Category)
-    comments        = models.ManyToManyField(User, through='Comment')
+    comments        = models.ManyToManyField(User, related_name = "book_comments", through='Comment')
+    holds           = models.ManyToManyField(User, related_name = "book_holds", through='Hold')
 
     def __str__(self):
         return self.title
@@ -126,6 +125,29 @@ class Book(models.Model):
         verbose_name = 'Βιβλίο'
         verbose_name_plural = 'Βιβλία' 
         ordering = ['title']
+
+
+# --------------------------------------------------------------------
+# Entry
+# --------------------------------------------------------------------
+class Entry(models.Model):
+    book            = models.ForeignKey(Book, on_delete=models.CASCADE)
+    entry_date      = models.DateTimeField(default=timezone.now)
+    classification  = models.CharField(max_length=255, blank=True)
+    cancel_date     = models.DateTimeField(null=True)
+    notes           = models.TextField(blank='True')
+
+    # many-to-many relationships
+    lends           = models.ManyToManyField(User, through='Lend')
+
+    def __str__(self):
+        return self.book
+    
+    class Meta:
+        db_table = 'entry'
+        verbose_name = 'Εισαγωγή'
+        verbose_name_plural = 'Εισαγωγές' 
+        ordering = ['-entry_date']
 
 
 # --------------------------------------------------------------------
@@ -178,3 +200,46 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comment'
 
+
+# --------------------------------------------------------------------
+# lend
+# --------------------------------------------------------------------
+class Lend(models.Model):
+    entry           = models.ForeignKey(Entry, on_delete=models.PROTECT)
+    user            = models.ForeignKey(User, on_delete=models.PROTECT)
+    lend_date       = models.DateTimeField(default=timezone.now)
+    lend_days       = models.PositiveSmallIntegerField(default=20)
+    return_date     = models.DateTimeField(blank=True, null=True)
+
+    def __str(self):
+        return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)
+    
+    class Meta:
+        db_table = 'lend'
+        verbose_name = 'Δανεισμός'
+        verbose_name_plural = 'Δανεισμοί' 
+        ordering = ['-lend_date']  
+
+
+# --------------------------------------------------------------------
+# suggestion
+# --------------------------------------------------------------------        
+class Suggestion(models.Model):
+    user            = models.ForeignKey(User, on_delete="models.PROTECT")
+    title           = models.CharField(max_length=255)
+    author          = models.CharField(max_length=255, blank=True)
+    publisher       = models.CharField(max_length=255, blank=True)
+    isbn            = models.CharField(max_length=50, blank=True)
+    created_at      = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at      = models.DateTimeField(auto_now=True, null=True)
+
+    def __str(self):
+        return "{0} ({1} {2})".format(self.title, self.user.lastname, self.user.first_name)
+
+    class Meta:
+        db_table = 'suggestion'
+        verbose_name = 'Πρόταση'
+        verbose_name_plural = 'Προτάσεις' 
+        ordering = ['-created_at']          
+
+    
