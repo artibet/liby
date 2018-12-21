@@ -28,7 +28,41 @@
 <section class="content">
     <div class="container-fluid">
     
-
+        <div class="card">
+        
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="#" class="btn btn-success" >Προσθήκη Χώρας</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card-body">
+                    <table class="table table-bordered table-hover" id="country-datatable">
+                        <thead>
+                            <tr>
+                                <th>Περιγραφή Χώρας</th>
+                                <th>Συντομογραφία</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for country in countries %}
+                                <tr>
+                                    <td>{{country.description}}</td>
+                                    <td>{{country.code}}</td>
+                                    <td>
+                                        <a href="#", title="Επεξεργασία", class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        <a href="#", title="Διαγραφή", class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+    
+        </div>
     
     </div><!-- /.container-fluid -->
 </section>
@@ -42,7 +76,41 @@
 
 <script>
 
+// init datatable
+function country_datatable() {
+    $('#country-datatable').DataTable({
+        "columnDefs": [
+            {
+                "targets": 2,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        "language": {
+            "decimal": ",",
+            "thousands": ".",
+            "lengthMenu": "_MENU_ εγγραφές ανά σελίδα",
+            "zeroRecords": "Δεν υπάρχουν εγγραφές",
+            "info": "(_START_ - _END_ από _TOTAL_ εγγραφές)",
+            "infoEmpty": "Δεν υπάρχουν εγγραφές",
+            "infoFiltered": "(εκ των _MAX_ εγγραφών)",
+            "processing": "Ανάκτηση δεδομένων...",
+            "search": "Φιλτράρισμα αποτελεσμάτων:",
+            "paginate": {
+                "first":    '<<',
+                "previous": '<',
+                "next":     '>',
+                "last":     '>>'
+            }
+        },
+    });
+
+}    
+
 $(document).ready(function() {
+
+    country_datatable();
+
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 
     $('#menu-books-countries .nav-link:first').addClass('active'); 

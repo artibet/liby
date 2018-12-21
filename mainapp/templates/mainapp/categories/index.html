@@ -28,7 +28,41 @@
 <section class="content">
     <div class="container-fluid">
     
-
+        <div class="card">
+        
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="#" class="btn btn-success" >Προσθήκη Κατηγορίας</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card-body">
+                    <table class="table table-bordered table-hover" id="category-datatable">
+                        <thead>
+                            <tr>
+                                <th>Περιγραφή Κατηγορίας</th>
+                                <th>Βιβλία</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <td>{{category.description}}</td>
+                                    <td>0</td>
+                                    <td>
+                                        <a href="#", title="Επεξεργασία", class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        <a href="#", title="Διαγραφή", class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+    
+        </div>
     
     </div><!-- /.container-fluid -->
 </section>
@@ -42,7 +76,41 @@
 
 <script>
 
+// init datatable
+function category_datatable() {
+    $('#category-datatable').DataTable({
+        "columnDefs": [
+            {
+                "targets": 2,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        "language": {
+            "decimal": ",",
+            "thousands": ".",
+            "lengthMenu": "_MENU_ εγγραφές ανά σελίδα",
+            "zeroRecords": "Δεν υπάρχουν εγγραφές",
+            "info": "(_START_ - _END_ από _TOTAL_ εγγραφές)",
+            "infoEmpty": "Δεν υπάρχουν εγγραφές",
+            "infoFiltered": "(εκ των _MAX_ εγγραφών)",
+            "processing": "Ανάκτηση δεδομένων...",
+            "search": "Φιλτράρισμα αποτελεσμάτων:",
+            "paginate": {
+                "first":    '<<',
+                "previous": '<',
+                "next":     '>',
+                "last":     '>>'
+            }
+        },
+    });
+
+}   
+
 $(document).ready(function() {
+    
+    category_datatable();
+
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 
     $('#menu-books-categories .nav-link:first').addClass('active'); 

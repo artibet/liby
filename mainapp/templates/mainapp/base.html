@@ -30,6 +30,10 @@
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet' %}">
 
+<!-- datatables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.css"/>
+
+
 <link rel="stylesheet" href="{% static 'css/liby.css' %}">
 
 </head>
@@ -208,10 +212,9 @@
         <!-- /.content-wrapper -->
         
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2018 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-            All rights reserved.
+            <strong>ΜΔΕ στην Εφαρμοσμένη Πληροφορική</strong>
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.0.0-alpha
+                <b>Τσακιρίδης Σωτήρης, Ταουσάνης Αθανάσιος</b>
             </div>
         </footer>
         
@@ -256,6 +259,10 @@
     <script src="{% static 'adminlte3/plugins/fastclick/fastclick.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'adminlte3/dist/js/adminlte.js' %}"></script>
+
+    <!-- datatables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
+
 
     <!-- custom scripts -->
     {% block script %} {% endblock %}

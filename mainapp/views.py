@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from . import models
 
 def dashboard(request):
     return render (request, 'mainapp/dashboard.html', {})
@@ -16,7 +18,7 @@ class BookViews:
         return render (request, 'mainapp/books/create.html', {})    
 
     def search(request):
-        pass               
+        return render (request, 'mainapp/books/search.html', {})                
 
 
 ##########################################################################
@@ -26,7 +28,8 @@ class BookViews:
 class AuthorViews:
 
     def index(request):
-        return render (request, 'mainapp/authors/index.html', {})
+        authors = models.Author.objects.all()
+        return render (request, 'mainapp/authors/index.html', {'authors': authors})
 
 
 ##########################################################################
@@ -36,7 +39,8 @@ class AuthorViews:
 class CategoryViews:
 
     def index(request):
-        return render (request, 'mainapp/categories/index.html', {})        
+        categories = models.Category.objects.all()
+        return render (request, 'mainapp/categories/index.html', {'categories': categories})        
 
 
 ##########################################################################
@@ -46,7 +50,8 @@ class CategoryViews:
 class PublisherViews:
 
     def index(request):
-        return render (request, 'mainapp/publishers/index.html', {})     
+        publishers = models.Publisher.objects.all()
+        return render (request, 'mainapp/publishers/index.html', {'publishers': publishers})     
 
 
 ##########################################################################
@@ -56,7 +61,8 @@ class PublisherViews:
 class LanguageViews:
 
     def index(request):
-        return render (request, 'mainapp/languages/index.html', {})         
+        langs = models.Language.objects.all()
+        return render (request, 'mainapp/languages/index.html', {'langs': langs})         
 
 
 ##########################################################################
@@ -66,7 +72,8 @@ class LanguageViews:
 class CountryViews:
 
     def index(request):
-        return render (request, 'mainapp/countries/index.html', {})       
+        countries = models.Country.objects.all()
+        return render (request, 'mainapp/countries/index.html', {'countries': countries})       
 
 
 ##########################################################################
@@ -76,7 +83,8 @@ class CountryViews:
 class UserViews:
 
     def index(request):
-        return render (request, 'mainapp/users/index.html', {})
+        users = User.objects.all()
+        return render (request, 'mainapp/users/index.html', {"users": users})
 
     def create(request):
         return render (request, 'mainapp/users/create.html', {})    
