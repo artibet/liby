@@ -10,13 +10,12 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Προσθήκη Νέου Βιβλίου</h1>
+            <h1 class="m-0 text-dark">Χρήστες Εφαρμογής</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'books-index' %}">Βιβλία</a></li>
-                <li class="breadcrumb-item active">Προσθήκη</li>
+                <li class="breadcrumb-item active">Χρήστες</li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -43,9 +42,9 @@
 <script>
 
 $(document).ready(function() {
-    $('#menu-books').addClass('menu-open'); 
-    $('#menu-books .nav-link:first').addClass('active'); 
-    $('#menu-books-create .nav-link:first').addClass('active'); 
+    $('#menu-users').addClass('menu-open'); 
+    $('#menu-users .nav-link:first').addClass('active'); 
+    $('#menu-users-index .nav-link:first').addClass('active'); 
 });
 
 </script>

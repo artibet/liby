@@ -10,7 +10,7 @@
 <li id="menu-books" class="nav-item has-treeview">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-book"></i>
-        <p>Εκδόσεις<i class="right fa fa-angle-left"></i></p>
+        <p>Βιβλία<i class="right fa fa-angle-left"></i></p>
     </a>
     <ul class="nav nav-treeview">
         
@@ -83,48 +83,48 @@
 
 
 <!-- Προβολές -->
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
+<li id="menu-views" class="nav-item has-treeview">
+    <a href="#"" class="nav-link">
         <i class="nav-icon fa fa-table"></i>
         <p>Προβολές<i class="right fa fa-angle-left"></i></p>
     </a>
     <ul class="nav nav-treeview">
 
         <!-- Κρατήσεις -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id=menu-views-hols" class="nav-item">
+            <a href="{% url 'holds-index' %}"" class="nav-link">
                 <i class="fa fa-anchor nav-icon"></i>
                 <p>Κρατήσεις</p>
             </a>
         </li>
 
         <!-- Δανεισμοί -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id="menu-views-lends" class="nav-item">
+            <a href="{% url 'lends-index' %}"" class="nav-link">
                 <i class="fa fa-calendar nav-icon"></i>
                 <p>Δανεισμοί</p>
             </a>
         </li>
 
         <!-- Καθηστερήσεις -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id="menu-views-delays" class="nav-item">
+            <a href="{% url 'lends-delays' %}"" class="nav-link">
                 <i class="fa fa-bell nav-icon"></i>
                 <p>Καθηστερήσεις</p>
             </a>
         </li>
 
         <!-- Προτάσεις -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id="menu-views-suggestions" class="nav-item">
+            <a href="{% url 'suggestions-index' %}"" class="nav-link">
                 <i class="fa fa-bullhorn nav-icon"></i>
                 <p>Προτάσεις</p>
             </a>
         </li>
 
         <!-- Σχόλια χρηστών -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id="menu-views-comments" class="nav-item">
+            <a href="{% url 'comments-index' %}"" class="nav-link">
                 <i class="fa fa-comment nav-icon"></i>
                 <p>Σχόλια χρηστών</p>
             </a>
@@ -135,7 +135,7 @@
 
 
 <!-- Χρήστες -->
-<li class="nav-item has-treeview">
+<li id="menu-users" class="nav-item has-treeview">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-pie-chart"></i>
         <p>Χρήστες<i class="right fa fa-angle-left"></i></p>
@@ -143,16 +143,16 @@
     <ul class="nav nav-treeview">
 
         <!-- Προβολή όλων -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id="menu-users-index" class="nav-item">
+            <a href="{% url 'users-index' %}" class="nav-link">
                 <i class="fa fa-table nav-icon"></i>
                 <p>Προβολή όλων</p>
             </a>
         </li>
 
         <!-- Νέος χρήστης -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        <li id="menu-users-create" class="nav-item">
+            <a href="{% url 'users-create' %}" class="nav-link">
                 <i class="fa fa-plus nav-icon"></i>
                 <p>Νέος χρήστης</p>
             </a>
