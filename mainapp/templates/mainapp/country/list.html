@@ -33,17 +33,20 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="#" class="btn btn-success" >Προσθήκη Χώρας</a>
+                            <a href="{% url 'country-create' %}" class="btn btn-outline-success btn-sm" >
+                                <i class="fa fa-plus"></i> Προσθήκη Χώρας
+                            </a>
                         </div>
                     </div>
                 </div>
     
                 <div class="card-body">
-                    <table class="table table-bordered table-hover" id="country-datatable">
+                    <table class="table table-bordered table-hover" id="country-table">
                         <thead>
                             <tr>
                                 <th>Περιγραφή Χώρας</th>
                                 <th>Συντομογραφία</th>
+                                <th>Ενημέρωση</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -52,9 +55,19 @@
                                 <tr>
                                     <td>{{country.description}}</td>
                                     <td>{{country.code}}</td>
+                                    <td>{{country.updated_at|date:'d/m/Y, H:i'}}</td>
                                     <td>
-                                        <a href="#", title="Επεξεργασία", class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                                        <a href="#", title="Διαγραφή", class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                        <!-- Επεξεργασία -->
+                                        <a href="{% url 'country-update' country.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        
+                                        <!-- Διαγραφή -->
+                                        <form id="delete-country-{{country.id}}" method="POST" action="{% url 'country-delete' country.id %}" style="display: none;">
+                                            {% csrf_token %}
+                                        </form>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteCountry('{{country.id}}', '{{country.description}}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -76,44 +89,38 @@
 
 <script>
 
-// init datatable
-function country_datatable() {
-    $('#country-datatable').DataTable({
-        "columnDefs": [
-            {
-                "targets": 2,
-                "searchable": false,
-                "orderable": false
-            }
-        ],
-        "language": {
-            "decimal": ",",
-            "thousands": ".",
-            "lengthMenu": "_MENU_ εγγραφές ανά σελίδα",
-            "zeroRecords": "Δεν υπάρχουν εγγραφές",
-            "info": "(_START_ - _END_ από _TOTAL_ εγγραφές)",
-            "infoEmpty": "Δεν υπάρχουν εγγραφές",
-            "infoFiltered": "(εκ των _MAX_ εγγραφών)",
-            "processing": "Ανάκτηση δεδομένων...",
-            "search": "Φιλτράρισμα αποτελεσμάτων:",
-            "paginate": {
-                "first":    '<<',
-                "previous": '<',
-                "next":     '>',
-                "last":     '>>'
-            }
+function deleteCountry(id, description) {
+    
+    alertify.confirm(
+        "Διαγραφή Χώρας",
+        "Να διαγραφεί η χώρα '" + description + "'?", 
+        function() {
+            $('#delete-country-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
         },
-    });
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
 
-}    
 
 $(document).ready(function() {
 
-    country_datatable();
+    setDatatable($('#country-table'), [
+        {
+            "targets": 3,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
 
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 
     $('#menu-books-countries .nav-link:first').addClass('active'); 
+
+
 });
 
 </script>

@@ -32,18 +32,21 @@
             
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-12">
-                        <a href="#" class="btn btn-success" >Προσθήκη Γλώσσας</a>
-                    </div>
+                        <div class="col-md-12">
+                            <a href="{% url 'language-create' %}" class="btn btn-outline-success btn-sm" >
+                                <i class="fa fa-plus"></i> Προσθήκη Γλώσσας
+                            </a>
+                        </div>
                 </div>
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered table-hover" id="lang-datatable">
+                <table class="table table-bordered table-hover" id="language-table">
                     <thead>
                         <tr>
                             <th>Περιγραφή Γλώσσας</th>
                             <th>Βιβλία</th>
+                            <th>Ενημέρωση</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -52,10 +55,20 @@
                             <tr>
                                 <td>{{lang.description}}</td>
                                 <td>0</td>
+                                <td>{{lang.updated_at|date:'d/m/Y, H:i'}}</td>
                                 <td>
-                                    <a href="#", title="Επεξεργασία", class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                                    <a href="#", title="Διαγραφή", class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                                </td>
+                                        <!-- Επεξεργασία -->
+                                        <a href="{% url 'language-update' lang.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        
+                                        <!-- Διαγραφή -->
+                                        <form id="delete-language-{{lang.id}}" method="POST" action="{% url 'language-delete' lang.id %}" style="display: none;">
+                                            {% csrf_token %}
+                                        </form>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteLanguage('{{lang.id}}', '{{lang.description}}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
+                                    </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -76,40 +89,31 @@
 
 <script>
 
-// init datatable
-function lang_datatable() {
-    $('#lang-datatable').DataTable({
-        "columnDefs": [
-            {
-                "targets": 2,
-                "searchable": false,
-                "orderable": false
-            }
-        ],
-        "language": {
-            "decimal": ",",
-            "thousands": ".",
-            "lengthMenu": "_MENU_ εγγραφές ανά σελίδα",
-            "zeroRecords": "Δεν υπάρχουν εγγραφές",
-            "info": "(_START_ - _END_ από _TOTAL_ εγγραφές)",
-            "infoEmpty": "Δεν υπάρχουν εγγραφές",
-            "infoFiltered": "(εκ των _MAX_ εγγραφών)",
-            "processing": "Ανάκτηση δεδομένων...",
-            "search": "Φιλτράρισμα αποτελεσμάτων:",
-            "paginate": {
-                "first":    '<<',
-                "previous": '<',
-                "next":     '>',
-                "last":     '>>'
-            }
+function deleteLanguage(id, description) {
+    
+    alertify.confirm(
+        "Διαγραφή Γλώσσας",
+        "Να διαγραφεί η γλώσσα '" + description + "'?", 
+        function() {
+            $('#delete-language-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
         },
-    });
-
-}    
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
 
 $(document).ready(function() {
     
-    lang_datatable();
+    setDatatable($('#language-table'), [
+        {
+            "targets": 3,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
     
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 

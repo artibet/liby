@@ -33,6 +33,10 @@
 <!-- datatables -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.css"/>
 
+<!-- alertify -->
+<link rel="stylesheet" href="{% static 'alertify/css/alertify.min.css' %}">
+<link rel="stylesheet" href="{% static 'alertify/css/themes/bootstrap.min.css' %}">
+
 
 <link rel="stylesheet" href="{% static 'css/liby.css' %}">
 
@@ -206,6 +210,14 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
 
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             {% block content %} {% endblock %}
             
         </div>
@@ -262,7 +274,20 @@
 
     <!-- datatables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
+    <!-- aleftify -->
+    <script src="{% static 'alertify/alertify.min.js' %}"></script>
+    <script>
+        //override defaults
+        //alertify.defaults.transition = "slide";
+        alertify.defaults.theme.ok = "btn btn-outline-primary";
+        alertify.defaults.theme.cancel = "btn btn-outline-danger";
+        //alertify.defaults.theme.input = "form-control";
+    </script>
+
+    <!-- liby scripts -->
+    <script src="{% static 'js/liby.js' %}"></script>
 
     <!-- custom scripts -->
     {% block script %} {% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %} 
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Επεξεργασία Κατηγορίας</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'category-list' %}">Κατηγορίες</a></li>
+                <li class="breadcrumb-item active">Επεξεργασία</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+    
+        <div class="row">
+            <div class="col-md-6">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success" type="submit">Ενημέρωση</button>
+                        <a href="{% url 'category-list' %}" class="btn btn-outline-info">Επιστροφή</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+$(document).ready(function() {
+
+    $('#menu-books').addClass('menu-open'); 
+    $('#menu-books .nav-link:first').addClass('active'); 
+    //$('#menu-books-countries .nav-link:first').addClass('active'); 
+
+});
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+

@@ -65,15 +65,7 @@ class LanguageViews:
         return render (request, 'mainapp/languages/index.html', {'langs': langs})         
 
 
-##########################################################################
-# Country views
-##########################################################################
 
-class CountryViews:
-
-    def index(request):
-        countries = models.Country.objects.all()
-        return render (request, 'mainapp/countries/index.html', {'countries': countries})       
 
 
 ##########################################################################

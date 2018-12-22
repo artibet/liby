@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mainapp',
-    'psite',
+
+    'crispy_forms',
+    'mainapp.apps.MainappConfig',
+    'psite.apps.PsiteConfig',
 ]
 
 MIDDLEWARE = [
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Berlin'
+TIME_ZONE = 'Europe/Athens'
 
 USE_I18N = True
 
@@ -130,3 +132,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'framework'),
 ]
+
+# Crispy css template
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

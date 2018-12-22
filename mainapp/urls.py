@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from .class_views import county as country_views
+from .class_views import language as language_views
+from .class_views import category as category_views
 
 
 urlpatterns = [
@@ -12,7 +15,10 @@ urlpatterns = [
     path('books/search', views.BookViews.search, name='books-search'),
 
     # Κατηγοριες
-    path('categories/', views.CategoryViews.index, name='categories-index'),
+    path('categories/', category_views.CategoryListView.as_view(), name='category-list'),
+    path('categories/create/', category_views.CategoryCreateView.as_view(), name='category-create'),
+    path('categories/<int:pk>/update/', category_views.CategoryUpdateView.as_view(), name='category-update'),
+    path('categories/<int:pk>/delete/', category_views.CategoryDeleteView.as_view(), name='category-delete'),
     
     # Συγγραφείς
     path('authors/', views.AuthorViews.index, name='authors-index'),
@@ -21,10 +27,16 @@ urlpatterns = [
     path('publishers/', views.PublisherViews.index, name='publishers-index'),
     
     # Γλώσσες
-    path('languages/', views.LanguageViews.index, name='languages-index'),
+    path('languages/', language_views.LanguageListView.as_view(), name='language-list'),
+    path('languages/create/', language_views.LanguageCreateView.as_view(), name='language-create'),
+    path('languages/<int:pk>/update/', language_views.LanguageUpdateView.as_view(), name='language-update'),
+    path('languages/<int:pk>/delete/', language_views.LanguageDeleteView.as_view(), name='language-delete'),
 
     # Χώρες
-    path('countries/', views.CountryViews.index, name='countries-index'),
+    path('countries/', country_views.CountryListView.as_view(), name='country-list'),
+    path('countries/create/', country_views.CountryCreateView.as_view(), name='country-create'),
+    path('countries/<int:pk>/update/', country_views.CountryUpdateView.as_view(), name='country-update'),
+    path('countries/<int:pk>/delete/', country_views.CountryDeleteView.as_view(), name='country-delete'),
     
     # Χρήστες
     path('users/', views.UserViews.index, name='users-index'),
