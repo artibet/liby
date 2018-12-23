@@ -5,11 +5,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from mainapp.models import Publisher
+from mainapp.vmodels import PublisherList
 
 
 # List
 class PublisherListView(SuperUserMixin, ListView):
-    model = Publisher
+    model = PublisherList
     template_name = 'mainapp/publisher/list.html'
     context_object_name = 'publishers'
 

@@ -5,11 +5,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from mainapp.models import Language
+from mainapp.vmodels import LanguageList
 
 
 # List
-class LanguageListView(SuperUserMixin, ListView):
-    model = Language
+class LanguageListView(ListView):
+    model = LanguageList
     template_name = 'mainapp/language/list.html'
     context_object_name = 'langs'
 
