@@ -9,7 +9,7 @@ from mainapp.vmodels import LanguageList
 
 
 # List
-class LanguageListView(ListView):
+class LanguageListView(SuperUserMixin, ListView):
     model = LanguageList
     template_name = 'mainapp/language/list.html'
     context_object_name = 'langs'

@@ -25,3 +25,19 @@ select
     (select count(*) from book where language_id = language.id) as books
 from
     language    
+
+
+# author_list
+create view author_list as
+select
+    id,
+    author_name,
+    bio,
+    email,
+    created_at,
+    updated_at,
+    (select count(*) from book_authors where author_id = author.id) as books
+from
+    author
+    
+

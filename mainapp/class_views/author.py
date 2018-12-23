@@ -5,11 +5,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from mainapp.models import Author
+from mainapp.vmodels import AuthorList
 
 
 # List
-class AuthorListView(SuperUserMixin, ListView):
-    model = Author
+class AuthorListView(ListView):
+    model = AuthorList
     template_name = 'mainapp/author/list.html'
     context_object_name = 'authors'
 

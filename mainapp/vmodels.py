@@ -45,3 +45,25 @@ class LanguageList(models.Model):
         verbose_name = 'Γλώσσα'
         verbose_name_plural = 'Γλώσσες' 
         ordering = ['description']        
+
+
+# --------------------------------------------------------------------
+# author_list
+# --------------------------------------------------------------------
+class AuthorList(models.Model):
+    author_name     = models.CharField(max_length=255, verbose_name="Επωνυμία Συγγραφέα")
+    bio             = models.TextField(blank=True, verbose_name="Βιογραφικό/Πληροφορίες")
+    email           = models.EmailField(max_length=100, unique=True, blank=True, verbose_name="Email")
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)   
+    books           = models.PositiveIntegerField(default=0)     
+
+    def __str__(self):
+        return author_name
+    
+    class Meta:
+        managed = False
+        db_table = 'author_list'
+        verbose_name = 'Συγγραφέας'
+        verbose_name_plural = 'Συγγραφείς' 
+        ordering = ['author_name']        
