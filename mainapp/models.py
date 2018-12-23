@@ -86,9 +86,11 @@ class Category(models.Model):
 # author
 # --------------------------------------------------------------------
 class Author(models.Model):
-    author_name     = models.CharField(max_length=255)
-    bio             = models.TextField(blank=True)
-    email           = models.EmailField(max_length=100, unique=True, blank=True)
+    author_name     = models.CharField(max_length=255, verbose_name="Επωνυμία Συγγραφέα")
+    bio             = models.TextField(blank=True, verbose_name="Βιογραφικό/Πληροφορίες")
+    email           = models.EmailField(max_length=100, unique=True, blank=True, verbose_name="Email")
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)        
 
     def __str__(self):
         return author_name

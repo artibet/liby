@@ -1,0 +1,144 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %} 
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Εκδοτικοί Οίκοι</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'books-index' %}">Βιβλία</a></li>
+                <li class="breadcrumb-item active">Εκδότικοί Οίκοι</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="card">
+            
+            <div class="card-header">
+                <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'publisher-create' %}" class="btn btn-outline-success btn-sm" >
+                                <i class="fa fa-plus"></i> Προσθήκη Εκδοτικού Οίκου
+                            </a>
+                        </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="publisher-table">
+                    <thead>
+                        <tr>
+                            <th>Επωνυμία</th>
+                            <th>Χώρα</th>
+                            <th>Πόλη</th>
+                            <th>Διεύθυνση</th>
+                            <th>Τηλέφωνο</th>
+                            <th>Βιβλία</th>
+                            <th>Ενημέρωση</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for publisher in publishers %}
+                            <tr>
+                                <td>{{publisher.pub_name}}</td>
+                                <td>{{publisher.country.description}}</td>
+                                <td>{{publisher.city}}</td>
+                                <td>{{publisher.address}}</td>
+                                <td>{{publisher.phone}}</td>
+                                <td>0</td>
+                                <td>{{publisher.updated_at|date:'d/m/Y, H:i'}}</td>
+                                <td>
+                                        <!-- Επεξεργασία -->
+                                        <a href="{% url 'publisher-update' publisher.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        
+                                        <!-- Διαγραφή -->
+                                        <form id="delete-publisher-{{publisher.id}}" method="POST" action="{% url 'publisher-delete' publisher.id %}" style="display: none;">
+                                            {% csrf_token %}
+                                        </form>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="deletePublisher('{{publisher.id}}', '{{publisher.pub_name}}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
+                                    </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+function deletePublisher(id, pub_name) {
+    
+    alertify.confirm(
+        "Διαγραφή Εκδοτικού Οίκου",
+        "Να διαγραφεί ο Εκδοτικός Οίκος '" + pub_name + "'?", 
+        function() {
+            $('#delete-publisher-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
+$(document).ready(function() {
+    
+    setDatatable($('#publisher-table'), [
+        {
+            "targets": 7,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
+    
+    $('#menu-books').addClass('menu-open'); 
+    $('#menu-books .nav-link:first').addClass('active'); 
+    $('#menu-books-publishers .nav-link:first').addClass('active'); 
+
+
+});
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

@@ -1,0 +1,138 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %} 
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Συγγραφείς</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'books-index' %}">Βιβλία</a></li>
+                <li class="breadcrumb-item active">Συγγραφείς</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="card">
+            
+            <div class="card-header">
+                <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'author-create' %}" class="btn btn-outline-success btn-sm" >
+                                <i class="fa fa-plus"></i> Προσθήκη Συγγραφέα
+                            </a>
+                        </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="author-table">
+                    <thead>
+                        <tr>
+                            <th>Επωνυμία</th>
+                            <th>Email</th>
+                            <th>Βιβλία</th>
+                            <th>Ενημέρωση</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for author in authors %}
+                            <tr>
+                                <td>{{author.author_name}}</td>
+                                <td>{{author.email}}</td>
+                                <td>0</td>
+                                <td>{{author.updated_at|date:'d/m/Y, H:i'}}</td>
+                                <td>
+                                        <!-- Επεξεργασία -->
+                                        <a href="{% url 'author-update' author.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        
+                                        <!-- Διαγραφή -->
+                                        <form id="delete-author-{{author.id}}" method="POST" action="{% url 'author-delete' author.id %}" style="display: none;">
+                                            {% csrf_token %}
+                                        </form>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteAuthor('{{author.id}}', '{{author.author_name}}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
+                                    </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+function deleteAuthor(id, author_name) {
+    
+    alertify.confirm(
+        "Διαγραφή Συγγραφέα",
+        "Να διαγραφεί ο συγγραφέας '" + author_name + "'?", 
+        function() {
+            $('#delete-author-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
+$(document).ready(function() {
+    
+    setDatatable($('#author-table'), [
+        {
+            "targets": 4,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
+    
+    $('#menu-books').addClass('menu-open'); 
+    $('#menu-books .nav-link:first').addClass('active'); 
+    $('#menu-books-authors .nav-link:first').addClass('active'); 
+
+
+});
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

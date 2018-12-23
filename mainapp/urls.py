@@ -4,6 +4,8 @@ from . import views
 from .class_views import county as country_views
 from .class_views import language as language_views
 from .class_views import category as category_views
+from .class_views import publisher as publisher_views
+from .class_views import author as author_views
 
 
 urlpatterns = [
@@ -21,10 +23,16 @@ urlpatterns = [
     path('categories/<int:pk>/delete/', category_views.CategoryDeleteView.as_view(), name='category-delete'),
     
     # Συγγραφείς
-    path('authors/', views.AuthorViews.index, name='authors-index'),
+    path('authors/', author_views.AuthorListView.as_view(), name='author-list'),
+    path('authors/create/', author_views.AuthorCreateView.as_view(), name='author-create'),
+    path('authors/<int:pk>/update/', author_views.AuthorUpdateView.as_view(), name='author-update'),
+    path('authors/<int:pk>/delete/', author_views.AuthorDeleteView.as_view(), name='author-delete'),
     
     # Εκδοτικοί οίκοι
-    path('publishers/', views.PublisherViews.index, name='publishers-index'),
+    path('publishers/', publisher_views.PublisherListView.as_view(), name='publisher-list'),
+    path('publishers/create/', publisher_views.PublisherCreateView.as_view(), name='publisher-create'),
+    path('publishers/<int:pk>/update/', publisher_views.PublisherUpdateView.as_view(), name='publisher-update'),
+    path('publishers/<int:pk>/delete/', publisher_views.PublisherDeleteView.as_view(), name='publisher-delete'),
     
     # Γλώσσες
     path('languages/', language_views.LanguageListView.as_view(), name='language-list'),
