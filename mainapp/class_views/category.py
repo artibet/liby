@@ -5,11 +5,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from mainapp.models import Category
+from mainapp.vmodels import CategoryList
 
 
 # List
-class CategoryListView(SuperUserMixin, ListView):
-    model = Category
+class CategoryListView(ListView):
+    model = CategoryList
     template_name = 'mainapp/category/list.html'
     context_object_name = 'categories'
 

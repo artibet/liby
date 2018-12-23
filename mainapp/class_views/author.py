@@ -9,7 +9,7 @@ from mainapp.vmodels import AuthorList
 
 
 # List
-class AuthorListView(ListView):
+class AuthorListView(SuperUserMixin, ListView):
     model = AuthorList
     template_name = 'mainapp/author/list.html'
     context_object_name = 'authors'

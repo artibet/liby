@@ -66,4 +66,24 @@ class AuthorList(models.Model):
         db_table = 'author_list'
         verbose_name = 'Συγγραφέας'
         verbose_name_plural = 'Συγγραφείς' 
-        ordering = ['author_name']        
+        ordering = ['author_name']     
+
+
+# --------------------------------------------------------------------
+# category_list
+# --------------------------------------------------------------------
+class CategoryList(models.Model):
+    description     = models.CharField(max_length=100, verbose_name="Περιγραφή Κατηγορίας")
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)    
+    books           = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.description
+
+    class Meta:
+        managed = False
+        db_table = 'category_list'
+        verbose_name = 'Κατηγορία Βιβλίου'
+        verbose_name_plural = 'Κατηγορίες Βιβλίων' 
+        ordering = ['description']           
