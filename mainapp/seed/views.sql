@@ -46,9 +46,8 @@ create view category_list as
 select
     id,
     description,
-    create_at,
+    created_at,
     updated_at,
     (select count(*) from book_categories where category_id = category.id) as books
 from
     category
-    

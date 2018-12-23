@@ -9,7 +9,7 @@ from mainapp.vmodels import CategoryList
 
 
 # List
-class CategoryListView(ListView):
+class CategoryListView(SuperUserMixin, ListView):
     model = CategoryList
     template_name = 'mainapp/category/list.html'
     context_object_name = 'categories'
