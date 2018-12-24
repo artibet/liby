@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from mainapp.vmodels import UserList
+from mainapp.forms import UserCreateForm
 
 
 # List
@@ -20,6 +21,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     template_name = 'mainapp/user/create.html'
     fields = ['username', 'password', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active']
+    form_class = UserCreateForm
     success_url = reverse_lazy('user-list')
     
     def form_valid(self, form):
