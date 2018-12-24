@@ -1,5 +1,6 @@
 # Create models for database views here
 from django.db import models
+from django.utils import timezone
 from .models import Country
 
 # --------------------------------------------------------------------
@@ -87,3 +88,29 @@ class CategoryList(models.Model):
         verbose_name = 'Κατηγορία Βιβλίου'
         verbose_name_plural = 'Κατηγορίες Βιβλίων' 
         ordering = ['description']           
+
+
+# --------------------------------------------------------------------
+# user_list
+# --------------------------------------------------------------------
+class UserList(models.Model):
+    username        = models.CharField(max_length=150, unique=True, verbose_name='Όνομα Χρήστη')
+    first_name      = models.CharField(max_length=30, blank=True, verbose_name='Όνομα')
+    last_name       = models.CharField(max_length=150, blank=True, verbose_name = 'Επώνυμο')
+    email           = models.EmailField(blank=True, verbose_name='Email')
+    password        = models.CharField(max_length=128, verbose_name='Κωδικός')
+    is_superuser    = models.BooleanField(default=False, verbose_name = 'Διαχειριστής')
+    is_staff        = models.BooleanField(default=False, verbose_name='Εκδότης')
+    is_active       = models.BooleanField(default=True, verbose_name='Ενεργός')
+    date_joined     = models.DateTimeField(default=timezone.now, verbose_name='Δημιουργήθηκε')
+    last_login      = models.DateTimeField(null=True, verbose_name='Τελελυταία σύνδεση')
+
+    def __str__(self):
+        return self.username
+
+    class Meta:
+        managed = False
+        db_table = 'user_list'
+        verbose_name = 'Χρήστης'
+        verbose_name_plural = 'Χρήστες' 
+        ordering = ['username']    

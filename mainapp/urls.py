@@ -6,6 +6,7 @@ from .class_views import language as language_views
 from .class_views import category as category_views
 from .class_views import publisher as publisher_views
 from .class_views import author as author_views
+from .class_views import user as user_views
 
 
 urlpatterns = [
@@ -47,8 +48,10 @@ urlpatterns = [
     path('countries/<int:pk>/delete/', country_views.CountryDeleteView.as_view(), name='country-delete'),
     
     # Χρήστες
-    path('users/', views.UserViews.index, name='users-index'),
-    path('users/create/', views.UserViews.create, name='users-create'),
+    path('users/', user_views.UserListView.as_view(), name='user-list'),
+    path('users/create/', user_views.UserCreateView.as_view(), name='user-create'),
+    path('users/<int:pk>/update/', user_views.UserUpdateView.as_view(), name='user-update'),
+    path('users/<int:pk>/delete/', user_views.UserDeleteView.as_view(), name='user-delete'),
 
     # Κρατήσεις
     path('holds/', views.HoldViews.index, name='holds-index'),

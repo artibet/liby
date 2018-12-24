@@ -1,0 +1,161 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %} 
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Χρήστες</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
+                <li class="breadcrumb-item active">Χρήστες</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="card">
+            
+            <div class="card-header">
+                <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'user-create' %}" class="btn btn-outline-success btn-sm" >
+                                <i class="fa fa-plus"></i> Προσθήκη Νέου Χρήστη
+                            </a>
+                        </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="user-table">
+                    <thead>
+                        <tr>
+                            <th>Κατάσταση</th>
+                            <th>Όνομα χρήστη</th>
+                            <th>Επώνυμο</th>
+                            <th>Όνομα</th>
+                            <th>Ιδιότητα</th>
+                            <th>Δανεισμοί</th>
+                            <th>Κρατήσεις</th>
+                            <th>Σχόλια</th>
+                            <th>Προτάσεις</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>
+                                    {% if user.is_active %}
+                                        <span class="badge badge-success">Ενεργός</span> 
+                                    {% else %}
+                                        <span class="badge badge-danger">Ανενεργός</span> 
+                                    {% endif %}
+                                </td>
+                                <td>{{user.username}}</td>
+                                <td>{{user.last_name}}</td>
+                                <td>{{user.first_name}}</td>
+                                <td>
+                                    {% if user.is_superuser %}
+                                        <span class="badge badge-primary">Διαχειριστής</span> 
+                                    {% elif user.is_staff %}
+                                        <span class="badge badge-info">Συντάκτης</span> 
+                                    {% else %}
+                                        <span class="badge badge-secondary">Χρήστης</span> 
+                                    {% endif %}
+                                </td>
+                                <td>{{user.lends}}</td>
+                                <td>{{user.holds}}</td>
+                                <td>{{user.comments}}</td>
+                                <td>{{user.suggestions}}</td>
+                                <td>
+                                        <!-- Επεξεργασία -->
+                                        <a href="{% url 'user-update' user.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        
+                                        <!-- Διαγραφή -->
+                                        <form id="delete-user-{{user.id}}" method="POST" action="{% url 'user-delete' user.id %}" style="display: none;">
+                                            {% csrf_token %}
+                                        </form>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteUser('{{user.id}}', '{{user.username}}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
+                                    </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+function deleteUser(id, username) {
+    
+    alertify.confirm(
+        "Διαγραφή Χρήστη",
+        "Να διαγραφεί ο χρήστης '" + username + "'?", 
+        function() {
+            $('#delete-user-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
+$(document).ready(function() {
+    
+    setDatatable($('#user-table'), [
+        {
+            "targets": 9,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
+    
+    $('#menu-users').addClass('menu-open'); 
+    $('#menu-users .nav-link:first').addClass('active'); 
+    $('#menu-users-list .nav-link:first').addClass('active'); 
+
+
+});
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

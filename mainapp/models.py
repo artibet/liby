@@ -93,7 +93,7 @@ class Author(models.Model):
     updated_at      = models.DateTimeField(auto_now=True)        
 
     def __str__(self):
-        return author_name
+        return self.author_name
     
     class Meta:
         db_table = 'author'
@@ -119,10 +119,10 @@ class Book(models.Model):
     updated_at      = models.DateTimeField(auto_now=True, null=True)
 
     # many-to-many relationships
-    authors         = models.ManyToManyField(Author)
-    categories      = models.ManyToManyField(Category)
-    comments        = models.ManyToManyField(User, related_name = "book_comments", through='Comment')
-    holds           = models.ManyToManyField(User, related_name = "book_holds", through='Hold')
+    authors         = models.ManyToManyField(Author, related_name = "books")
+    categories      = models.ManyToManyField(Category, related_name = "books")
+    comments        = models.ManyToManyField(User, related_name = "comments", through='Comment')
+    holds           = models.ManyToManyField(User, related_name = "holds", through='Hold')
 
     def __str__(self):
         return self.title
@@ -145,7 +145,7 @@ class Entry(models.Model):
     notes           = models.TextField(blank='True')
 
     # many-to-many relationships
-    lends           = models.ManyToManyField(User, through='Lend')
+    lends           = models.ManyToManyField(User, related_name = "lends", through='Lend')
 
     def __str__(self):
         return self.book
