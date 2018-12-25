@@ -1,3 +1,4 @@
+
 function setDatatable(element, columnDefs=[]) {
     $.fn.dataTable.moment('DD/MM/YYYY');
     $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');

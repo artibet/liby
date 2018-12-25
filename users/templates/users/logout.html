@@ -1,0 +1,17 @@
+{% extends 'psite/base.html' %}
+{% load static %}
+
+{% block content %} 
+
+    <h2>Έγινε αποσύνδεση</h2>
+    <p>Ευχαριστούμε που επισκευθήκατε την βιβλιοθήκη μας.</p>
+    <div class="content-section">
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a href="{% url 'login' %}" class="ml-2">Επανασύνδεση</a>
+            </small>
+        </div>
+        
+    </div>
+
+{% endblock %}

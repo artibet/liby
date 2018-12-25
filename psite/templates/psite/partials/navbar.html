@@ -1,0 +1,77 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+        <!-- brand -->
+        <img src="{% static 'img/logo60.png' %}" class="d-inline-block align-top" alt="">
+        <a class="navbar-brand brand-text pl-2" href="{%url 'psite-home' %}">Liby</a>
+
+        <!-- Toggle visibility buuton -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <form class="form-inline ml-auto">
+            <div class="input-group">
+                <select style="width: 135px;" name="" id="" class="form-control">
+                    <option value="1">Βιβλία</option>
+                    <option value="2">Συγγραφείς</option>
+                    <option value="2">ISBN</option>
+                </select>
+                <input style="width: 310px;" class="form-control mr-sm-2" type="search" placeholder="Αναζήτηση" aria-label="Αναζήτηση βιβλίων">
+            </div>
+                        
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Αναζήτηση</button>
+        </form>
+    
+        
+        <!-- left aligned links -->
+        <ul class="navbar-nav ml-auto">
+            
+            {% if user.is_authenticated %}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                        {{user.username}}
+                        {% if user.is_superuser %}
+                            (Διαχειριστής)
+                        {% else %}
+                            (Απλός χρήστης)
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="user-dropdown">
+                        <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa fa-user"></i> Προφίλ χρήστη</a>
+                        {% if user.is_superuser %}
+                            <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fa fa-sign-in"></i> Διαχείρηση</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-in"></i> Αποσύνδεση</a>
+                    </div>
+                </li>
+
+            {% else %}
+
+                <!-- Σύνδεση -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Σύνδεση</a>
+                </li>
+
+                <!-- Εγγραφή -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Εγγραφή</a>
+                </li>
+
+            {% endif %}
+
+            
+
+        </ul>
+
+    </div>
+
+</nav>

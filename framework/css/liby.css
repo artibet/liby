@@ -2,6 +2,11 @@
     font-family : 'Lobster', cursive;
 }
 
+.brand-text {
+    font-family : 'Lobster', cursive;
+    font-size: 36px;
+}
+
 .logo-img {
     vertical-align: middle;
 }

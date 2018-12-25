@@ -5,36 +5,40 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from mainapp.vmodels import UserList
-from mainapp.forms import UserCreateForm
+from mainapp.forms import UserCreateForm, UserUpdateForm
+
 
 
 # List
-class UserListView(ListView):
+class UserListView(SuperUserMixin, ListView):
     model = UserList
     template_name = 'mainapp/user/list.html'
     context_object_name = 'users'
 
 
 # Create    
-class UserCreateView(SuccessMessageMixin, CreateView):
+class UserCreateView(SuperUserMixin, SuccessMessageMixin, CreateView):
     model = User
     template_name = 'mainapp/user/create.html'
-    fields = ['username', 'password', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active']
+    #fields = ['username', 'password', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active']
     form_class = UserCreateForm
     success_url = reverse_lazy('user-list')
     
     def form_valid(self, form):
         user = form.instance
+        user.password = make_password(user.password)
         self.success_message = f"Ο χρήστης '{user.username}' δημιουργήθηκε με επιτυχία!'"
         return super().form_valid(form)
 
 
 # Update
-class UserUpdateView(SuccessMessageMixin, UpdateView):
+class UserUpdateView(SuperUserMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'mainapp/user/update.html'
-    fields = ['username', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login']
+    #fields = ['username', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login']
+    form_class = UserUpdateForm
     success_url = reverse_lazy('user-list')
 
     def form_valid(self, form):
@@ -44,7 +48,7 @@ class UserUpdateView(SuccessMessageMixin, UpdateView):
 
 
 # Delete
-class UserDeleteView(DeleteView):
+class UserDeleteView(SuperUserMixin, DeleteView):
     model = User
     success_url = reverse_lazy('user-list')
     

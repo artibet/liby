@@ -111,6 +111,8 @@ class Book(models.Model):
     title           = models.CharField(max_length=255)
     isbn            = models.CharField(max_length=50, unique=True, blank=True)
     pages           = models.PositiveSmallIntegerField(default=0)
+    dimensions      = models.CharField(max_length=50, blank=True)
+    weight          = models.PositiveIntegerField(blank=True, null=True)
     published       = models.DateTimeField(default=timezone.now)
     revision        = models.PositiveSmallIntegerField(default=1)
     abstract        = models.TextField(blank=True)
