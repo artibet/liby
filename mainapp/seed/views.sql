@@ -76,3 +76,27 @@ select
     (select count(*) from suggestion where suggestion.user_id = auth_user.id) as suggestions
 from auth_user
 ;
+
+# book_details
+create view book_details as
+select 
+    id as book_id,
+    (select count(*) from hold where hold.id = book.id and hold.status_id = 0) as active_holds,
+    (select count(*) from entry where entry.book_id = book.id and entry.cancel_date is null) as num_entries,
+    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as num_lends,
+    (select count(*) from comment where comment.book_id = book.id) as num_comments,
+    (select sum(stars) from comment where comment.book_id = book.id) as sum_stars
+from
+    book
+;
+    
+# Recent 10 new editions
+# book_newest
+create view book_newest as
+select
+    id as book_id
+from
+    book
+order by created_at desc
+limit 10
+;

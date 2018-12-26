@@ -17,3 +17,70 @@
     line-height  : .5;
     border-radius : .2rem;
   }
+
+  .slider-card {
+      position: relative;
+      border: none;
+      text-align: center;
+  }
+
+  .slider-card img:hover {
+      opacity: .8;
+      transition: .5s;
+  }
+
+  .slider-card .card-body {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+  }
+
+
+.slider-card img {
+    width: 100px !important;
+    display: block;
+    
+}
+
+.slider-card .book-title {
+    font-weight: bold;
+    text-align: left;
+    font-size: 15px;
+}
+
+.slider-card .book-author {
+    text-align: left;
+    font-size: 14px;
+}
+
+.slider-card .book-stars .on {
+    text-align: left;
+    color: #fed221;
+}
+
+.slider-card .book-stars .off {
+    text-align: left;
+    color: gainsboro;
+}
+
+.slider-card .hold-link {
+    width: 100%;
+    display: block;
+}
+
+.slider-card .book-votes {
+    color: black;
+    font-size: 15px;
+}
+
+.slider-card h6 {
+    text-align: left;
+    font-size: 14px;
+}
+
+.slider-card .badge {
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}

@@ -116,7 +116,7 @@ class Book(models.Model):
     published       = models.DateTimeField(default=timezone.now)
     revision        = models.PositiveSmallIntegerField(default=1)
     abstract        = models.TextField(blank=True)
-    image           = models.ImageField(max_length="255", blank=True)
+    image           = models.ImageField(default="default_book.png", upload_to="book_covers")
     created_at      = models.DateTimeField(auto_now_add=True, null=True)
     updated_at      = models.DateTimeField(auto_now=True, null=True)
 

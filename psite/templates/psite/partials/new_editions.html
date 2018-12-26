@@ -1,0 +1,25 @@
+<div class="row mt-4">
+    
+    <div class="col-md-12 text-left text-primary">
+        <h2>Νέες Εκδόσεις</h2>
+    </div>
+
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-md-12">
+        <div class="owl-carousel owl-theme">
+            
+            {% for b in newest %}
+                {% include 'psite/partials/book_card.html' with book=b.book %}
+            {% endfor %}
+  
+        </div>
+    </div> 
+
+</div>
+    
+    
+    
+    
