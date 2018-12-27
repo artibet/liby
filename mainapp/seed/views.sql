@@ -1,5 +1,5 @@
 # publisher_list
-create view publisher_list as
+create or replace view publisher_list as
 select 
     id,
     pub_name,
@@ -17,7 +17,7 @@ from
 
 
 # language_list
-create view language_list as
+create or replace view language_list as
 select 
     id,
     description,
@@ -30,7 +30,7 @@ from
 
 
 # author_list
-create view author_list as
+create or replace view author_list as
 select
     id,
     author_name,
@@ -45,7 +45,7 @@ from
 
 
 # category_list
-create view category_list as
+create or replace view category_list as
 select
     id,
     description,
@@ -57,7 +57,7 @@ from
 ;
 
 # user_data
-create view user_data as
+create or replace view user_data as
 select  
     id as user_id,
     (select count(*) from lend where lend.id = auth_user.id) as lends,
@@ -68,7 +68,7 @@ from auth_user
 ;
 
 # book_data
-create view book_data as
+create or replace view book_data as
 select 
     id as book_id,
     (select count(*) from hold where hold.id = book.id and hold.status_id = 0) as active_holds,
@@ -82,7 +82,7 @@ from
     
 # Recent 10 new editions
 # book_newest
-create view book_newest as
+create or replace view book_newest as
 select
     id as book_id
 from

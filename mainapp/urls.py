@@ -52,7 +52,7 @@ urlpatterns = [
     path('users/create/', user_views.UserCreateView.as_view(), name='user-create'),
     path('users/<int:pk>/update/', user_views.UserUpdateView.as_view(), name='user-update'),
     path('users/<int:pk>/delete/', user_views.UserDeleteView.as_view(), name='user-delete'),
-     path('users/<int:pk>/change_password/', user_views.change_password, name='user-change_password'),
+    path('users/<int:pk>/change_password/', user_views.change_password, name='user-change_password'),
 
     # Κρατήσεις
     path('holds/', views.HoldViews.index, name='holds-index'),

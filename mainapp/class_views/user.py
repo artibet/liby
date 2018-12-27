@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django import forms
 from mainapp.lib import SuperUserMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from mainapp.forms import UserCreateForm, UserUpdateForm
+from mainapp.forms import UserCreateForm, UserUpdateForm, ChangePasswordForm
 
 
 # List
@@ -58,7 +59,21 @@ class UserDeleteView(SuperUserMixin, DeleteView):
         return super().delete(self, request, *args, **kwargs)
    
 
-@login_required
-# change password
-def change_password(request):
-    pass
+# change user password
+def change_password(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    form = ChangePasswordForm(request.POST or None, instance=user)
+    context = {
+        'form': form,
+        'instance': user
+    }
+    if form.is_valid():
+        password = form.cleaned_data.get('password')
+        user.password = make_password(password)
+        user.save()
+        return redirect('user-list')
+    return render(request, 'mainapp/user/change_password.html', context)
+
+
+
+  

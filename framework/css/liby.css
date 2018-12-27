@@ -55,7 +55,7 @@
     
 }
 
-.slider-card a:link, a:active, a:visited {
+.slider-card a:link, .slider-card a:active, .slider-card a:visited {
     color: black;
 }
 
@@ -109,3 +109,4 @@
     margin-bottom: 10px;
     margin-left: 0px;
 }
+

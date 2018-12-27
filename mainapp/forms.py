@@ -54,6 +54,15 @@ class UserUpdateForm(ModelForm):
             'is_active': ''
         }
         widgets = {
-            'password': forms.PasswordInput(),
-            'date_joined': DateTimePickerInput()
+            'password': forms.PasswordInput()
+        } 
+
+# Change password form
+class ChangePasswordForm(forms.ModelForm):
+    
+    class Meta:
+        model = User    
+        fields = ['password']   
+        widgets =  {
+            'password': forms.PasswordInput
         } 

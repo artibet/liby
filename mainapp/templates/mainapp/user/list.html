@@ -86,7 +86,7 @@
                                         <a href="{% url 'user-update' user.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
 
                                         <!-- Αλλαγή κωδικού -->
-                                        <a href="#", title="Αλλαγή κωδικού", class="btn btn-outline-warning btn-sm"><i class="fa fa-lock"></i></a>
+                                        <a href="{%url 'user-change_password' user.id %}", title="Αλλαγή συνθηματικού", class="btn btn-outline-warning btn-sm"><i class="fa fa-lock"></i></a>
                                         
                                         <!-- Διαγραφή -->
                                         <form id="delete-user-{{user.id}}" method="POST" action="{% url 'user-delete' user.id %}" style="display: none;">
