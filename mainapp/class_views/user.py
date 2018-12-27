@@ -9,7 +9,6 @@ from django.contrib.auth.hashers import make_password
 from mainapp.forms import UserCreateForm, UserUpdateForm
 
 
-
 # List
 class UserListView(SuperUserMixin, ListView):
     model = User
@@ -21,8 +20,8 @@ class UserListView(SuperUserMixin, ListView):
 class UserCreateView(SuperUserMixin, SuccessMessageMixin, CreateView):
     model = User
     template_name = 'mainapp/user/create.html'
-    #fields = ['username', 'password', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active']
-    form_class = UserCreateForm
+    fields = ['username', 'password', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active']
+    #form_class = UserCreateForm
     success_url = reverse_lazy('user-list')
     
     def form_valid(self, form):
@@ -36,8 +35,8 @@ class UserCreateView(SuperUserMixin, SuccessMessageMixin, CreateView):
 class UserUpdateView(SuperUserMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'mainapp/user/update.html'
-    #fields = ['username', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login']
-    form_class = UserUpdateForm
+    fields = ['username', 'email', 'last_name', 'first_name', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login']
+    #form_class = UserUpdateForm
     success_url = reverse_lazy('user-list')
 
     def form_valid(self, form):

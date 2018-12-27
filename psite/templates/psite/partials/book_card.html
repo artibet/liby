@@ -14,7 +14,7 @@
         {% endfor %}
                 
         <div class="book-stars">
-            {% for i in book.book_details.stars %}
+            {% for i in book.book_data.stars %}
                 {% if i == 1 %}
                     <i class="on fa fa-star"></i>
                 {% elif i == 2 %}
@@ -23,10 +23,10 @@
                     <i class="off fa fa-star"></i>
                 {% endif %}
             {% endfor%}
-            <span class="book-votes ml-1">({{book.book_details.num_comments}})</span>
+            <span class="book-votes ml-1">({{book.book_data.num_comments}})</span>
         </div>
-        <h6 class="text-muted">Δανεισμοί: {{book.book_details.num_lends}}</h6>
-        <h6 class="text-muted">Κρατήσεις: {{book.book_details.active_holds}}</h6>
+        <h6 class="text-muted">Δανεισμοί: {{book.book_data.num_lends}}</h6>
+        <h6 class="text-muted">Κρατήσεις: {{book.book_data.active_holds}}</h6>
         <div class="badge badge-danger">Δανεισμένο</div>
         <a href="#" class="btn btn-outline-primary btn-sm hold-link">Κράτηση</a>
         

@@ -53,13 +53,15 @@
     font-size: 14px;
 }
 
-.slider-card .book-stars .on {
+.slider-card .book-stars {
     text-align: left;
+}
+
+.slider-card .book-stars .on {
     color: #fed221;
 }
 
 .slider-card .book-stars .off {
-    text-align: left;
     color: gainsboro;
 }
 

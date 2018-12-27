@@ -97,16 +97,13 @@ class CategoryList(models.Model):
 # user_data
 # --------------------------------------------------------------------
 class UserData(models.Model):
-    user            = models.OneToOneField(User, primary_key=True, on_delete="models.CASCADE", related_name="user_data")
+    user            = models.OneToOneField(User, primary_key=True, on_delete=models.DO_NOTHING, related_name="user_data")
 
     lends           = models.PositiveIntegerField(default=0)
     comments        = models.PositiveIntegerField(default=0)
     holds           = models.PositiveIntegerField(default=0)
     suggestions     = models.PositiveIntegerField(default=0)
     
-    def __str__(self):
-        return self.user.username
-
     class Meta:
         managed = False
         db_table = 'user_data'
@@ -115,10 +112,10 @@ class UserData(models.Model):
   
 
 # --------------------------------------------------------------------
-# book_details
+# book_data
 # --------------------------------------------------------------------        
-class BookDetails(models.Model):
-    book            = models.OneToOneField(Book, primary_key=True, on_delete="models.CASCADE", related_name="book_details")
+class BookData(models.Model):
+    book            = models.OneToOneField(Book, on_delete=models.DO_NOTHING, primary_key=True, related_name="book_data")
     
     active_holds    = models.PositiveIntegerField(default=0)
     num_entries     = models.PositiveIntegerField(default=0)
@@ -126,9 +123,6 @@ class BookDetails(models.Model):
     num_comments    = models.PositiveIntegerField(default=0)
     sum_stars       = models.PositiveIntegerField(default=0)
 
-   
-    def __str__(self):
-        return self.title
 
     def is_available(self):
         return num_entries > active_holds
@@ -158,14 +152,14 @@ class BookDetails(models.Model):
     
     class Meta:
         managed = False
-        db_table = 'book_details'
+        db_table = 'book_data'
         verbose_name = 'Βιβλίο'
         verbose_name_plural = 'Βιβλία' 
 
 
 # book_newest
 class BookNewest(models.Model):
-    book            = models.OneToOneField(Book, primary_key=True, on_delete="models.CASCADE", related_name="book_newest")
+    book            = models.OneToOneField(Book, primary_key=True, on_delete=models.DO_NOTHING, related_name="book_newest")
 
     class Meta:
         managed = False

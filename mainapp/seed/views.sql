@@ -67,8 +67,8 @@ select
 from auth_user
 ;
 
-# book_details
-create view book_details as
+# book_data
+create view book_data as
 select 
     id as book_id,
     (select count(*) from hold where hold.id = book.id and hold.status_id = 0) as active_holds,
