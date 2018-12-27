@@ -87,6 +87,7 @@ select
     id as book_id
 from
     book
+where exists (select book_id from entry where book.id = entry.book_id) 
 order by created_at desc
 limit 10
 ;

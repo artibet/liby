@@ -88,7 +88,7 @@ class Category(models.Model):
 class Author(models.Model):
     author_name     = models.CharField(max_length=255, verbose_name="Επωνυμία Συγγραφέα")
     bio             = models.TextField(blank=True, verbose_name="Βιογραφικό/Πληροφορίες")
-    email           = models.EmailField(max_length=100, unique=True, blank=True, verbose_name="Email")
+    email           = models.EmailField(max_length=100, blank=True, verbose_name="Email")
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)        
 
@@ -109,11 +109,12 @@ class Book(models.Model):
     language        = models.ForeignKey(Language, on_delete=models.PROTECT)
     publisher       = models.ForeignKey(Publisher, on_delete=models.PROTECT)
     title           = models.CharField(max_length=255)
-    isbn            = models.CharField(max_length=50, unique=True, blank=True)
+    isbn            = models.CharField(max_length=50, blank=True)
     pages           = models.PositiveSmallIntegerField(default=0)
     dimensions      = models.CharField(max_length=50, blank=True)
     weight          = models.PositiveIntegerField(blank=True, null=True)
-    published       = models.DateTimeField(default=timezone.now)
+    published_year  = models.PositiveSmallIntegerField(blank=True, null=True)
+    published_month = models.PositiveSmallIntegerField(blank=True, null=True)
     revision        = models.PositiveSmallIntegerField(default=1)
     abstract        = models.TextField(blank=True)
     image           = models.ImageField(default="default_book.png", upload_to="book_covers")
@@ -143,14 +144,14 @@ class Entry(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.CASCADE)
     entry_date      = models.DateTimeField(default=timezone.now)
     classification  = models.CharField(max_length=255, blank=True)
-    cancel_date     = models.DateTimeField(null=True)
-    notes           = models.TextField(blank='True')
+    cancel_date     = models.DateTimeField(null=True, blank=True)
+    notes           = models.TextField(blank=True)
 
     # many-to-many relationships
     lends           = models.ManyToManyField(User, related_name = "lends", through='Lend')
 
     def __str__(self):
-        return self.book
+        return self.book.title
     
     class Meta:
         db_table = 'entry'

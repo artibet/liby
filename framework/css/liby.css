@@ -38,6 +38,7 @@
 
 .slider-card img {
     width: 100px !important;
+    height: 125px !important;
     display: block;
     
 }
@@ -45,12 +46,34 @@
 .slider-card .book-title {
     font-weight: bold;
     text-align: left;
-    font-size: 15px;
+    font-size: 14px;
+    max-height: 40px;
+    min-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    
 }
+
+.slider-card a:link, a:active, a:visited {
+    color: black;
+}
+
 
 .slider-card .book-author {
     text-align: left;
     font-size: 14px;
+}
+
+.slider-card .book-authors {
+    overflow: hidden;
+    max-height: 25px;
+    min-height: 25px;
+}
+
+.slider-card .book-title:hover, .book-authors:hover {
+    max-height: 400px;
+    overflow: visible;
 }
 
 .slider-card .book-stars {

@@ -125,7 +125,7 @@ class BookData(models.Model):
 
 
     def is_available(self):
-        return num_entries > active_holds
+        return self.num_entries > self.active_holds
 
     # if true add a half star to rating
     def has_half_star(self):

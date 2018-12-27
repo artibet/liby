@@ -2,16 +2,20 @@
 
 
 <div class="card slider-card">
-    <img  src="{% static 'psite/book_default.png' %}" alt="Βιβλίο" class="card-img-top">
+    <a href="#"><img  src="{{book.image.url}}" alt="Βιβλίο" class="card-img-top"></a>
     <div class="card-body">
         <div class="book-title">
-            {{book.title}}
+            <a href="#">{{book.title}}</a>
         </div>
-        {% for author in book.authors.all %}
-            <div class="book-author">
-                {{author.author_name}}
-            </div>
-        {% endfor %}
+        <div class="book-authors">
+            {% for author in book.authors.all %}
+                <div class="book-author">
+                    <a href="#">
+                        {{author.author_name}}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
                 
         <div class="book-stars">
             {% for i in book.book_data.stars %}
@@ -25,9 +29,13 @@
             {% endfor%}
             <span class="book-votes ml-1">({{book.book_data.num_comments}})</span>
         </div>
-        <h6 class="text-muted">Δανεισμοί: {{book.book_data.num_lends}}</h6>
+        <h6 class="text-muted">Αντύτυπα: {{book.book_data.num_entries}}</h6>
         <h6 class="text-muted">Κρατήσεις: {{book.book_data.active_holds}}</h6>
-        <div class="badge badge-danger">Δανεισμένο</div>
+        {% if book.book_data.is_available %}
+            <div class="badge badge-success">Διαθέσιμο</div>    
+        {% else %}
+            <div class="badge badge-danger">Δανεισμένο</div>
+        {% endif%}
         <a href="#" class="btn btn-outline-primary btn-sm hold-link">Κράτηση</a>
         
     </div>
