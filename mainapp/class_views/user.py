@@ -6,14 +6,13 @@ from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from mainapp.vmodels import UserList
 from mainapp.forms import UserCreateForm, UserUpdateForm
 
 
 
 # List
 class UserListView(SuperUserMixin, ListView):
-    model = UserList
+    model = User
     template_name = 'mainapp/user/list.html'
     context_object_name = 'users'
 

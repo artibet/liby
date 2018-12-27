@@ -56,20 +56,10 @@ from
     category
 ;
 
-# user_list
-create view user_list as
+# user_data
+create view user_data as
 select  
-    id,
-    username,
-    first_name,
-    last_name,
-    email,
-    password,
-    is_superuser,
-    is_staff,
-    last_login,
-    date_joined,
-    is_active,
+    id as user_id,
     (select count(*) from lend where lend.id = auth_user.id) as lends,
     (select count(*) from comment where comment.user_id = auth_user.id) as comments,
     (select count(*) from hold where hold.user_id = auth_user.id) as holds,
