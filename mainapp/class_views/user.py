@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from mainapp.lib import SuperUserMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -57,4 +58,7 @@ class UserDeleteView(SuperUserMixin, DeleteView):
         return super().delete(self, request, *args, **kwargs)
    
 
-
+@login_required
+# change password
+def change_password(request):
+    pass

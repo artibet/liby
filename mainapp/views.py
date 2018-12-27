@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from . import models
 
+@login_required
 def dashboard(request):
     return render (request, 'mainapp/dashboard.html', {})
 
