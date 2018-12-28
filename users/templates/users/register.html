@@ -7,20 +7,24 @@
     <div class="content-section">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom md-4">Δημιουργία λογαριασμού</legend>
-                        {{ form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Εγγραφή</button>
+                <div class="card" style="padding: 10px;">
+                    <div class="card-title">
+                        <h3 class="border-bottom pb-3">Δημιουργία λογαριασμού</h3>
                     </div>
-                </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                        Έχετε ήδη λογαριασμό? <a href="{% url 'login' %}" class="ml-2">Συνδεθείτε εδώ</a>
-                    </small>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Εγγραφή</button>
+                        </div>
+                    </form>
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            Έχετε ήδη λογαριασμό? <a href="{% url 'login' %}" class="ml-2">Συνδεθείτε εδώ</a>
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
