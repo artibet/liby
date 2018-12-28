@@ -29,8 +29,11 @@
             {% endfor%}
             <span class="book-votes ml-1">({{book.book_data.num_comments}})</span>
         </div>
+        {% if total_lends %}
+            <h6 class="text-info">Σύνολο δανεισμών: {{book.book_data.total_lends}}</h6>
+        {% endif %}
         <h6 class="text-muted">Αντίτυπα: {{book.book_data.num_entries}}</h6>
-        <h6 class="text-muted">Δανεισμένα: {{book.book_data.on_lend}}</h6>
+        <h6 class="text-muted">Δανεισμένα: {{book.book_data.active_lends}}</h6>
         <h6 class="text-muted">Κρατήσεις: {{book.book_data.active_holds}}</h6>
         {% if book.book_data.status == 1 %}
             <div class="badge badge-success">Διαθέσιμο</div>    

@@ -73,10 +73,10 @@ select
     id as book_id,
     (select count(*) from hold where hold.id = book.id and hold.status_id = 0) as active_holds,
     (select count(*) from entry where entry.book_id = book.id and entry.cancel_date is null) as num_entries,
-    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as num_lends,
+    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as total_lends,
+    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as active_lends,
     (select count(*) from comment where comment.book_id = book.id) as num_comments,
-    (select sum(stars) from comment where comment.book_id = book.id) as sum_stars,
-    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as on_lend
+    ifnull((select sum(stars) from comment where comment.book_id = book.id), 0) as sum_stars
 from
     book
 ;
@@ -90,7 +90,30 @@ from
     book
 where exists (select book_id from entry where book.id = entry.book_id) 
 order by created_at desc
-limit 10
+limit 20
 ;
 
-# 
+
+# Κορυφαίοι τίτλοι
+create or replace view book_top_titles as
+select
+    book_id,
+    ifnull((sum_stars / num_comments), 0) as grade
+from
+    book_data
+order by
+    (sum_stars / num_comments) desc, grade asc
+limit 20
+;
+
+# Προτιμήσεις αναγνωστών (σύνολο δανεισμών)
+create or replace view book_best_choices as
+select
+    book_id,
+    total_lends
+from
+    book_data
+order by
+    total_lends desc
+limit 20
+;

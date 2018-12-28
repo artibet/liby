@@ -3,10 +3,10 @@
     <div class="col-md-12">
         
         <div class="card" style="padding: 10px;">
-            <div class="card-title"><h3 class="text-primary">Μεγαλύτερη ζήτηση</h2></div>
+            <div class="card-title"><h3 class="text-primary">Προτιμήσεις αναγνωστών</h2></div>
             <div class="owl-carousel owl-theme">
-                {% for b in newest %}
-                    {% include 'psite/partials/book_card.html' with book=b.book %}
+                {% for b in best_choices %}
+                    {% include 'psite/partials/book_card.html' with book=b.book total_lends=1 %}
                 {% endfor %}
             </div>
         </div>

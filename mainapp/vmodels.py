@@ -119,16 +119,16 @@ class BookData(models.Model):
     
     active_holds    = models.PositiveIntegerField(default=0)
     num_entries     = models.PositiveIntegerField(default=0)
-    num_lends       = models.PositiveIntegerField(default=0)
+    total_lends     = models.PositiveIntegerField(default=0)
+    active_lends    = models.PositiveIntegerField(default=0)
     num_comments    = models.PositiveIntegerField(default=0)
     sum_stars       = models.PositiveIntegerField(default=0)
-    on_lend         = models.PositiveIntegerField(default=0)
 
 
     def status(self):
-        if self.num_entries > self.on_lend + self.active_holds:
+        if self.num_entries > self.active_lends + self.active_holds:
             return 1    # Διαθέσιμο
-        elif self.num_entries > self.on_lend and self.num_entries <= self.on_lend + self.active_holds:
+        elif self.num_entries > self.active_lends and self.num_entries <= self.active_lends + self.active_holds:
             return 2    # Δεσμευμένο
         else:
             return 0    # Μη διαθέσιμο
@@ -171,3 +171,21 @@ class BookNewest(models.Model):
     class Meta:
         managed = False
         db_table = 'book_newest'        
+
+
+# book_top_titles
+class BookTopTitles(models.Model):
+    book            = models.OneToOneField(Book, primary_key=True, on_delete=models.DO_NOTHING, related_name="book_top_titles")
+
+    class Meta:
+        managed = False
+        db_table = 'book_top_titles'          
+
+
+# book_best_choices
+class BookBestChoices(models.Model):
+    book            = models.OneToOneField(Book, primary_key=True, on_delete=models.DO_NOTHING, related_name="book_best_choices")
+
+    class Meta:
+        managed = False
+        db_table = 'book_best_choices'             

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Country, Language, Category, \
                     Publisher, Book, Author, HoldStatus, \
-                    Hold, Entry, Suggestion, Lend
+                    Hold, Entry, Suggestion, Lend, Comment
 
 admin.site.register(Country)
 admin.site.register(Language)
@@ -14,3 +14,4 @@ admin.site.register(Hold)
 admin.site.register(Entry)
 admin.site.register(Suggestion)
 admin.site.register(Lend)
+admin.site.register(Comment)

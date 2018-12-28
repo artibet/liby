@@ -5,7 +5,7 @@
         <div class="card" style="padding: 10px;">
             <div class="card-title"><h3 class="text-primary">Κορυφαίοι Τίτλοι</h2></div>
             <div class="owl-carousel owl-theme">
-                {% for b in newest %}
+                {% for b in top_titles %}
                     {% include 'psite/partials/book_card.html' with book=b.book %}
                 {% endfor %}
             </div>
