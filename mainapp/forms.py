@@ -58,11 +58,6 @@ class UserUpdateForm(ModelForm):
         } 
 
 # Change password form
-class ChangePasswordForm(forms.ModelForm):
-    
-    class Meta:
-        model = User    
-        fields = ['password']   
-        widgets =  {
-            'password': forms.PasswordInput
-        } 
+class ChangePasswordForm(forms.Form):
+    password = forms.CharField(label='Νέο Συνθηματικό', max_length=128, widget=forms.PasswordInput)
+   

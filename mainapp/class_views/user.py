@@ -62,7 +62,7 @@ class UserDeleteView(SuperUserMixin, DeleteView):
 # change user password
 def change_password(request, pk):
     user = get_object_or_404(User, pk=pk)
-    form = ChangePasswordForm(request.POST or None, instance=user)
+    form = ChangePasswordForm(request.POST or None)
     context = {
         'form': form,
         'instance': user
