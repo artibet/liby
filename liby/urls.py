@@ -8,7 +8,7 @@ from users import views as user_views
 
 
 urlpatterns = [
-    path('admin_old/', admin.site.urls),
+    path('django_admin/', admin.site.urls),
     path('admin/', include('mainapp.urls')),    # admin dashboard
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),

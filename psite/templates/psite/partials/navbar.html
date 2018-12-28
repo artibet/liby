@@ -47,7 +47,7 @@
                     <div class="dropdown-menu" aria-labelledby="user-dropdown">
                         <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa fa-user"></i> Προφίλ χρήστη</a>
                         {% if user.is_superuser %}
-                            <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fa fa-tools"></i> Διαχείρηση</a>
+                            <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Διαχείρηση</a>
                         {% endif %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-in"></i> Αποσύνδεση</a>

@@ -88,7 +88,8 @@ select
     id as book_id
 from
     book
-where exists (select book_id from entry where book.id = entry.book_id) 
+where
+    exists (select book_id from entry where book.id = entry.book_id) 
 order by created_at desc
 limit 20
 ;
@@ -101,6 +102,8 @@ select
     ifnull((sum_stars / num_comments), 0) as grade
 from
     book_data
+where
+    exists (select book_id from entry where book_data.book_id = entry.book_id) 
 order by
     (sum_stars / num_comments) desc, grade asc
 limit 20
@@ -113,6 +116,8 @@ select
     total_lends
 from
     book_data
+where
+    exists (select book_id from entry where book_data.book_id = entry.book_id) 
 order by
     total_lends desc
 limit 20
