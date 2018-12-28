@@ -75,7 +75,8 @@ select
     (select count(*) from entry where entry.book_id = book.id and entry.cancel_date is null) as num_entries,
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as num_lends,
     (select count(*) from comment where comment.book_id = book.id) as num_comments,
-    (select sum(stars) from comment where comment.book_id = book.id) as sum_stars
+    (select sum(stars) from comment where comment.book_id = book.id) as sum_stars,
+    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as on_lend
 from
     book
 ;
@@ -91,3 +92,5 @@ where exists (select book_id from entry where book.id = entry.book_id)
 order by created_at desc
 limit 10
 ;
+
+# 

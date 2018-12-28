@@ -122,10 +122,17 @@ class BookData(models.Model):
     num_lends       = models.PositiveIntegerField(default=0)
     num_comments    = models.PositiveIntegerField(default=0)
     sum_stars       = models.PositiveIntegerField(default=0)
+    on_lend         = models.PositiveIntegerField(default=0)
 
 
-    def is_available(self):
-        return self.num_entries > self.active_holds
+    def status(self):
+        if self.num_entries > self.on_lend + self.active_holds:
+            return 1    # Διαθέσιμο
+        elif self.num_entries > self.on_lend and self.num_entries <= self.on_lend + self.active_holds:
+            return 2    # Δεσμευμένο
+        else:
+            return 0    # Μη διαθέσιμο
+
 
     # if true add a half star to rating
     def has_half_star(self):
