@@ -1,30 +1,19 @@
-<div class="row mt-3">
-    
-    <div class="col-md-12 text-left text-primary">
-        <h2>Μεγαλύτερη Ζήτηση</h2>
-    </div>
-
-</div>
-
-<div class="row mt-2">
+<div class="row mt-4">
 
     <div class="col-md-12">
-        <div class="owl-carousel owl-theme">
-            
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            <div>{% include 'psite/partials/book_card.html' %}</div>
-            
-                
+        
+        <div class="card" style="padding: 10px;">
+            <div class="card-title"><h3 class="text-primary">Μεγαλύτερη ζήτηση</h2></div>
+            <div class="owl-carousel owl-theme">
+                {% for b in newest %}
+                    {% include 'psite/partials/book_card.html' with book=b.book %}
+                {% endfor %}
+            </div>
         </div>
+        
     </div> 
 
 </div>
+
+
     
