@@ -76,16 +76,16 @@
     overflow: visible;
 }
 
-.slider-card .book-stars {
+.book-stars {
     text-align: left;
     margin-bottom: 5px;
 }
 
-.slider-card .book-stars .on {
+.book-stars .on {
     color: #fed221;
 }
 
-.slider-card .book-stars .off {
+.book-stars .off {
     color: gainsboro;
 }
 
@@ -113,4 +113,19 @@
 
 body.psite {
     background-color: cadetblue;
+}
+
+.book-details-card img {
+    width: 300px !important;    
+}
+
+.book-details-card {
+    padding: 15px;
+}
+
+
+
+.book-details-data {
+    font-size: 14px;
+    margin-top: 10px;
 }

@@ -133,6 +133,11 @@ class BookData(models.Model):
         else:
             return 0    # Μη διαθέσιμο
 
+    def grade(self):
+        if self.num_comments == 0:
+            return 0
+        return round(self.sum_stars/self.num_comments, 2)           
+
 
     # if true add a half star to rating
     def has_half_star(self):
@@ -154,7 +159,11 @@ class BookData(models.Model):
         if self.has_half_star():
             stars[avg] = 2
 
-        return stars          
+        return stars 
+
+    # Returns a list of books from same authors
+    def from_same_author(self):
+        pass
 
     
     class Meta:

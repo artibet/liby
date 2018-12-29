@@ -129,6 +129,34 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def published_month_desc(self):
+        if self.published_month == 1:
+            return 'Ιανουάριος'
+        elif self.published_month == 2:
+            return 'Φεβρουάριος'
+        elif self.published_month == 3:
+            return 'Μάρτιος'
+        elif self.published_month == 4:
+            return 'Απρίλιος'      
+        elif self.published_month == 5:
+            return 'Μάιος' 
+        elif self.published_month == 6:
+            return 'Ιούνιος'
+        elif self.published_month == 7:
+            return 'Ιούλιος' 
+        elif self.published_month == 8:
+            return 'Αύγουστος'  
+        elif self.published_month == 9:
+            return 'Σεπτέμβριος'  
+        elif self.published_month == 10:
+            return 'Οκτώβριος'
+        elif self.published_month == 11:
+            return 'Νομέβριος'
+        elif self.published_month == 12:
+            return 'Δεκέμβριος'
+        else:
+            return ''
     
     class Meta:
         db_table = 'book'

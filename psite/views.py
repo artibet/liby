@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookBestChoices
+from mainapp.models import Book
+
 
 # Home
 def home(request):
@@ -20,3 +23,10 @@ def home(request):
     }
 
     return render (request, 'psite/home.html', context)
+
+
+# Book details
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'psite/book.html'
+    context_object_name = 'book'
