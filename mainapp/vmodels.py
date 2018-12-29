@@ -163,7 +163,16 @@ class BookData(models.Model):
 
     # Returns a list of books from same authors
     def from_same_author(self):
-        pass
+        
+        # Get author id's into list
+        author_ids = []
+        for author in self.book.authors.all():
+            author_ids.append(author.id)
+
+        # filter
+        return Book.objects.filter(authors__id__in = author_ids).exclude(id=self.book_id).distinct()
+
+        
 
     
     class Meta:

@@ -3,7 +3,7 @@
     <div class="col-md-12">
         
         <div class="card" style="padding: 10px;">
-            <div class="card-title"><h3 class="text-primary">Κορυφαίοι Τίτλοι</h2></div>
+            <div class="card-title border-bottom"><h3 class="text-primary">Κορυφαίοι Τίτλοι</h3></div>
             <div class="owl-carousel owl-theme">
                 {% for b in top_titles %}
                     {% include 'psite/partials/book_card.html' with book=b.book %}

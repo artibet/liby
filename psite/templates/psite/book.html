@@ -4,12 +4,23 @@
 {% block content %} 
 
     <div class="context">
+
+        <!-- book info -->
         <div class="row mt-4 mb-4">
             {% include 'psite/partials/book_info.html' %}
         </div>
+
+        <!-- Από τους ίδους συγγραφείς (αν υπάρχουν και άλλα) -->
+        {% if book.book_data.from_same_author %}
+            <div class="row mt-4 mb-4">
+                {% include 'psite/partials/book_from_same_authors.html' %}
+            </div>
+        {% endif %}
+
+
     </div>
 
-    <!-- Από τους ίδους συγγραφείς (αν υπάρχουν και άλλα) -->
+    
 
 
     <!-- Λεπτομέριες αξιολόγησης -->
