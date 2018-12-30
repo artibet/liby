@@ -17,16 +17,18 @@
 
         <form class="form-inline ml-auto" method="POST", action="{% url 'psite-search' %}" id="search-form">
             {% csrf_token %}
-            <div class="input-group">
+            <!-- <div class="input-group">
                 <select style="width: 135px;" name="search-target" id="search-target" class="form-control">
-                    <option value="1">Βιβλία</option>
-                    <option value="2">Συγγραφείς</option>
-                    <option value="3">ISBN</option>
+                    <option value="1">Τίτλος</option>
+                    <option value="2">Περίληψη</option>
+                    <option value="3">Συγγραφείς</option>
+                    <option value="4">ISBN</option>
                 </select>
                 <input name="search-text" id="search-text" style="width: 310px;" class="form-control mr-sm-2" type="search" placeholder="Αναζήτηση" aria-label="Αναζήτηση βιβλίων">
-            </div>
-                        
-            <button class="btn btn-outline-success my-2 my-sm-0" onclick="event.preventDefault();submitSearch()">Αναζήτηση</button>
+            </div> -->
+            <input name="search-text" id="search-text" style="width: 350px;" class="form-control mr-2" type="search" placeholder="Τίτλος, περιγραφή, συγγραφέας ή ISBN" aria-label="Αναζήτηση βιβλίων">                        
+            <button class="btn btn-success my-2" onclick="event.preventDefault();submitSearch()">Αναζήτηση</button>
+            <button class="btn btn-outline-success my-2 ml-2" onclick="event.preventDefault()">Σύνθετη αναζήτηση</button>
         </form>
     
         
