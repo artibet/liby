@@ -106,8 +106,8 @@ class Author(models.Model):
 # book
 # --------------------------------------------------------------------
 class Book(models.Model):
-    language        = models.ForeignKey(Language, on_delete=models.PROTECT)
-    publisher       = models.ForeignKey(Publisher, on_delete=models.PROTECT)
+    language        = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="books")
+    publisher       = models.ForeignKey(Publisher, on_delete=models.PROTECT, related_name="books")
     title           = models.CharField(max_length=255)
     isbn            = models.CharField(max_length=50, blank=True)
     pages           = models.PositiveSmallIntegerField(default=0)

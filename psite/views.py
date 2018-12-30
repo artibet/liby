@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
-from mainapp.models import Book, Author
+from mainapp.models import Book, Author, Publisher
 
 
 # Home
@@ -89,3 +89,15 @@ def author(request, author_id):
     }
 
     return render (request, 'psite/author.html', context)    
+
+
+# Publisher page
+def publisher(request, publisher_id):
+    publisher = get_object_or_404(Publisher, pk=publisher_id)
+    
+    context = {
+        'publisher': publisher,
+        'books': publisher.books.all()
+    }
+
+    return render (request, 'psite/publisher.html', context)      

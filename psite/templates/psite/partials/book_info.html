@@ -47,7 +47,7 @@
                 </div>
                 <div class="book-publisher">
                     <span class="font-weight-bold">Εκδότης: </span>
-                    <a href="#">{{book.publisher.pub_name}}</a>
+                    <a href="{% url 'psite-publisher' book.publisher_id %}">{{book.publisher.pub_name}}</a>
                 </div>
                 <div class="book-published">
                     <span class="font-weight-bold">Ημ/νία έκδοσης: </span>

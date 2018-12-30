@@ -1,0 +1,65 @@
+{% extends 'psite/base.html' %}
+{% load static %}
+
+{% block content %} 
+
+<div class="container mb-4 px-0">
+    <div class="row mt-2">
+
+        <div class="col-md-12 px-0">
+            
+            <div class="card" style="padding: 15px;">
+                
+                <!-- page title -->
+                <div class="card-title border-bottom row">
+                    <h3 class='col'>{{publisher.pub_name}}</h3>
+                </div>
+
+                <!-- country -->
+                <div>
+                    <span class="font-weight-bold">Χώρα: </span>{{publisher.country.description}}
+                </div>
+
+                <!-- city -->
+                {% if publisher.city %}
+                    <div>
+                        <span class="font-weight-bold">Πόλη: </span>{{publisher.city}}
+                    </div>
+                {% endif %}
+
+                <!-- address -->
+                {% if publisher.address %}
+                    <div>
+                        <span class="font-weight-bold">Διεύθυνση: </span>{{publisher.address}}
+                    </div>
+                {% endif %}
+
+                <!-- zip -->
+                {% if publisher.zip %}
+                    <div>
+                        <span class="font-weight-bold">Τ.Κ. (Zip): </span>{{publisher.zip}}
+                    </div>
+                {% endif %}
+
+                <!-- zip -->
+                {% if publisher.phone %}
+                    <div>
+                        <span class="font-weight-bold">Τηλέφωνο: </span>{{publisher.phone}}
+                    </div>
+                {% endif %}
+
+                <p></p>
+                
+                <!-- items -->
+                <h4 class='mb-4'>Εκδόσεις</h4>
+                {% include 'psite/partials/browse_items.html' %}
+                
+
+            </div>
+            
+        </div> 
+
+    </div>
+</div>    
+    
+{% endblock %}

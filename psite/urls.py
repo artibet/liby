@@ -8,4 +8,5 @@ urlpatterns = [
     path('top_books/', views.top_books, name='psite-top_books'),
     path('top_picks/', views.top_picks, name='psite-top_picks'),
     path('author/<int:author_id>/', views.author, name='psite-author'),
+    path('publisher/<int:publisher_id>/', views.publisher, name='psite-publisher'),
 ]

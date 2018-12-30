@@ -15,6 +15,13 @@
                     <h3 class='col'>{{author.author_name}}</h3>
                 </div>
 
+                <!-- email -->
+                {% if author.email %}
+                    <div class="email">
+                        <span class="font-weight-bold">Email: </span><a href="mailto:{{author.email}}">{{author.email}}</a>
+                    </div>
+                {% endif %}
+
                 <p>{{author.bio|linebreaks}}</p>
 
                 <!-- items -->
