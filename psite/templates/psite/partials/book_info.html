@@ -64,7 +64,7 @@
                         <span class="font-weight-bold">Κατηγορία: </span>
                     {% endif %}
                     {% for category in book.categories.all %}
-                        <a href="#">{{category.description}}</a> 
+                        <a href="{% url 'psite-category' category.id %}">{{category.description}}</a> 
                     {% endfor %}
                 </div>
                 <p class="card-text">{{book.abstract|linebreaks}}</p>
