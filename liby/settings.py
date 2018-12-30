@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'mainapp',
     'psite',
     'users.apps.UsersConfig',
+    'django_cool_paginator',
 
 ]
 
@@ -145,3 +146,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # login landing page
 LOGIN_REDIRECT_URL = 'psite-home'
 LOGIN_URL = 'login'
+
+# pagination
+COOL_PAGINATOR_NEXT_NAME = 'Επόμενο'
+COOL_PAGINATOR_PREVIOUS_NAME = 'Προηγούμενο'

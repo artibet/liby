@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.db.models import Q
+from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
 from mainapp.models import Book, Author, Publisher, Category
@@ -120,10 +121,9 @@ def category(request, category_id):
 
 # Αναζήτηση
 def search(request):
-    if request.method != 'POST':
-        raise Http404('error')   
 
-    key = request.POST['search-text']
+    # get book_list for search-text
+    key = request.GET['search-text']
 
     q_title = Q(title__icontains = key)
     q_abstract = Q(abstract__icontains = key)
@@ -131,11 +131,16 @@ def search(request):
     q_isbn = Q(isbn__icontains = key)
 
     q_clause = q_title | q_abstract | q_author | q_isbn
-    books = Book.objects.filter(q_clause)
+    book_list = Book.objects.filter(q_clause)
+    
+    # paginate book_list
+    paginator = Paginator(book_list, 12)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
 
     context = {
         'books': books,
-        'title': 'Αποτέλεσμα αναζήτησης'
+        'title': f"Bρέθηκαν {paginator.count} βιβλία",
     } 
 
     return render (request, 'psite/browse.html', context)   
