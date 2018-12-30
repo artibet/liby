@@ -85,10 +85,16 @@ def top_picks(request):
 # Author page
 def author(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
+
+    # paginate book_list
+    book_list = author.books.all()
+    paginator = Paginator(book_list, 8)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
     
     context = {
         'author': author,
-        'books': author.books.all(),
+        'books': books
     }
 
     return render (request, 'psite/author.html', context)    
@@ -97,10 +103,16 @@ def author(request, author_id):
 # Publisher page
 def publisher(request, publisher_id):
     publisher = get_object_or_404(Publisher, pk=publisher_id)
+
+    # paginate book_list
+    book_list = publisher.books.all()
+    paginator = Paginator(book_list, 8)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
     
     context = {
         'publisher': publisher,
-        'books': publisher.books.all()
+        'books': books
     }
 
     return render (request, 'psite/publisher.html', context)      
@@ -109,11 +121,16 @@ def publisher(request, publisher_id):
 # Category page
 def category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
-    books = category.books.all()
+
+    # paginate book_list
+    book_list = category.books.all()
+    paginator = Paginator(book_list, 8)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
 
     context = {
         'books': books,
-        'title': category.description,
+        'title': f"{category.description} ({paginator.count})",
     }
     
     return render (request, 'psite/browse.html', context)        
