@@ -15,21 +15,13 @@
     <link rel="stylesheet" href="{% static 'owl/dist/assets/owl.carousel.min.css' %}"> 
     <link rel="stylesheet" href="{% static 'owl/dist/assets/owl.theme.default.min.css' %}"> 
 
+    <!-- alertify -->
+    <link rel="stylesheet" href="{% static 'alertify/css/alertify.min.css' %}">
+    <link rel="stylesheet" href="{% static 'alertify/css/themes/bootstrap.min.css' %}">
     
-    <!-- tiny-slider -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/tiny-slider.css"> -->
-
-    <!-- flickity -->
-    <!-- <link rel="stylesheet" href="{% static 'flickity/flickity.min.css' %}" media="screen"> -->
-
-    <!-- FlexSlider2 -->
-    <!-- <link rel="stylesheet" href="{% static 'flexslider/flexslider.css' %}" media="screen">   -->
-
-    <!-- slick -->
-    <!-- <link rel="stylesheet" href="{% static 'slick/slick.css' %}">
-    <link rel="stylesheet" href="{% static 'slick/slick-theme.css' %}"> -->
     
     <link rel="stylesheet" href="{% static 'css/liby.css' %}">
+
 </head>
 <body class="psite">
        
@@ -47,6 +39,16 @@
     
     <!-- owl carousel -->
     <script src="{% static 'owl/dist/owl.carousel.min.js' %}" ></script>
+
+    <!-- aleftify -->
+    <script src="{% static 'alertify/alertify.min.js' %}"></script>
+    <script>
+        //override defaults
+        //alertify.defaults.transition = "slide";
+        alertify.defaults.theme.ok = "btn btn-outline-primary";
+        alertify.defaults.theme.cancel = "btn btn-outline-danger";
+        //alertify.defaults.theme.input = "form-control";
+    </script>
 
    
     <!-- custom scripts -->

@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
 from mainapp.models import Book, Author, Publisher, Category
@@ -114,3 +115,32 @@ def category(request, category_id):
     }
     
     return render (request, 'psite/browse.html', context)        
+
+
+# Αναζήτηση
+def search(request):
+    if request.method != 'POST':
+        raise Http404('error')   
+
+    target = request.POST['search-target']
+    text = request.POST['search-text']
+
+    if target == '1':       # search in book titles
+        books = Book.objects.filter(title__icontains = text)
+        title = f"Αποτέλεσμα αναζήτησης του '{text}' στους τίτλους βιβλίων"
+    elif target == '2':     # search in author names
+        books = Book.objects.filter(authors__author_name__icontains = text).distinct()
+        title = f"Αποτέλεσμα αναζήτησης του '{text}' στα ονόματα συγγραφέων"
+    elif target == '3':     # search in ISBN
+        books = Book.objects.filter(isbn__icontains = text)
+        title = f"Αποτέλεσμα αναζήτησης του '{text}' στο ISBN των βιβλίων"        
+    else:
+       raise Http404('error')   
+
+    context = {
+        'books': books,
+        'title': title
+    } 
+
+    return render (request, 'psite/browse.html', context)   
+    

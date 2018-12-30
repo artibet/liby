@@ -10,4 +10,5 @@ urlpatterns = [
     path('author/<int:author_id>/', views.author, name='psite-author'),
     path('publisher/<int:publisher_id>/', views.publisher, name='psite-publisher'),
     path('category/<int:category_id>/', views.category, name='psite-category'),
+    path('search/', views.search, name='psite-search'),
 ]
