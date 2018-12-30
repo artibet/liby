@@ -76,7 +76,7 @@ select
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as total_lends,
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as active_lends,
     (select count(*) from comment where comment.book_id = book.id) as num_comments,
-    ifnull((select sum(stars) from comment where comment.book_id = book.id), 0) as sum_stars
+    ifnull((select sum(stars) from comment where comment.book_id = book.id), 0) as sum_stars,
 from
     book
 ;
@@ -91,7 +91,6 @@ from
 where
     exists (select book_id from entry where book.id = entry.book_id) 
 order by created_at desc
-limit 20
 ;
 
 
@@ -106,7 +105,6 @@ where
     exists (select book_id from entry where book_data.book_id = entry.book_id) 
 order by
     (sum_stars / num_comments) desc, grade asc
-limit 20
 ;
 
 # Προτιμήσεις αναγνωστών (σύνολο δανεισμών)
@@ -120,5 +118,4 @@ where
     exists (select book_id from entry where book_data.book_id = entry.book_id) 
 order by
     total_lends desc
-limit 20
 ;

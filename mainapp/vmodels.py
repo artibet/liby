@@ -201,7 +201,7 @@ class BookTopTitles(models.Model):
 
 
 # book_best_choices
-class BookBestChoices(models.Model):
+class BookTopPicks(models.Model):
     book            = models.OneToOneField(Book, primary_key=True, on_delete=models.DO_NOTHING, related_name="book_best_choices")
 
     class Meta:

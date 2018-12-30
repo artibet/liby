@@ -1,0 +1,32 @@
+{% extends 'psite/base.html' %}
+{% load static %}
+
+{% block content %} 
+
+<div class="container mb-4 px-0">
+    <div class="row mt-2">
+
+        <div class="col-md-12 px-0">
+            
+            <div class="card" style="padding: 15px;">
+                
+                <!-- page title -->
+                <div class="card-title border-bottom row">
+                    <h3 class='col'>{{author.author_name}}</h3>
+                </div>
+
+                <p>{{author.bio|linebreaks}}</p>
+
+                <!-- items -->
+                <h4 class='mb-4'>Εκδόσεις</h4>
+                {% include 'psite/partials/browse_items.html' %}
+                
+
+            </div>
+            
+        </div> 
+
+    </div>
+</div>    
+    
+{% endblock %}

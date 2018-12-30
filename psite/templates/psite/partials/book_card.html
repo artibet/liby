@@ -10,7 +10,7 @@
         <div class="book-authors">
             {% for author in book.authors.all %}
                 <div class="book-author">
-                    <a href="#">
+                    <a href="{% url 'psite-author' author.id %}">
                         {{author.author_name}}
                     </a>
                 </div>
@@ -21,6 +21,9 @@
             {% include 'psite/partials/book_stars.html' %}
             <span class="book-votes ml-1">({{book.book_data.num_comments}})</span>
         </div>
+        {% if entry_date %}
+            <h6 class="text-info">Πραλαβή: {{book.created_at|date:'d/m/Y'}}</h6>
+        {% endif %}
         {% if total_lends %}
             <h6 class="text-info">Σύνολο δανεισμών: {{book.book_data.total_lends}}</h6>
         {% endif %}

@@ -42,7 +42,7 @@
                         <span class="font-weight-bold">Συγγραφέας: </span>
                     {% endif %}
                     {% for author in book.authors.all %}
-                        <a href="#">{{author.author_name}}</a> 
+                        <a href="{% url 'psite-author' author.id %}">{{author.author_name}}</a> 
                     {% endfor %}
                 </div>
                 <div class="book-publisher">

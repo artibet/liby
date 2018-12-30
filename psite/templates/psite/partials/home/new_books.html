@@ -1,0 +1,24 @@
+
+<div class="row mt-2">
+
+    <div class="col-md-12 px-0">
+        
+        <div class="card" style="padding: 15px;">
+            <div class="card-title border-bottom row">
+                <h3 class=" col-md-6">Νέες παραλαβές</h3>
+                <div class="ml-auto more-data"><a href="{% url 'psite-new_books' %}">Περισσότερα</a></div>
+            </div>
+            <div class="owl-carousel owl-theme">
+                {% for b in newest %}
+                    {% include 'psite/partials/book_card.html' with book=b.book entry_date=1 %}
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div> 
+
+</div>
+    
+    
+    
+    

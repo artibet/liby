@@ -1,0 +1,14 @@
+<div class="container p-0 ">
+    <div class="row">
+        <!-- book cards -->
+        {% for book in books %}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div style="width:170px; padding-bottom: 40px;">
+                {% include 'psite/partials/book_card.html' %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- pagination links -->
