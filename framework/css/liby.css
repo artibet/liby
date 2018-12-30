@@ -137,3 +137,7 @@ body.psite {
 .broswe-card {
     width: 200px;
 }
+
+.myhidden {
+    visibility: hidden;
+}

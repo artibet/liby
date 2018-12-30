@@ -12,16 +12,13 @@
 
         <!-- Από τους ίδους συγγραφείς (αν υπάρχουν και άλλα) -->
         {% if book.book_data.from_same_author %}
-            <div class="row mt-4 mb-4">
+            <div class="row mt-4 mb-4 myhidden">
                 {% include 'psite/partials/book_from_same_authors.html' %}
             </div>
         {% endif %}
 
 
     </div>
-
-    
-
 
     <!-- Λεπτομέριες αξιολόγησης -->
     
