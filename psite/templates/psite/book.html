@@ -5,22 +5,26 @@
 
     <div class="context">
 
-        <!-- book info -->
-        <div class="row mt-4 mb-4">
-            {% include 'psite/partials/book_info.html' %}
+        <div class="card" style="margin-bottom: 20px;">
+            
+            <!-- book info -->
+            {% include 'psite/partials/book/info.html' %}
+
+            <!-- Κριτικές-Αξιολόγηση -->
+            {% include 'psite/partials/book/comments.html' %}
+
+            <!-- from same author (if any) -->
+            {% if book.book_data.from_same_author %}
+                {% include 'psite/partials/book/from_same_authors.html' %}
+            {% endif %}
+
+            
+
+            <!-- Λεπτομέριες αξιολόγησης -->
+
         </div>
 
-        <!-- Από τους ίδους συγγραφείς (αν υπάρχουν και άλλα) -->
-        {% if book.book_data.from_same_author %}
-            <div class="row mt-4 mb-4 myhidden">
-                {% include 'psite/partials/book_from_same_authors.html' %}
-            </div>
-        {% endif %}
-
-
     </div>
-
-    <!-- Λεπτομέριες αξιολόγησης -->
     
 
 {% endblock %}

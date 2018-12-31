@@ -89,7 +89,7 @@
     color: gainsboro;
 }
 
-.slider-card .hold-link {
+.hold-link {
     width: 100%;
     display: block;
 }
@@ -141,3 +141,4 @@ body.psite {
 .myhidden {
     visibility: hidden;
 }
+

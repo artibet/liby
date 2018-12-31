@@ -1,0 +1,24 @@
+
+<div class="row no-gutters">
+    <div class="col-md-12 border-top" style="padding: 15px;">
+        <h4>
+            {% if book.authors.count == 1%}
+                Από τον ίδιο συγγραφέα
+            {% else %}
+                Από τους ίδιους συγγραφείς
+            {% endif%}
+        </h4>
+    </div>
+</div>
+
+<div class="row no-gutters">
+    <div class="card col-md-12" style="padding: 15px; border: none;">
+        <div class="owl-carousel owl-theme">
+            {% for b in book.book_data.from_same_author %}
+                {% include 'psite/partials/book/card.html' with book=b %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    
+
