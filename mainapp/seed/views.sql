@@ -76,7 +76,12 @@ select
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as total_lends,
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as active_lends,
     (select count(*) from comment where comment.book_id = book.id) as num_comments,
-    ifnull((select sum(stars) from comment where comment.book_id = book.id), 0) as sum_stars,
+    ifnull((select count(*) from comment where comment.book_id = book.id and stars=1), 0) as num_stars1,
+    ifnull((select count(*) from comment where comment.book_id = book.id and stars=2), 0) as num_stars2,
+    ifnull((select count(*) from comment where comment.book_id = book.id and stars=3), 0) as num_stars3,
+    ifnull((select count(*) from comment where comment.book_id = book.id and stars=4), 0) as num_stars4,
+    ifnull((select count(*) from comment where comment.book_id = book.id and stars=5), 0) as num_stars5,
+    ifnull((select sum(stars) from comment where comment.book_id = book.id), 0) as sum_stars
 from
     book
 ;

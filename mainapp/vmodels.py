@@ -122,6 +122,11 @@ class BookData(models.Model):
     total_lends     = models.PositiveIntegerField(default=0)
     active_lends    = models.PositiveIntegerField(default=0)
     num_comments    = models.PositiveIntegerField(default=0)
+    num_stars1      = models.PositiveIntegerField(default=0)
+    num_stars2      = models.PositiveIntegerField(default=0)
+    num_stars3      = models.PositiveIntegerField(default=0)
+    num_stars4      = models.PositiveIntegerField(default=0)
+    num_stars5      = models.PositiveIntegerField(default=0)
     sum_stars       = models.PositiveIntegerField(default=0)
 
 
@@ -172,8 +177,45 @@ class BookData(models.Model):
         # filter
         return Book.objects.filter(authors__id__in = author_ids).exclude(id=self.book_id).distinct()
 
-        
+    # stars_1 percentage
+    @property
+    def stars1_pc(self):
+        if self.sum_stars == 0:
+            return 0;
 
+        return int(round(self.num_stars1 * 100/ self.num_comments, 0))
+    
+    # stars_2 percentage
+    @property
+    def stars2_pc(self):
+        if self.sum_stars == 0:
+            return 0;
+
+        return int(round(self.num_stars2 * 100 / self.num_comments, 0))
+
+    # stars_3 percentage
+    @property
+    def stars3_pc(self):
+        if self.sum_stars == 0:
+            return 0;
+
+        return int(round(self.num_stars3 * 100 / self.num_comments, 0))
+        
+    # stars_4 percentage
+    @property
+    def stars4_pc(self):
+        if self.sum_stars == 0:
+            return 0;
+
+        return int(round(self.num_stars4 * 100 / self.num_comments, 0))
+
+    # stars_5 percentage
+    @property
+    def stars5_pc(self):
+        if self.sum_stars == 0:
+            return 0;
+
+        return int(round(self.num_stars5 * 100 / self.num_comments, 0))
     
     class Meta:
         managed = False
