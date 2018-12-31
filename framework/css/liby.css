@@ -89,6 +89,15 @@
     color: gainsboro;
 }
 
+.book-stars .progress {
+    box-sizing: border-box;
+    border: 1px inset white
+}
+
+.book-stars .progress-bar {
+    background-color: #fed221;
+}
+
 .hold-link {
     width: 100%;
     display: block;

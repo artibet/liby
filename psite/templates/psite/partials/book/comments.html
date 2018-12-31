@@ -10,29 +10,12 @@
         <div>
             {{book.book_data.grade}} από 5 αστέρια
         </div>
-        <div class="book-stars">
-            
-            <div>
-                5 <i class="fa fa-star on"></i>
-            </div> 
-            <div>
-                4 <i class="fa fa-star on"></i>
-            </div>
-            <div>
-                3 <i class="fa fa-star on"></i>
-            </div>
-            <div>
-                2 <i class="fa fa-star on"></i>
-            </div>
-            <div>
-                1 <i class="fa fa-star on"></i>
-            </div>
-        </div>
-
+        
+        {% include 'psite/partials/book/scoreboard.html' %}
 
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-8 pl-5">
         Γράψτε μια κριτική για το βιβλίο
     </div>
 
