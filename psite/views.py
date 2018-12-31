@@ -154,10 +154,16 @@ def search(request):
     paginator = Paginator(book_list, 12)
     page = request.GET.get('page')
     books = paginator.get_page(page)
+    num_books = paginator.count
 
+    if num_books > 0:
+        title = f"Bρέθηκαν {num_books} βιβλία"
+    else:
+        title = 'Δεν βρέθηκαν βιβλία'
+    
     context = {
         'books': books,
-        'title': f"Bρέθηκαν {paginator.count} βιβλία",
+        'title': title
     } 
 
     return render (request, 'psite/browse.html', context)   
