@@ -1,8 +1,8 @@
+{% load static %}
+
 <div class="row no-gutters border-top p-3">
     <div class="col-md-4 ">
-        <h4>
-            Ανάλυση αξιολόγησης
-        </h4>
+        <h4>Ανάλυση αξιολόγησης</h4>
         <div class="book-stars">
             {% include 'psite/partials/book/stars.html' %}
             <span class="book-votes ml-1">({{book.book_data.num_comments}} κριτικές)</span>
@@ -15,8 +15,29 @@
 
     </div>
 
-    <div class="col-md-8 pl-5">
-        Γράψτε μια κριτική για το βιβλίο
+    <div class="col-md-8 pl-3">
+        <h4>Κριτικές αναγνωστών</h4>
+        {% for comment in book.comment_set.all %}
+            <div class="user-comment">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="{% static 'img/comment_user.png' %}" alt=""> 
+                        <span style="display:inline-block" class="ml-2">{{comment.user.username}}</span>
+                        <p class="float-right">{{comment.updated_at|date:'d/m/Y, H:i'}}</p>
+                        <div class="book-stars pt-2">
+                            {% include 'psite/partials/book/stars.html' %}
+                        </div>
+                    </div>
+                    <div class="card-title">
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+        
+        {% endfor %}
+
     </div>
 
 </div>

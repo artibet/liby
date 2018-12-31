@@ -124,8 +124,8 @@ class Book(models.Model):
     # many-to-many relationships
     authors         = models.ManyToManyField(Author, related_name = "books")
     categories      = models.ManyToManyField(Category, related_name = "books")
-    comments        = models.ManyToManyField(User, related_name = "comments", through='Comment')
-    holds           = models.ManyToManyField(User, related_name = "holds", through='Hold')
+    comments        = models.ManyToManyField(User, related_name = "user_comments", through='Comment')
+    holds           = models.ManyToManyField(User, related_name = "user_holds", through='Hold')
 
     def __str__(self):
         return self.title

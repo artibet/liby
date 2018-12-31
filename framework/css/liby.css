@@ -151,3 +151,6 @@ body.psite {
     visibility: hidden;
 }
 
+.user-comment img {
+    width: 30px;
+}

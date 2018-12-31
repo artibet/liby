@@ -10,14 +10,13 @@
             <!-- book info -->
             {% include 'psite/partials/book/info.html' %}
 
-            <!-- Κριτικές-Αξιολόγηση -->
-            {% include 'psite/partials/book/comments.html' %}
-
             <!-- from same author (if any) -->
             {% if book.book_data.from_same_author %}
                 {% include 'psite/partials/book/from_same_authors.html' %}
             {% endif %}
 
+            <!-- Κριτικές-Αξιολόγηση -->
+            {% include 'psite/partials/book/comments.html' %}
             
 
             <!-- Λεπτομέριες αξιολόγησης -->
