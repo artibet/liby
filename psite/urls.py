@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='psite-home'),                      
-    path('book/<int:pk>/', views.BookDetailView.as_view(), name='psite-book'),
+    path('book/<int:book_id>/', views.book_details, name='psite-book'),
     path('new_books/', views.new_books, name='psite-new_books'),
     path('top_books/', views.top_books, name='psite-top_books'),
     path('top_picks/', views.top_picks, name='psite-top_picks'),

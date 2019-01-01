@@ -235,6 +235,14 @@ class Comment(models.Model):
     created_at      = models.DateTimeField(auto_now_add=True, null=True)
     updated_at      = models.DateTimeField(auto_now=True, null=True)
 
+    # create a list for star rendering
+    @property
+    def star_list(self):
+        star_list = [0,0,0,0,0]
+        for n in range(self.stars):
+            star_list[n] = 1    
+        return star_list
+
     class Meta:
         db_table = 'comment'
 

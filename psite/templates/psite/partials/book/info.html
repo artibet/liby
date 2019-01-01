@@ -28,7 +28,7 @@
                 {% endif %}
             </div>
             <div class="book-stars">
-                {% include 'psite/partials/book/stars.html' %}
+                {% include 'psite/partials/book/stars.html' with star_list=book.book_data.star_list %}
                 <span class="text-muted">
                     {{book.book_data.grade}}
                     ({{book.book_data.num_comments}} κριτικές)

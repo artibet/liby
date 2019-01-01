@@ -29,10 +29,18 @@ def home(request):
 
 
 # Book details
-class BookDetailView(DetailView):
-    model = Book
-    template_name = 'psite/book.html'
-    context_object_name = 'book'
+def book_details(request, book_id):
+    
+    book = get_object_or_404(Book, pk=book_id)
+    comments = book.comment_set.order_by('-updated_at')
+
+    context = {
+        'book': book,
+        'comments': comments
+    }
+
+    return render (request, 'psite/book.html', context)
+    
 
 
 # Νέες παραλαβές

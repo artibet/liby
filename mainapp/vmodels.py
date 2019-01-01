@@ -154,7 +154,7 @@ class BookData(models.Model):
         else:
             return False
 
-    def stars(self):
+    def star_list(self):
         stars = [0,0,0,0,0]
         if self.num_comments == 0:
             return stars

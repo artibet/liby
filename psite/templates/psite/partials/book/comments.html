@@ -4,40 +4,46 @@
     <div class="col-md-4 ">
         <h4>Ανάλυση αξιολόγησης</h4>
         <div class="book-stars">
-            {% include 'psite/partials/book/stars.html' %}
+            {% include 'psite/partials/book/stars.html' with star_list=book.book_data.star_list %}
             <span class="book-votes ml-1">({{book.book_data.num_comments}} κριτικές)</span>
         </div>
         <div>
             {{book.book_data.grade}} από 5 αστέρια
         </div>
         
-        {% include 'psite/partials/book/scoreboard.html' %}
+        <div>{% include 'psite/partials/book/scoreboard.html' %}</div>
+
+        <div>
+            <h5 class="pt-4">Γράψτε μια κριτική γι' αυτό το βιβλίο</h5>
+            <p>Μοιραστήτε τις εντυπώσεις σας με τους υπόλοιπους αναγνώστες</p>
+            <a href="#" class="btn btn-warning">Γράψτε μια κριτική</a>
+        </div>
+
+
 
     </div>
 
     <div class="col-md-8 pl-3">
-        <h4>Κριτικές αναγνωστών</h4>
-        {% for comment in book.comment_set.all %}
-            <div class="user-comment">
-                <div class="card">
-                    <div class="card-header">
-                        <img src="{% static 'img/comment_user.png' %}" alt=""> 
-                        <span style="display:inline-block" class="ml-2">{{comment.user.username}}</span>
-                        <p class="float-right">{{comment.updated_at|date:'d/m/Y, H:i'}}</p>
-                        <div class="book-stars pt-2">
-                            {% include 'psite/partials/book/stars.html' %}
+        <h4 class="pb-3">Κριτικές αναγνωστών</h4>
+        {% if not comments %}
+            <p>Δεν υπάρχουν κριτικές γι' αυτό το βιβλίο.</p>
+        {% else %}
+            {% for comment in comments %}
+                <div class="user-comment">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <img src="{% static 'img/comment_user.png' %}" alt=""> 
+                            <span style="display:inline-block" class="ml-2">{{comment.user.username}}</span>
+                            <p class="float-right">{{comment.updated_at|date:'d/m/Y, H:i'}}</p>
+                            <div class="book-stars pt-2">
+                                {% include 'psite/partials/book/stars.html' with star_list=comment.star_list %}
+                            </div>
+                            <p>{{comment.body|linebreaks}}</p>
                         </div>
                     </div>
-                    <div class="card-title">
-                        
-                    </div>
                 </div>
-                
-            </div>
-        
-        
-        {% endfor %}
-
+            {% endfor %}
+        {% endif %}
     </div>
 
 </div>
