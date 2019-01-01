@@ -147,19 +147,39 @@ def category(request, category_id):
 # Αναζήτηση
 def search(request):
 
-    # get book_list for search-text
+    # get search criteria
     key = request.GET['search-text']
+    target = request.GET['search-target']
 
+    # Δημιουργούμε q clauses για το κριτήριο αναζήτησης
     q_title = Q(title__icontains = key)
     q_abstract = Q(abstract__icontains = key)
     q_author = Q(authors__author_name__icontains = key)
     q_isbn = Q(isbn__icontains = key)
-
-    q_clause = q_title | q_abstract | q_author | q_isbn
+    q_invalid = Q(id = -1)  
+        
+    # Ανάλογα με την επιλογή αναζήτησης (target)
+    # διαμορφώνεται η τελική q_clause 
+    if target == '1':     # Αναζήτηση σε τίτλο
+        q_clause = q_title
+    elif target == '2':   # Αναζήτηση στην περίληψη
+        q_clause = q_abstract
+    elif target == '3':   # Αναζήτηση στον συγγραφέα
+        q_clause = q_author
+    elif target == '4':   # Αναζήτηση σε ISBN
+        q_clause = q_isbn
+    elif target == '5':    # Αναζήτηση οπουδήποτε
+        q_clause = q_title | q_abstract | q_author | q_isbn
+    else:
+        q_clause = q_invalid      # invalid target - return none
+    
+    # Ανάκτηση βιβλίων ανάλογα με το κριτήριο
     book_list = Book.objects.filter(q_clause)
+    print(book_list)
     
     # paginate book_list
-    paginator = Paginator(book_list, 12)
+    num_per_page = 12
+    paginator = Paginator(book_list, num_per_page)
     page = request.GET.get('page')
     books = paginator.get_page(page)
     num_books = paginator.count
@@ -177,6 +197,5 @@ def search(request):
     return render (request, 'psite/browse.html', context)   
     
 
-# Σύνθετη αναζήτηση
 
     
