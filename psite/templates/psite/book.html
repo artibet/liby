@@ -27,3 +27,27 @@
     
 
 {% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+function deleteComment(id) {
+    
+    alertify.confirm(
+        "Διαγραφή Αξιολόγησης",
+        "Να διαγραφεί η επιλεγμένη αξιολόγηση?", 
+        function() {
+            $('#delete-comment-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
+</script>
+{% endblock %}

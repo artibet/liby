@@ -1,11 +1,16 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import Http404, HttpResponseForbidden, HttpResponseNotFound
+from django.contrib import messages
 from django.db.models import Q
+from django.urls import reverse_lazy
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
-from mainapp.models import Book, Author, Publisher, Category
+from mainapp.models import Book, Author, Publisher, Category, Comment
+from .forms import CommentForm
 
+PAGE_SIZE = 8   # pagination
 
 # Home
 def home(request):
@@ -46,9 +51,15 @@ def book_details(request, book_id):
 # Νέες παραλαβές
 def new_books(request):
     newest = BookNewest.objects.all()
-    books = []
+    book_list = []
     for b in newest:
-        books.append(b.book)
+        book_list.append(b.book)
+
+    # paginate book_list
+    paginator = Paginator(book_list, PAGE_SIZE)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
+    
 
     context = {
         'books': books,
@@ -62,9 +73,14 @@ def new_books(request):
 # Κορυφαίοι τίτλοι
 def top_books(request):
     top = BookTopTitles.objects.all()
-    books = []
+    book_list = []
     for b in top:
-        books.append(b.book)
+        book_list.append(b.book)
+
+    # paginate book_list
+    paginator = Paginator(book_list, PAGE_SIZE)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
 
     context = {
         'books': books,
@@ -77,9 +93,14 @@ def top_books(request):
 # Προτιμήσεις αναγνωστών
 def top_picks(request):
     picks = BookTopPicks.objects.all()
-    books = []
+    book_list = []
     for b in picks:
-        books.append(b.book)
+        book_list.append(b.book)
+
+    # paginate book_list
+    paginator = Paginator(book_list, PAGE_SIZE)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
 
     context = {
         'books': books,
@@ -96,7 +117,7 @@ def author(request, author_id):
 
     # paginate book_list
     book_list = author.books.all()
-    paginator = Paginator(book_list, 8)
+    paginator = Paginator(book_list, PAGE_SIZE)
     page = request.GET.get('page')
     books = paginator.get_page(page)
     
@@ -114,7 +135,7 @@ def publisher(request, publisher_id):
 
     # paginate book_list
     book_list = publisher.books.all()
-    paginator = Paginator(book_list, 8)
+    paginator = Paginator(book_list, PAGE_SIZE)
     page = request.GET.get('page')
     books = paginator.get_page(page)
     
@@ -132,7 +153,7 @@ def category(request, category_id):
 
     # paginate book_list
     book_list = category.books.all()
-    paginator = Paginator(book_list, 8)
+    paginator = Paginator(book_list, PAGE_SIZE)
     page = request.GET.get('page')
     books = paginator.get_page(page)
 
@@ -178,8 +199,7 @@ def search(request):
     print(book_list)
     
     # paginate book_list
-    num_per_page = 12
-    paginator = Paginator(book_list, num_per_page)
+    paginator = Paginator(book_list, PAGE_SIZE)
     page = request.GET.get('page')
     books = paginator.get_page(page)
     num_books = paginator.count
@@ -197,5 +217,80 @@ def search(request):
     return render (request, 'psite/browse.html', context)   
     
 
-
+# Καταχώρηση αξιολόγησης (comment) για βιβλίο
+@login_required
+def create_comment(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
     
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.instance.book_id = book.id
+            form.instance.user_id = request.user.id
+            form.save()
+            #messages.success(request, f'Η αξιολόγησή σας καταχωρήθηκε με επιτυχία')
+            return redirect('psite-book', book.id)
+    else:
+        form = CommentForm()
+
+    context = {
+        'form': form,
+        'book': book
+    }
+
+    return render(request, 'psite/comment_form.html', context)
+    
+
+# Επεξεργασία υπάρχουσας αξιολόγησης
+@login_required
+def update_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    book = comment.book
+    
+    # if connected user is not the author of the comment
+    # return HttpResponseForbiten
+    if comment.user.id != request.user.id:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.instance.book_id = book.id
+            form.instance.user_id = request.user.id
+            form.save()
+            #messages.success(request, f'Η αξιολόγησή σας ενημερώθηκε με επιτυχία!')
+            return redirect('psite-book', book.id)
+    else:
+        form = CommentForm(instance=comment)
+
+    context = {
+        'form': form,
+        'book': book
+    }
+
+    return render(request, 'psite/comment_form.html', context)
+
+
+# Διαγραφή αξιολόγησης
+@login_required
+def delete_comment(request, comment_id):
+    
+    # Αν δεν είναι POST requst επιστροφή
+    if request.method != 'POST':
+        return HttpResponseNotFound()
+    
+    # Get comment instance and respective book
+    comment = get_object_or_404(Comment, pk=comment_id)
+    book = comment.book
+
+    # if connected user is not the author of the comment
+    # return HttpResponseForbiten
+    if comment.user.id != request.user.id:
+        return HttpResponseForbidden()
+
+    # delete and go back to book details page
+    comment.delete()
+    #messages.success(request, f'Η αξιολόγηση διαγράφηκε με επιτυχία!')
+    return redirect('psite-book', book.id)
+    
+   

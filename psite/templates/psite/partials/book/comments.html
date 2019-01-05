@@ -16,7 +16,7 @@
         <div>
             <h5 class="pt-4">Γράψτε μια κριτική γι' αυτό το βιβλίο</h5>
             <p>Μοιραστήτε τις εντυπώσεις σας με τους υπόλοιπους αναγνώστες</p>
-            <a href="#" class="btn btn-warning">Γράψτε μια κριτική</a>
+            <a href="{% url 'psite-create-comment' book.id %}" class="btn btn-warning">Γράψτε μια κριτική</a>
         </div>
 
 
@@ -34,11 +34,27 @@
                         <div class="card-header">
                             <img src="{% static 'img/comment_user.png' %}" alt=""> 
                             <span style="display:inline-block" class="ml-2">{{comment.user.username}}</span>
-                            <p class="float-right">{{comment.updated_at|date:'d/m/Y, H:i'}}</p>
+                            <p class="float-right text-muted" style="font-size: 12px;">{{comment.updated_at|date:'d/m/Y, H:i'}}</p>
                             <div class="book-stars pt-2">
                                 {% include 'psite/partials/book/stars.html' with star_list=comment.star_list %}
                             </div>
                             <p>{{comment.body|linebreaks}}</p>
+                            {% if user == comment.user %}
+                                <div>
+                                    
+                                    <!-- update -->
+                                    <a href="{% url 'psite-update-comment' comment.id %}" class="btn btn-outline-primary btn-sm">Επεξεργασία</a>
+                                    
+                                    <!-- delete -->
+                                    <form id="delete-comment-{{comment.id}}" method="POST" action="{% url 'psite-delete-comment' comment.id %}" style="display: none;">
+                                        {% csrf_token %}
+                                    </form>
+                                    <button class="btn btn-outline-danger btn-sm" onclick="deleteComment('{{comment.id}}')">
+                                        Διαγραφή
+                                    </button>
+
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

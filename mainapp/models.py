@@ -228,10 +228,18 @@ class Hold(models.Model):
 # comment
 # --------------------------------------------------------------------        
 class Comment(models.Model):
+    star_choices = [
+        (1, '1 αστέρι'),
+        (2, '2 αστέρια'),
+        (3, '3 αστέρια'),
+        (4, '4 αστέρια'),
+        (5, '5 αστέρια'),
+    ]
+
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     book            = models.ForeignKey(Book, on_delete=models.CASCADE)
-    stars           = models.PositiveSmallIntegerField(default=0)
-    body            = models.TextField(blank=True)
+    stars           = models.PositiveSmallIntegerField(default=0, verbose_name="Αξιολόγηση", choices=star_choices)
+    body            = models.TextField(blank=True, verbose_name="Σχόλια")
     created_at      = models.DateTimeField(auto_now_add=True, null=True)
     updated_at      = models.DateTimeField(auto_now=True, null=True)
 
