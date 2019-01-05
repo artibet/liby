@@ -221,16 +221,23 @@ def search(request):
 @login_required
 def create_comment(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
-    
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             form.instance.book_id = book.id
             form.instance.user_id = request.user.id
             form.save()
-            #messages.success(request, f'Η αξιολόγησή σας καταχωρήθηκε με επιτυχία')
+            messages.success(request, f'Η αξιολόγησή σας καταχωρήθηκε με επιτυχία!')
             return redirect('psite-book', book.id)
     else:
+        # Αν ο συνδεδεμένος χρήστης έχει ήδη καταχωρήσει κριτική, 
+        # εμφάνιση σχετικού μηνύματος
+        # comment = Comment.objects.filter(user_id=request.user.id, book_id=book.id)
+        # if comment:
+        #     messages.error(request, f'Εχετε ήδη καταχωρήση μία αξιολόγηση για το συγκεκριμένο βιβλίο!')
+        #     return redirect('psite-book', book.id)
+        # else:
         form = CommentForm()
 
     context = {
@@ -248,17 +255,17 @@ def update_comment(request, comment_id):
     book = comment.book
     
     # if connected user is not the author of the comment
-    # return HttpResponseForbiten
+    # return HttpResponseForbidden
     if comment.user.id != request.user.id:
         return HttpResponseForbidden()
 
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.instance.book_id = book.id
             form.instance.user_id = request.user.id
             form.save()
-            #messages.success(request, f'Η αξιολόγησή σας ενημερώθηκε με επιτυχία!')
+            messages.success(request, f'Η αξιολόγησή σας ενημερώθηκε με επιτυχία!')
             return redirect('psite-book', book.id)
     else:
         form = CommentForm(instance=comment)
@@ -290,7 +297,7 @@ def delete_comment(request, comment_id):
 
     # delete and go back to book details page
     comment.delete()
-    #messages.success(request, f'Η αξιολόγηση διαγράφηκε με επιτυχία!')
+    messages.success(request, f'Η αξιολόγησή σας διαγράφηκε με επιτυχία!')
     return redirect('psite-book', book.id)
     
    

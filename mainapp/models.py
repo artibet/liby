@@ -157,7 +157,7 @@ class Book(models.Model):
             return 'Δεκέμβριος'
         else:
             return ''
-    
+   
     class Meta:
         db_table = 'book'
         verbose_name = 'Βιβλίο'
