@@ -3,23 +3,23 @@
 
 {% block content %} 
 
-    <div class="content-section">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card" style="padding: 10px;">
-                    <div class="card-title">
-                        <h2 class="border-bottom pb-3">Έγινε αποσύνδεση</h2>
-                    </div>
-                    <p>Ευχαριστούμε που επισκευθήκατε την βιβλιοθήκη μας.</p>
-                    <div class="border-top pt-3">
-                        <a href="{% url 'login' %}" class="ml-2">Συνεθείτε ξανά</a>
-                        ή επιστρέψτε στην 
-                        <a href="{% url 'psite-home' %}">Αρχική σελίδα</a>
-                    </div>
+<div class="container mb-4 px-0">
+    <div class="row mt-2 min-height">
+        <div class="col-md-6 offset-md-3">
+            <div class="card" style="padding: 10px;">
+                <div class="card-title">
+                    <h2 class="border-bottom pb-3">Έγινε αποσύνδεση</h2>
+                </div>
+                <p>Ευχαριστούμε που επισκευθήκατε την βιβλιοθήκη μας.</p>
+                <div class="border-top pt-3">
+                    <a href="{% url 'login' %}" class="ml-2">Συνεθείτε ξανά</a>
+                    ή επιστρέψτε στην 
+                    <a href="{% url 'psite-home' %}">Αρχική σελίδα</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
 

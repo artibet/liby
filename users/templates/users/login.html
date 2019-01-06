@@ -4,31 +4,32 @@
 
 {% block content %} 
 
-    <div class="content-section">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card" style="padding: 10px;">
-                    <div class="card-title">
-                        <h3 class="border-bottom pb-3">Σύνδεση</h3>
+<div class="container mb-4 px-0">
+    <div class="row mt-2 min-height">
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card" style="padding: 10px;">
+                <div class="card-title">
+                    <h3 class="border-bottom pb-3">Σύνδεση</h3>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success" type="submit">Σύνδεση</button>
+                        <a href="{% url 'psite-home' %}" class="btn btn-outline-info">Αρχική Σελίδα</a>
                     </div>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                            {{ form|crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                            <button class="btn btn-outline-success" type="submit">Σύνδεση</button>
-                            <a href="{% url 'psite-home' %}" class="btn btn-outline-info">Αρχική Σελίδα</a>
-                        </div>
-                    </form>
-                    <div class="border-top pt-3">
-                        <small class="text-muted">
-                            Δεν έχετε εγγραφεί?<a href="{% url 'register' %}" class="ml-2">Δημιουργία νέου λογαριασμού</a>
-                        </small>
-                    </div>
+                </form>
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        Δεν έχετε εγγραφεί?<a href="{% url 'register' %}" class="ml-2">Δημιουργία νέου λογαριασμού</a>
+                    </small>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}

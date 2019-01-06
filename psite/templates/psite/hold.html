@@ -4,67 +4,72 @@
 
 {% block content %} 
 
-<div class="row mt-2">
+<div class="container mb-4 px-0 min-height">
+    <div class="row mt-2">
 
-    <div class="col-md-12 px-0">    
+        <div class="col-md-12 px-0">    
 
-        <div class="card" style="padding: 10px;">
-            <div class="card-title">
-                <h3 class="border-bottom pb-3">Κράτηση βιβλίου</h3>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{{book.image.url}}" style="width: 100%;" class="img-fluid" alt="Εξώφυλλο">
+            <div class="card" style="padding: 10px;">
+                <div class="card-title">
+                    <h3 class="border-bottom pb-3">Κράτηση βιβλίου</h3>
                 </div>
-            
-                <div class="col-md-8 px-4">
-                    
-                    <div class="card-title border-bottom pb-2">
-                        <h4>{{book.title}}</h4>
-                        {% if book.revision > 1 %}
-                            <h5>({{book.revision}}η έκδοση)</h4>
-                        {% endif %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{book.image.url}}" style="width: 100%;" class="img-fluid" alt="Εξώφυλλο">
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-4">Ενεργές κρατήσεις:</div>
-                        <div class="col-md-8">{{active_holds}}</div>
-                    </div>
-
-                    {% if active_holds > 0 %}
-                        <div class="row">
-                            <div class="col-md-4">Παλαιότερη κράτηση:</div>
-                            <div class="col-md-8">{{oldest_hold|date:'d/m/Y, H:i'}}</div>
-                        </div>
-                        <div class="row">
-                                <div class="col-md-4">Πρόσφατη κράτηση:</div>
-                                <div class="col-md-8">{{newest_hold|date:'d/m/Y, H:i'}}</div>
-                            </div>
-                    {% endif%}
-
-                    <div class="row mt-5">
-                        <div class="col-md-12">
-                            {% if has_active_hold %}
-                                <p>Έχετε ήδη μία ενεργή κράτηση γι' αυτό το βιβλίο στις {{active_hold_date|date:'d/m/Y, H:i'}}</p>
-                                <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a> 
-                            {% else %}
-                            <form method="POST">
-                                {% csrf_token %}
-                                <div class="form-group mt-5">
-                                    <p>Θέλετε να κάνετε μία κράτηση γι' αυτό το βιβλίο?</p>
-                                    <p>Θα ειδοποιηθείται με email μόλις το βιβλίο γίνει διαθέσιμο.</p>
-                                    <button class="btn btn-outline-success" type="submit">Κράτηση</button>
-                                    <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a>
-                                </div>
-                            </form>
+                
+                    <div class="col-md-8 px-4">
+                        
+                        <div class="card-title border-bottom pb-2">
+                            <h4>{{book.title}}</h4>
+                            {% if book.revision > 1 %}
+                                <h5>({{book.revision}}η έκδοση)</h4>
                             {% endif %}
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-4">Ενεργές κρατήσεις:</div>
+                            <div class="col-md-8">{{active_holds}}</div>
+                        </div>
+
+                        {% if active_holds > 0 %}
+                            <div class="row">
+                                <div class="col-md-4">Παλαιότερη κράτηση:</div>
+                                <div class="col-md-8">{{oldest_hold|date:'d/m/Y, H:i'}}</div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-4">Πρόσφατη κράτηση:</div>
+                                    <div class="col-md-8">{{newest_hold|date:'d/m/Y, H:i'}}</div>
+                                </div>
+                        {% endif%}
+
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                {% if has_active_hold %}
+                                    <p>Έχετε ήδη μία ενεργή κράτηση γι' αυτό το βιβλίο στις {{active_hold_date|date:'d/m/Y, H:i'}}</p>
+                                    <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a> 
+                                {% else %}
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group mt-5">
+                                        <p>Θέλετε να κάνετε μία κράτηση γι' αυτό το βιβλίο?</p>
+                                        <p>Θα ειδοποιηθείται με email μόλις το βιβλίο γίνει διαθέσιμο.</p>
+                                        <button class="btn btn-outline-success" type="submit">Κράτηση</button>
+                                        <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a>
+                                    </div>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
                     </div>
-                    
                 </div>
             </div>
+
         </div>
 
     </div>
+
+</div>
 
 {% endblock %}

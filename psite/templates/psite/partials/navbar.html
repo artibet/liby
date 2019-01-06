@@ -80,26 +80,3 @@
 
 </nav>
 
-{% block scripts %}
-
-<script>
-
-    function submitSearch() {
-
-
-        // Get target and text
-        search_target = $('#search-target').val()
-        search_text = $('#search-text').val()
-
-        if ( (search_target == '') || (search_text == '') ) {
-            alertify.alert("Αναζήτηση βιβλίων", "Δεν έχετε δώσει κριτήρια αναζήτησης");
-        }
-        else {
-            $('#search-form').submit();
-        }
-        
-    }
-
-</script>
-
-{% endblock %}

@@ -18,23 +18,22 @@
     border-radius : .2rem;
   }
 
-  .slider-card {
-      position: relative;
-      border: none;
-      text-align: center;
-  }
-
-  .slider-card img:hover {
-      opacity: .8;
-      transition: .5s;
-  }
-
-  .slider-card .card-body {
-    margin: 0px;
-    padding: 0px;
+.slider-card {
+    position: relative;
+    border: none;
     text-align: center;
-  }
+}
 
+.slider-card img:hover {
+    opacity: .8;
+    transition: .5s;
+}
+
+.slider-card .card-body {
+margin: 0px;
+padding: 0px;
+text-align: center;
+}
 
 .slider-card img {
     width: 100px !important;
@@ -153,4 +152,14 @@ body.psite {
 
 .user-comment img {
     width: 30px;
+}
+
+.page-footer {
+    background-color: #343a40;
+    opacity: 1;
+    color: white;
+}
+
+.min-height {
+    min-height: 400px;
 }

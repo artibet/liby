@@ -4,45 +4,51 @@
 
 {% block content %} 
 
-<div class="row mt-2">
+<div class="container mb-4 px-0 min-height">
+    
+    <div class="row mt-2">
 
-    <div class="col-md-12 px-0">    
+        <div class="col-md-12 px-0">    
 
-        <div class="card" style="padding: 10px;">
-            <div class="card-title">
-                <h3 class="border-bottom pb-3">Αξιολόγηση βιβλίου</h3>
-                {% if form.instance.updated_at %}
-                    <div class="text-muted">Τελευταία ενημέρωση: {{form.instance.updated_at|date:'d/m/Y, H:i'}}</div>
-                {% endif %}
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{{book.image.url}}" style="width: 100%;" class="img-fluid" alt="Εξώφυλλο">
+            <div class="card" style="padding: 10px;">
+                <div class="card-title">
+                    <h3 class="border-bottom pb-3">Αξιολόγηση βιβλίου</h3>
+                    {% if form.instance.updated_at %}
+                        <div class="text-muted">Τελευταία ενημέρωση: {{form.instance.updated_at|date:'d/m/Y, H:i'}}</div>
+                    {% endif %}
                 </div>
-            
-                <div class="col-md-8 px-4">
-                    
-                    <div class="card-title border-bottom pb-2">
-                        <h4>{{book.title}}</h4>
-                        {% if book.revision > 1 %}
-                            <h5>({{book.revision}}η έκδοση)</h4>
-                        {% endif %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{book.image.url}}" style="width: 100%;" class="img-fluid" alt="Εξώφυλλο">
                     </div>
-
-                    <form method="POST">
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                            {{ form|crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                            <button class="btn btn-outline-success" type="submit">Καταχώρηση</button>
-                            <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a>
+                
+                    <div class="col-md-8 px-4">
+                        
+                        <div class="card-title border-bottom pb-2">
+                            <h4>{{book.title}}</h4>
+                            {% if book.revision > 1 %}
+                                <h5>({{book.revision}}η έκδοση)</h4>
+                            {% endif %}
                         </div>
-                    </form>
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                {{ form|crispy }}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-outline-success" type="submit">Καταχώρηση</button>
+                                <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </div>
+
+</div>
 
 {% endblock %}

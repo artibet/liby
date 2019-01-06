@@ -8,9 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Liby - Online Δανειστική Βιβλιοθήκη</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'adminlte3/plugins/font-awesome/css/font-awesome.min.css' %}">
-
+    
     <!-- owl carousel -->
     <link rel="stylesheet" href="{% static 'owl/dist/assets/owl.carousel.min.css' %}"> 
     <link rel="stylesheet" href="{% static 'owl/dist/assets/owl.theme.default.min.css' %}"> 
@@ -22,7 +20,9 @@
     <!-- datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.css"/>
 
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'adminlte3/plugins/font-awesome/css/font-awesome.min.css' %}">
+
     
     <link rel="stylesheet" href="{% static 'css/liby.css' %}">
 
@@ -34,6 +34,18 @@
     <div class="container mt-4">
         {% block content %} {% endblock %}
     </div>
+
+    <!-- footer -->
+    <footer class="page-footer font-small sticky-bottom myhidden">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            Τσακιρίδης Σωτήρης, Ταουσάνης Αθανάσιος
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+    
+    
     
     
     <!-- bootstrap 4 -->
@@ -98,7 +110,25 @@
             $('.myhidden').removeClass('myhidden');
         });
 
+
+        function submitSearch() {
+
+            // Get target and text
+            search_target = $('#search-target').val()
+            search_text = $('#search-text').val()
+
+            if ( (search_target == '') || (search_text == '') ) {
+                alertify.alert("Αναζήτηση βιβλίων", "Δεν έχετε δώσει κριτήρια αναζήτησης");
+            }
+            else {
+                $('#search-form').submit();
+            }
+            
+        }
+
     </script>
+
+
 
     
 
