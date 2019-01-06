@@ -230,14 +230,14 @@ def create_comment(request, book_id):
             form.instance.user_id = request.user.id
             form.save()
             messages.success(request, f'Η αξιολόγησή σας καταχωρήθηκε με επιτυχία!')
-            return redirect('psite-book', book.id)
+            return redirect('psite:book', book.id)
     else:
         # Αν ο συνδεδεμένος χρήστης έχει ήδη καταχωρήσει κριτική, 
         # εμφάνιση σχετικού μηνύματος
         # comment = Comment.objects.filter(user_id=request.user.id, book_id=book.id)
         # if comment:
         #     messages.error(request, f'Εχετε ήδη καταχωρήση μία αξιολόγηση για το συγκεκριμένο βιβλίο!')
-        #     return redirect('psite-book', book.id)
+        #     return redirect('psite:book', book.id)
         # else:
         form = CommentForm()
 
@@ -267,7 +267,7 @@ def update_comment(request, comment_id):
             form.instance.user_id = request.user.id
             form.save()
             messages.success(request, f'Η αξιολόγησή σας ενημερώθηκε με επιτυχία!')
-            return redirect('psite-book', book.id)
+            return redirect('psite:book', book.id)
     else:
         form = CommentForm(instance=comment)
 
@@ -299,7 +299,7 @@ def delete_comment(request, comment_id):
     # delete and go back to book details page
     comment.delete()
     messages.success(request, f'Η αξιολόγησή σας διαγράφηκε με επιτυχία!')
-    return redirect('psite-book', book.id)
+    return redirect('psite:book', book.id)
     
    
 # Κράτηση βιβλίου
@@ -317,7 +317,7 @@ def hold_book(request, book_id):
         hold.status = HoldStatus.opened()
         hold.save()
         messages.success(request, f'Η κράτησή σας πραγματοποιήθηκε με επιτυχία!')
-        return redirect('psite-book', book.id)
+        return redirect('psite:book', book.id)
     
     # GET request
 

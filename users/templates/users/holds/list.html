@@ -34,7 +34,7 @@
                             <tbody>
                                 {% for hold in holds %}
                                 <tr>
-                                    <td><a href="{% url 'psite-book' hold.book.id %}">{{hold.book.title}}</a></td>
+                                    <td><a href="{% url 'psite:book' hold.book.id %}">{{hold.book.title}}</a></td>
                                     <td>{{hold.created_at|date:'d/m/Y, H:i'}}</td>
                                     <td><span class="{{hold.status.css_class}}">{{hold.status.description}}</span></td>
                                     <td>
@@ -60,7 +60,7 @@
                 <!-- return -->
                 <div class="row mt-4">
                     <div class="col-md-12">
-                        <a href="{% url 'psite-home' %}" class="btn btn-outline-info">Αρχική σελίδα</a>
+                        <a href="{% url 'psite:home' %}" class="btn btn-outline-info">Αρχική σελίδα</a>
                     </div>
                 </div>
                 

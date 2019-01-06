@@ -5,7 +5,7 @@
 
         <!-- brand -->
         <img src="{% static 'img/logo60.png' %}" class="d-inline-block align-top" alt="">
-        <a class="navbar-brand brand-text pl-2" href="{%url 'psite-home' %}">Liby</a>
+        <a class="navbar-brand brand-text pl-2" href="{%url 'psite:home' %}">Liby</a>
 
         <!-- Toggle visibility buuton -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +15,7 @@
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <form class="form-inline ml-auto" method="get" action="{% url 'psite-search' %}" id="search-form">
+        <form class="form-inline ml-auto" method="get" action="{% url 'psite:search' %}" id="search-form">
             <div class="input-group">
                 <select style="width: 150px;" name="search-target" id="search-target" class="form-control">
                     <option value="1">Τίτλος</option>

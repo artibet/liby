@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # login landing page
-LOGIN_REDIRECT_URL = 'psite-home'
+LOGIN_REDIRECT_URL = 'psite:home'
 LOGIN_URL = 'login'
 
 # pagination

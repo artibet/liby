@@ -22,7 +22,7 @@
             <div><span class="font-weight-bold">Κρατήσεις: </span>{{book.book_data.active_holds}}</div>
 
             <div>
-                <a href="{% url 'psite-hold-book' book.id %}" class="btn btn-primary mt-3 hold-link">Κράτηση</a>
+                <a href="{% url 'psite:hold-book' book.id %}" class="btn btn-primary mt-3 hold-link">Κράτηση</a>
             </div>
         </div>
     </div>
@@ -51,12 +51,12 @@
                     <span class="font-weight-bold">Συγγραφέας: </span>
                 {% endif %}
                 {% for author in book.authors.all %}
-                    <a href="{% url 'psite-author' author.id %}">{{author.author_name}}</a> 
+                    <a href="{% url 'psite:author' author.id %}">{{author.author_name}}</a> 
                 {% endfor %}
             </div>
             <div class="book-publisher">
                 <span class="font-weight-bold">Εκδότης: </span>
-                <a href="{% url 'psite-publisher' book.publisher_id %}">{{book.publisher.pub_name}}</a>
+                <a href="{% url 'psite:publisher' book.publisher_id %}">{{book.publisher.pub_name}}</a>
             </div>
             <div class="book-published">
                 <span class="font-weight-bold">Ημ/νία έκδοσης: </span>
@@ -73,7 +73,7 @@
                     <span class="font-weight-bold">Κατηγορία: </span>
                 {% endif %}
                 {% for category in book.categories.all %}
-                    <a href="{% url 'psite-category' category.id %}">{{category.description}}</a> 
+                    <a href="{% url 'psite:category' category.id %}">{{category.description}}</a> 
                 {% endfor %}
             </div>
             <p class="card-text">{{book.abstract|linebreaks}}</p>

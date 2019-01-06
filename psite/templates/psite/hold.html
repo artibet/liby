@@ -47,7 +47,7 @@
                             <div class="col-md-12">
                                 {% if has_active_hold %}
                                     <p>Έχετε ήδη μία ενεργή κράτηση γι' αυτό το βιβλίο στις {{active_hold_date|date:'d/m/Y, H:i'}}</p>
-                                    <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a> 
+                                    <a href="{% url 'psite:book' book.id %}" class="btn btn-outline-info">Επιστροφή</a> 
                                 {% else %}
                                 <form method="POST">
                                     {% csrf_token %}
@@ -55,7 +55,7 @@
                                         <p>Θέλετε να κάνετε μία κράτηση γι' αυτό το βιβλίο?</p>
                                         <p>Θα ειδοποιηθείται με email μόλις το βιβλίο γίνει διαθέσιμο.</p>
                                         <button class="btn btn-outline-success" type="submit">Κράτηση</button>
-                                        <a href="{% url 'psite-book' book.id %}" class="btn btn-outline-info">Επιστροφή</a>
+                                        <a href="{% url 'psite:book' book.id %}" class="btn btn-outline-info">Επιστροφή</a>
                                     </div>
                                 </form>
                                 {% endif %}

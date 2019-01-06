@@ -17,7 +17,7 @@
         <div>
             <h5 class="pt-4">Γράψτε μια κριτική γι' αυτό το βιβλίο</h5>
             <p>Μοιραστήτε τις εντυπώσεις σας με τους υπόλοιπους αναγνώστες</p>
-            <a href="{% url 'psite-create-comment' book.id %}" class="btn btn-warning">Γράψτε μια κριτική</a>
+            <a href="{% url 'psite:create-comment' book.id %}" class="btn btn-warning">Γράψτε μια κριτική</a>
         </div>
 
 
@@ -44,10 +44,10 @@
                                 <div>
                                     
                                     <!-- update -->
-                                    <a href="{% url 'psite-update-comment' comment.id %}" class="btn btn-outline-primary btn-sm">Επεξεργασία</a>
+                                    <a href="{% url 'psite:update-comment' comment.id %}" class="btn btn-outline-primary btn-sm">Επεξεργασία</a>
                                     
                                     <!-- delete -->
-                                    <form id="delete-comment-{{comment.id}}" method="POST" action="{% url 'psite-delete-comment' comment.id %}" style="display: none;">
+                                    <form id="delete-comment-{{comment.id}}" method="POST" action="{% url 'psite:delete-comment' comment.id %}" style="display: none;">
                                         {% csrf_token %}
                                     </form>
                                     <button class="btn btn-outline-danger btn-sm" onclick="deleteComment('{{comment.id}}')">

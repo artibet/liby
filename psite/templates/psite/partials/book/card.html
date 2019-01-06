@@ -2,15 +2,15 @@
 
 
 <div class="card slider-card">
-    <a href="{% url 'psite-book' book.id %}"><img  src="{{book.image.url}}" alt="Βιβλίο" class="card-img-top"></a>
+    <a href="{% url 'psite:book' book.id %}"><img  src="{{book.image.url}}" alt="Βιβλίο" class="card-img-top"></a>
     <div class="card-body">
         <div class="book-title">
-            <a href="{% url 'psite-book' book.id %}">{{book.title}}</a>
+            <a href="{% url 'psite:book' book.id %}">{{book.title}}</a>
         </div>
         <div class="book-authors">
             {% for author in book.authors.all %}
                 <div class="book-author">
-                    <a href="{% url 'psite-author' author.id %}">
+                    <a href="{% url 'psite:author' author.id %}">
                         {{author.author_name}}
                     </a>
                 </div>
@@ -37,7 +37,7 @@
         {% else %}
             <div class="badge badge-danger">Μη διαθέσιμο</div>
         {% endif%}
-        <a href="{% url 'psite-hold-book' book.id %}" class="btn btn-outline-primary btn-sm hold-link">Κράτηση</a>
+        <a href="{% url 'psite:hold-book' book.id %}" class="btn btn-outline-primary btn-sm hold-link">Κράτηση</a>
         
     </div>
 </div>

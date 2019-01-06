@@ -6,7 +6,7 @@
         <div class="card" style="padding: 15px;">
             <div class="card-title border-bottom row">
                 <h3 class=" col-md-6">Νέες παραλαβές</h3>
-                <div class="ml-auto more-data"><a href="{% url 'psite-new_books' %}">Περισσότερα</a></div>
+                <div class="ml-auto more-data"><a href="{% url 'psite:new_books' %}">Περισσότερα</a></div>
             </div>
             <div class="owl-carousel owl-theme">
                 {% for b in newest %}
