@@ -284,7 +284,7 @@ insert into country(description, code) values('Ώλαντ','AX');
 # hold_status
 insert into hold_status(id, description) values(0, 'Αναμονή για δανεισμό');
 insert into hold_status(id, description) values(1, 'Διεκπεραιώθηκε');
-insert into hold_status(id, description) values(2, 'Ακυρώθηκε');
+insert into hold_status(id, description) values(2, 'Ανακλήθηκε');
 
 # langueage
 insert into language(description, created_at, updated_at) values ('Αγγλικά', '2018-12-22', '2018-12-22');

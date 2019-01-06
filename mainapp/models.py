@@ -203,12 +203,22 @@ class HoldStatus(models.Model):
         return HoldStatus.objects.get(id=0)
 
     @staticmethod
-    def closed(cls):
+    def closed():
         return HoldStatus.objects.get(id=1)
 
     @staticmethod
-    def canceled(cls):
+    def canceled():
         return HoldStatus.objects.get(id=2)
+
+    # css class
+    @property
+    def css_class(self):
+        if self.id == 0:
+            return "badge badge-primary"
+        elif self.id == 1:
+            return "badge badge-success"
+        else:
+            return "badge badge-danger"
     
     class Meta:
         db_table = 'hold_status'  

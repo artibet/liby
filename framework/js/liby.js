@@ -1,10 +1,11 @@
 
-function setDatatable(element, columnDefs=[]) {
+function setDatatable(element, columnDefs=[], order=[[]]) {
     $.fn.dataTable.moment('DD/MM/YYYY');
     $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
 
     $(element).DataTable({
         "columnDefs": columnDefs,
+        "order": order,
         "language": {
             "decimal": ",",
             "thousands": ".",

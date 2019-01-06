@@ -1,0 +1,117 @@
+{% extends 'psite/base.html' %}
+{% load static %}
+
+{% block content %} 
+
+<div class="row mt-2">
+
+    <div class="col-md-12 px-0">    
+
+        <div class="card" style="padding: 10px;">
+            
+            <!-- page title -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-title">
+                        <h3 class="border-bottom pb-3">Οι κρατήσεις μου</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- table data -->
+            <div class="row">
+                <div class="col-md-12">
+                    {% if holds %}
+                    <table class="table table-bordered table-hover" id="hold-table">
+                        <thead>
+                            <tr>
+                                <th>Τίτλος βιβλίου</th>
+                                <th>Κράτηση</th>
+                                <th>Κατάσταση</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for hold in holds %}
+                            <tr>
+                                <td><a href="{% url 'psite-book' hold.book.id %}">{{hold.book.title}}</a></td>
+                                <td>{{hold.created_at|date:'d/m/Y, H:i'}}</td>
+                                <td><span class="{{hold.status.css_class}}">{{hold.status.description}}</span></td>
+                                <td>
+                                    {% if hold.status.id == 0 %}
+                                        <form id="revoke-hold-{{hold.id}}" method="POST" action="{% url 'users:revoke-hold' hold.id %}" style="display:none">
+                                            {% csrf_token %}
+                                        </form>
+                                        <button title="Ανάκληση" class="btn btn-outline-danger btn-sm" onclick="revokeHold('{{hold.id}}', '{{hold.book.title}}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <p>Δεν έχετε κάνει κάποια κράτηση.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- return -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <a href="{% url 'psite-home' %}" class="btn btn-outline-info">Αρχική σελίδα</a>
+                </div>
+            </div>
+            
+ 
+        </div>
+
+    </div>
+
+</div>
+        
+    
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+$(document).ready(function() {
+    
+    setDatatable($('#hold-table'), [
+        {
+            "targets": 3,
+            "searchable": false,
+            "orderable": false
+        }        
+    ],
+    [
+        [1, 'asc']
+    ]);
+  
+});
+
+function revokeHold(id, title) {
+    
+    alertify.confirm(
+        "Ανάκληση κράτησης",
+        "Να ανακληθεί η κράτηση του βιβλίου με τίτλο:<p><strong>" + title + "</strong></p>", 
+        function() {
+            $('#revoke-hold-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
+
+
+</script>
+
+{% endblock %}

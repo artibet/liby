@@ -18,5 +18,7 @@ urlpatterns = [
     
     path('comment/<int:comment_id>/update/', views.update_comment, name='psite-update-comment'),
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='psite-delete-comment'),
+
+
     
 ]
