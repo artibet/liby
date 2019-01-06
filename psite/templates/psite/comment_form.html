@@ -21,6 +21,14 @@
                 </div>
             
                 <div class="col-md-8 px-4">
+                    
+                    <div class="card-title border-bottom pb-2">
+                        <h4>{{book.title}}</h4>
+                        {% if book.revision > 1 %}
+                            <h5>({{book.revision}}η έκδοση)</h4>
+                        {% endif %}
+                    </div>
+
                     <form method="POST">
                         {% csrf_token %}
                         <fieldset class="form-group">

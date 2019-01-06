@@ -197,6 +197,18 @@ class HoldStatus(models.Model):
 
     def __str__(self):
         return self.description
+
+    @staticmethod
+    def opened():
+        return HoldStatus.objects.get(id=0)
+
+    @staticmethod
+    def closed(cls):
+        return HoldStatus.objects.get(id=1)
+
+    @staticmethod
+    def canceled(cls):
+        return HoldStatus.objects.get(id=2)
     
     class Meta:
         db_table = 'hold_status'  

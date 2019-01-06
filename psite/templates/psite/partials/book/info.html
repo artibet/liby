@@ -11,20 +11,18 @@
     <div class="col-auto">
         <img src="{{book.image.url}}" class="img-fluid" alt="Εξώφυλλο">
         <div class="book-details-data text-muted">
+            <div><span class="font-weight-bold">ISBN: </span>{{book.isbn}}</div>
+            <div><span class="font-weight-bold">Σελίδες: </span>{{book.pages}}</div>
+            <div><span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}</div>
+            <div><span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.</div>
+
+            <div class="mt-3"><span class="font-weight-bold">Σύνολο δανεισμών: </span>{{book.book_data.total_lends}}</div>
+            <div><span class="font-weight-bold">Αντίτυπα: </span>{{book.book_data.num_entries}}</div>
+            <div><span class="font-weight-bold">Δανεισμένα: </span>{{book.book_data.active_lends}}</div>
+            <div><span class="font-weight-bold">Κρατήσεις: </span>{{book.book_data.active_holds}}</div>
+
             <div>
-                <span class="font-weight-bold">ISBN: </span>{{book.isbn}}
-            </div>
-            <div>
-                <span class="font-weight-bold">Σελίδες: </span>{{book.pages}}
-            </div>
-            <div>
-                <span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}
-            </div>
-            <div>
-                <span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.
-            </div>
-            <div>
-                <a href="#" class="btn btn-primary mt-3 hold-link">Κράτηση</a>
+                <a href="{% url 'psite-hold-book' book.id %}" class="btn btn-primary mt-3 hold-link">Κράτηση</a>
             </div>
         </div>
     </div>

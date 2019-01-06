@@ -37,7 +37,7 @@
         {% else %}
             <div class="badge badge-danger">Μη διαθέσιμο</div>
         {% endif%}
-        <a href="#" class="btn btn-outline-primary btn-sm hold-link">Κράτηση</a>
+        <a href="{% url 'psite-hold-book' book.id %}" class="btn btn-outline-primary btn-sm hold-link">Κράτηση</a>
         
     </div>
 </div>

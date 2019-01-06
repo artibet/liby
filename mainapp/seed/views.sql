@@ -71,7 +71,7 @@ from auth_user
 create or replace view book_data as
 select 
     id as book_id,
-    (select count(*) from hold where hold.id = book.id and hold.status_id = 0) as active_holds,
+    (select count(*) from hold where hold.book_id = book.id and hold.status_id = 0) as active_holds,
     (select count(*) from entry where entry.book_id = book.id and entry.cancel_date is null) as num_entries,
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as total_lends,
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as active_lends,
@@ -86,7 +86,6 @@ from
     book
 ;
     
-# Recent 10 new editions
 # book_newest
 create or replace view book_newest as
 select

@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404, HttpResponseForbidden, HttpResponseNotFound
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Avg, Max, Min
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
-from mainapp.models import Book, Author, Publisher, Category, Comment
+from mainapp.models import Book, Author, Publisher, Category, Comment, Hold, HoldStatus
 from .forms import CommentForm
 
 PAGE_SIZE = 8   # pagination
@@ -178,7 +178,8 @@ def search(request):
     q_author = Q(authors__author_name__icontains = key)
     q_isbn = Q(isbn__icontains = key)
     q_invalid = Q(id = -1)  
-        
+
+
     # Ανάλογα με την επιλογή αναζήτησης (target)
     # διαμορφώνεται η τελική q_clause 
     if target == '1':     # Αναζήτηση σε τίτλο
@@ -301,3 +302,59 @@ def delete_comment(request, comment_id):
     return redirect('psite-book', book.id)
     
    
+# Κράτηση βιβλίου
+@login_required
+def hold_book(request, book_id):
+    
+    # get book instance
+    book = get_object_or_404(Book, pk=book_id)
+   
+    # POST request
+    if request.method == 'POST':
+        hold = Hold()   # new Hold object
+        hold.book = book
+        hold.user = request.user
+        hold.status = HoldStatus.opened()
+        hold.save()
+        messages.success(request, f'Η κράτησή σας πραγματοποιήθηκε με επιτυχία!')
+        return redirect('psite-book', book.id)
+    
+    # GET request
+
+    # Έλεγχος αν ο τρέχον χρήστης έχει ήδη ενεργή κράτηση
+    active_hold = Hold.objects.filter(book_id=book_id, user_id=request.user.id, status_id=0).first()
+    if active_hold:
+        has_active_hold = True
+        active_hold_date = active_hold.created_at
+    else:
+        active_hold_date = ''
+        has_active_hold = False
+
+    # Ενεργές κρατήσεις και πιο παλαιότερη - νεότερη κράτηση
+    active_holds = book.book_data.active_holds
+    if active_holds > 0:
+        oldest_hold = Hold.objects.filter(status_id=0).aggregate(Min('created_at')).get('created_at__min')
+        newest_hold = Hold.objects.filter(status_id=0).aggregate(Max('created_at')).get('created_at__max')
+    else:
+        oldest_hold = ''
+        newest_hold = ''
+
+    context = {
+        'book': book,
+        'has_active_hold': has_active_hold,
+        'active_hold_date': active_hold_date,
+        'active_holds': active_holds,
+        'oldest_hold': oldest_hold,
+        'newest_hold': newest_hold
+    }
+
+    return render(request, 'psite/hold.html', context)
+    
+    
+
+
+
+    
+
+    
+
