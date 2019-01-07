@@ -333,8 +333,8 @@ def hold_book(request, book_id):
     # Ενεργές κρατήσεις και πιο παλαιότερη - νεότερη κράτηση
     active_holds = book.book_data.active_holds
     if active_holds > 0:
-        oldest_hold = Hold.objects.filter(status_id=0).aggregate(Min('created_at')).get('created_at__min')
-        newest_hold = Hold.objects.filter(status_id=0).aggregate(Max('created_at')).get('created_at__max')
+        oldest_hold = Hold.objects.filter(status_id=0, book_id=book_id).aggregate(Min('created_at')).get('created_at__min')
+        newest_hold = Hold.objects.filter(status_id=0, book_id=book_id).aggregate(Max('created_at')).get('created_at__max')
     else:
         oldest_hold = ''
         newest_hold = ''
