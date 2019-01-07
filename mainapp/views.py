@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from . import models
+from django.contrib import messages
+from .models import Hold, Lend
+from .forms import HoldToLendForm
 
 @login_required
 def dashboard(request):
@@ -49,6 +51,36 @@ class HoldViews:
     def index(request):
         return render (request, 'mainapp/holds/index.html', {})   
 
+    # Διαθέσιμα βιβλία κρατήσεων
+    def available(request):
+        holds = Hold.objects.filter(book__book_data__available__gt = 0, status_id=0)
+        context = {
+            'holds': holds
+        }
+        return render(request, 'mainapp/holds/available.html', context)
+
+    # Μετατροπή κράτησης σε δανεισμό
+    def hold_to_lend(request, hold_id):
+        hold = get_object_or_404(Hold, pk=hold_id)
+        
+        if request.method == 'POST':
+            form = HoldToLendForm(hold, request.POST)
+            if form.is_valid():
+                lend = Lend()   # new lend object
+                lend.entry_id = form.cleaned_data['entry_id']
+                lend.book_id = hold.book_id
+                lend.user_id = hold.user_id
+                lend.lend_date = form.cleaned_data['lend_date']
+                lend.lend_days = form.cleaned_data['lend_days']
+                lend.save()
+                messages.success(request, f'Ο δανεισμός καταχωρήθηκε με επιτυχία!')
+                return redirect('holds-available')
+        else:   # GET request
+           form = HoldToLendForm(Hold) 
+
+        return render(request, 'mainapp/holds/hold_to_lend.html', {'form': form})        
+
+
 
 ##########################################################################
 # Lend views
@@ -61,6 +93,7 @@ class LendViews:
 
     def delays(request):
          return render (request, 'mainapp/lends/delays.html', {})  
+
 
 
 ##########################################################################

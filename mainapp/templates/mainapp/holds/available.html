@@ -1,0 +1,105 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %} 
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Διαθέσιμα βιβλία κρατήσεων</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
+                <li class="breadcrumb-item active">Διαθέσιμα βιβλία κρατήσεων</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+    
+        <div class="card">
+            
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="hold-table">
+                    <thead>
+                        <tr>
+                            <th>Καταχώρηση</th>
+                            <th>Όνομα χρήστη</th>
+                            <th>Τίτλος βιβλίου</th>
+                            <th>Αντύτυπα</th> 
+                            <th>Δανεισμένα</th>
+                            <th>Διαθέσιμα</th>
+                            <th>Δανεισμός</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hold in holds %}
+                            <tr>
+                                <td>{{hold.created_at|date:'d/m/Y, H:i'}}</td>
+                                <td>{{hold.user.username}}</td>
+                                <td>{{hold.book.title}}</td>
+                                <td>{{hold.book.book_data.num_entries}}</td>
+                                <td>{{hold.book.book_data.active_lends}}</td>
+                                <td>{{hold.book.book_data.available}}</td>
+                                <td>
+                                    <!-- Δανεισμός -->
+                                    <a href="{% url 'hold-to-lend' hold.id %}", title="Δανεισμός", class="btn btn-outline-primary btn-sm"><i class="fa fa-anchor"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+$(document).ready(function() {
+    
+    setDatatable($('#hold-table'), [
+        {
+            "targets": 6,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
+
+    $('#menu-holds').addClass('menu-open'); 
+    $('#menu-holds .nav-link:first').addClass('active'); 
+    $('#menu-holds-available .nav-link:first').addClass('active'); 
+
+});
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

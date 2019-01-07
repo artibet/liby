@@ -26,3 +26,5 @@ function setDatatable(element, columnDefs=[], order=[[0, 'asc']]) {
     });
 }
 
+
+

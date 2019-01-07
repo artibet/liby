@@ -6,7 +6,7 @@
     </a>
 </li>
 
-<!-- Εκδόσεις -->
+<!-- Βιβλία -->
 <li id="menu-books" class="nav-item has-treeview">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-book"></i>
@@ -77,6 +77,34 @@
                 <p>Αναζήτηση</p>
             </a>
         </li>
+        
+    </ul>
+</li>
+
+<!-- Κρατήσεις -->
+<li id="menu-holds" class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-bell"></i>
+        <p>Κρατήσεις<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        
+        <!-- Προβολή όλων -->
+        <li id="menu-holds-index" class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-table nav-icon"></i>
+                <p>Προβολή όλων</p>
+            </a>
+        </li>
+
+        <!-- Διαθέσιμα -->
+        <li id="menu-holds-available" class="nav-item">
+            <a href="{% url 'holds-available' %}" class="nav-link">
+                <i class="fa fa-unlock nav-icon"></i>
+                <p>Διαθέσιμα βιβλία</p>
+            </a>
+        </li>
+        
         
     </ul>
 </li>

@@ -56,6 +56,8 @@ urlpatterns = [
 
     # Κρατήσεις
     path('holds/', views.HoldViews.index, name='holds-index'),
+    path('holds/available/', views.HoldViews.available, name='holds-available'),
+    path('holds/<int:hold_id>/lend/', views.HoldViews.hold_to_lend, name='hold-to-lend'),
 
     # Δανεισμοί
     path('lends/', views.LendViews.index, name='lends-index'),

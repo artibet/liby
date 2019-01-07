@@ -121,6 +121,7 @@ class BookData(models.Model):
     num_entries     = models.PositiveIntegerField(default=0)
     total_lends     = models.PositiveIntegerField(default=0)
     active_lends    = models.PositiveIntegerField(default=0)
+    available       = models.PositiveIntegerField(default=0)
     num_comments    = models.PositiveIntegerField(default=0)
     num_stars1      = models.PositiveIntegerField(default=0)
     num_stars2      = models.PositiveIntegerField(default=0)

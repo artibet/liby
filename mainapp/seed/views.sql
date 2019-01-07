@@ -67,14 +67,45 @@ select
 from auth_user
 ;
 
+
+# num_entries per book
+create or replace view num_entries as
+select
+    book.id as book_id,
+    count(entry.book_id) as entries
+from
+    book left outer join entry on book.id = entry.book_id
+where
+    entry.cancel_date is null
+group by
+    book.id
+;
+
+
+# active lends per book
+create or replace view active_lends as
+select
+    book.id as book_id,
+    count(lend.id) as lends
+from
+    book    left outer join entry on book.id = entry.book_id
+            left outer join lend on entry.id = lend.entry_id
+where
+    lend.return_date is null
+group by
+    book.id
+;
+
+
 # book_data
 create or replace view book_data as
 select 
-    id as book_id,
+    book.id as book_id,
+    num_entries.entries as num_entries,
+    active_lends.lends as active_lends,
+    num_entries.entries - active_lends.lends as available,
     (select count(*) from hold where hold.book_id = book.id and hold.status_id = 0) as active_holds,
-    (select count(*) from entry where entry.book_id = book.id and entry.cancel_date is null) as num_entries,
     (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id) as total_lends,
-    (select count(*) from lend, entry where lend.entry_id = entry.id and entry.book_id = book.id and lend.return_date is null) as active_lends,
     (select count(*) from comment where comment.book_id = book.id) as num_comments,
     ifnull((select count(*) from comment where comment.book_id = book.id and stars=1), 0) as num_stars1,
     ifnull((select count(*) from comment where comment.book_id = book.id and stars=2), 0) as num_stars2,
@@ -83,7 +114,12 @@ select
     ifnull((select count(*) from comment where comment.book_id = book.id and stars=5), 0) as num_stars5,
     ifnull((select sum(stars) from comment where comment.book_id = book.id), 0) as sum_stars
 from
-    book
+    book,
+    num_entries,
+    active_lends
+where
+    book.id = num_entries.book_id and
+    book.id = active_lends.book_id
 ;
     
 # book_newest

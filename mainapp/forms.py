@@ -1,7 +1,9 @@
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
-from bootstrap_datepicker_plus import DateTimePickerInput
+from django.utils import timezone
+from datetime import datetime
+from .models import Lend, Entry, Hold
 
 
 # Create user form
@@ -60,4 +62,28 @@ class UserUpdateForm(ModelForm):
 # Change password form
 class ChangePasswordForm(forms.Form):
     password = forms.CharField(label='Νέο Συνθηματικό', max_length=128, widget=forms.PasswordInput)
-   
+
+
+
+################################################################################################################
+# Hold forms
+################################################################################################################  
+
+# Μετατροπή κράτησης σε δανεισμό
+class HoldToLendForm(forms.Form):
+
+    # Override init 
+    def __init__(self, hold, *args, **kwargs):
+        choices = [
+            ('1', '1'),
+            ('2', '2')
+        ]
+        super(HoldToLendForm, self).__init__(*args, **kwargs)
+        self.fields['entry_id'] = forms.ChoiceField(label="Αριθμός αντιτύπου", choices = choices)
+        self.fields['lend_date'] = forms.DateTimeField(label="Ημερομηνία δανεισμού",  input_formats=['%d/%m/%Y %H:%M'], initial=timezone.now)
+        self.fields['lend_days'] = forms.IntegerField(label="Διάρκεια δανεισμού (μέρες)", initial=20)
+
+    
+
+    
+    
