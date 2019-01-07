@@ -1,6 +1,7 @@
 venv/
 .vscode/
 .idea/
+.vs/
 liby/__pycache__/
 
 mainapp/__pycache__/

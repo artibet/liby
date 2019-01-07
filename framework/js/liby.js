@@ -1,5 +1,5 @@
 
-function setDatatable(element, columnDefs=[], order=[[]]) {
+function setDatatable(element, columnDefs=[], order=[[0, 'asc']]) {
     $.fn.dataTable.moment('DD/MM/YYYY');
     $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
 
