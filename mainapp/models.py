@@ -226,6 +226,25 @@ class HoldStatus(models.Model):
         verbose_name_plural = 'Καταστάσεις Κρατήσεων' 
         ordering = ['description']    
 
+# --------------------------------------------------------------------
+# lend
+# --------------------------------------------------------------------
+class Lend(models.Model):
+    entry           = models.ForeignKey(Entry, on_delete=models.PROTECT)
+    user            = models.ForeignKey(User, on_delete=models.PROTECT)
+    lend_date       = models.DateTimeField(default=timezone.now)
+    lend_days       = models.PositiveSmallIntegerField(default=20)
+    return_date     = models.DateTimeField(blank=True, null=True)
+
+    def __str(self):
+        return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)
+    
+    class Meta:
+        db_table = 'lend'
+        verbose_name = 'Δανεισμός'
+        verbose_name_plural = 'Δανεισμοί' 
+        ordering = ['-lend_date']  
+
 
 # --------------------------------------------------------------------
 # hold
@@ -234,6 +253,7 @@ class Hold(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.PROTECT)
     user            = models.ForeignKey(User, on_delete=models.PROTECT)
     status          = models.ForeignKey(HoldStatus, default=0, on_delete=models.PROTECT)
+    lend            = models.ForeignKey(Lend, on_delete=models.PROTECT, null=True, blank=True)
     created_at      = models.DateTimeField(auto_now_add=True)
 
     def __str(self):
@@ -277,24 +297,6 @@ class Comment(models.Model):
         db_table = 'comment'
 
 
-# --------------------------------------------------------------------
-# lend
-# --------------------------------------------------------------------
-class Lend(models.Model):
-    entry           = models.ForeignKey(Entry, on_delete=models.PROTECT)
-    user            = models.ForeignKey(User, on_delete=models.PROTECT)
-    lend_date       = models.DateTimeField(default=timezone.now)
-    lend_days       = models.PositiveSmallIntegerField(default=20)
-    return_date     = models.DateTimeField(blank=True, null=True)
-
-    def __str(self):
-        return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)
-    
-    class Meta:
-        db_table = 'lend'
-        verbose_name = 'Δανεισμός'
-        verbose_name_plural = 'Δανεισμοί' 
-        ordering = ['-lend_date']  
 
 
 # --------------------------------------------------------------------
