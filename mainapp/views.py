@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Hold, Lend
+from .models import Hold, Lend, HoldStatus
 from .forms import HoldToLendForm
 
 @login_required
@@ -73,6 +73,9 @@ class HoldViews:
                 lend.lend_date = form.cleaned_data['lend_date']
                 lend.lend_days = form.cleaned_data['lend_days']
                 lend.save()
+                hold.status = HoldStatus.closed()   # Αλλαγή του status
+                hold.lend = lend
+                hold.save()
                 messages.success(request, f'Ο δανεισμός καταχωρήθηκε με επιτυχία!')
                 return redirect('holds-available')
         else:   # GET request
