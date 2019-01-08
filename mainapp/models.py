@@ -253,7 +253,7 @@ class Hold(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.PROTECT)
     user            = models.ForeignKey(User, on_delete=models.PROTECT)
     status          = models.ForeignKey(HoldStatus, default=0, on_delete=models.PROTECT)
-    lend            = models.ForeignKey(Lend, on_delete=models.PROTECT, null=True, blank=True)
+    lend            = models.OneToOneField(Lend, on_delete=models.PROTECT, null=True, blank=True, related_name="hold")
     created_at      = models.DateTimeField(auto_now_add=True)
 
     def __str(self):
