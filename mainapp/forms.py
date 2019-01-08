@@ -75,13 +75,18 @@ class HoldToLendForm(forms.Form):
     # Override init to pass Hold instance
     def __init__(self, hold, *args, **kwargs):
         
-        # Ανάκτηση διαθέσιμων αντιτύπων
-        book_id = hold.book.pk
-        reserved_entries = Entry.objects.filter(lends__id__isnull=True)
-        entries = Entry.objects.filter(book_id=hold.book.id).exclude(id__in=reserved_entries).value_list('id', flat=True)
-        
         super(HoldToLendForm, self).__init__(*args, **kwargs)
-        self.fields['entry_id'] = forms.ChoiceField(label="Αριθμός αντιτύπου", choices = entries)
+
+        # Ανάκτηση διαθέσιμων αντιτύπων
+        book_id = hold.book.id
+        reserved_entry_list = Lend.objects.filter(entry__book_id=book_id, return_date__isnull=True).values_list('entry_id', flat=True)
+        available_entry_list = Entry.objects.filter(book_id=book_id).exclude(id__in=reserved_entry_list).values_list('id', flat=True)
+        choices = []
+        for n in available_entry_list:
+            choices.append((n,n))
+
+        # Τα πεδία της φόρμας
+        self.fields['entry_id'] = forms.ChoiceField(label="Αριθμός αντιτύπου", choices=choices)
         self.fields['lend_date'] = forms.DateTimeField(label="Ημερομηνία δανεισμού",  input_formats=['%d/%m/%Y %H:%M'], initial=timezone.now)
         self.fields['lend_days'] = forms.IntegerField(label="Διάρκεια δανεισμού (μέρες)", initial=20)
 

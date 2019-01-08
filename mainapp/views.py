@@ -76,9 +76,14 @@ class HoldViews:
                 messages.success(request, f'Ο δανεισμός καταχωρήθηκε με επιτυχία!')
                 return redirect('holds-available')
         else:   # GET request
-           form = HoldToLendForm(Hold) 
+           form = HoldToLendForm(hold) 
 
-        return render(request, 'mainapp/holds/hold_to_lend.html', {'form': form})        
+        context = {
+            'hold': hold,
+            'form': form
+        }
+
+        return render(request, 'mainapp/holds/hold_to_lend.html', context)        
 
 
 

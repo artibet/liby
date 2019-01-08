@@ -29,24 +29,61 @@
     <div class="container-fluid">
     
         <div class="row">
-            <div class="col-md-6">
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        {{ form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-success" type="submit">Καταχώρηση</button>
-                        <a href="{% url 'holds-available' %}" class="btn btn-outline-info">Επιστροφή</a>
-                    </div>
+            <div class="col-md-4">
+                <img src="{{hold.book.image.url}}" style="width: 100%;" class="img-fluid" alt="Εξώφυλλο">
+            </div>
+        
+            <div class="col-md-8 px-4">
+                
+                <div class="card-title border-bottom pb-2">
+                    <h4>{{hold.book.title}}</h4>
+                    {% if hold.book.revision > 1 %}
+                        <h5>({{hold.book.revision}}η έκδοση)</h4>
+                    {% endif %}
+                </div>
 
-                </form>
+                <div class="mt-3">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th scope="col" class="col-auto">Όνομα χρήστη:</th>
+                            <td class="col">{{hold.user.username}}</td>
+                        </tr>
+                        <tr>
+                            <th>Ονοματεπώνυμο:</th>
+                            <td>{{hold.user.lastname}}&nbsp;{{hold.user.firstname}}</td>
+                        </tr>
+                        <tr>
+                            <th>Κράτηση:</th>
+                            <td>{{hold.created_at|date:'d/m/Y, H:i'}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+               
+                <div class="row mt-3">
+                    <div class="col-md-12 bg-dark form-div">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                {{ form|crispy }}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-outline-success" type="submit">Καταχώρηση</button>
+                                <a href="{% url 'holds-available' %}" class="btn btn-outline-info">Επιστροφή</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
             </div>
         </div>
-    
+        
     </div><!-- /.container-fluid -->
+
 </section>
 <!-- /.content -->
+
+
 
 {% endblock %}
 
