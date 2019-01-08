@@ -72,14 +72,16 @@ class ChangePasswordForm(forms.Form):
 # Μετατροπή κράτησης σε δανεισμό
 class HoldToLendForm(forms.Form):
 
-    # Override init 
+    # Override init to pass Hold instance
     def __init__(self, hold, *args, **kwargs):
-        choices = [
-            ('1', '1'),
-            ('2', '2')
-        ]
+        
+        # Ανάκτηση διαθέσιμων αντιτύπων
+        book_id = hold.book.pk
+        reserved_entries = Entry.objects.filter(lends__id__isnull=True)
+        entries = Entry.objects.filter(book_id=hold.book.id).exclude(id__in=reserved_entries).value_list('id', flat=True)
+        
         super(HoldToLendForm, self).__init__(*args, **kwargs)
-        self.fields['entry_id'] = forms.ChoiceField(label="Αριθμός αντιτύπου", choices = choices)
+        self.fields['entry_id'] = forms.ChoiceField(label="Αριθμός αντιτύπου", choices = entries)
         self.fields['lend_date'] = forms.DateTimeField(label="Ημερομηνία δανεισμού",  input_formats=['%d/%m/%Y %H:%M'], initial=timezone.now)
         self.fields['lend_days'] = forms.IntegerField(label="Διάρκεια δανεισμού (μέρες)", initial=20)
 
