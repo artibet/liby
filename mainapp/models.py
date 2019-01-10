@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 
 # --------------------------------------------------------------------
 # country
@@ -236,6 +237,49 @@ class Lend(models.Model):
     lend_days       = models.PositiveSmallIntegerField(default=20)
     return_date     = models.DateTimeField(blank=True, null=True)
 
+    # Κωδικοποίηση καταστάσεων δανεισμού (class variables)
+    STATUS_ACTIVE = 0
+    STATUS_OVERDUE = 1
+    STATUS_RETURNED = 2
+
+    # Επιστροφή κατάστασης (κωδικός)
+    @property
+    def status(self):
+        if self.return_date:
+            return Lend.STATUS_RETURNED
+        else:
+            if self.deadline < timezone.now():
+                return Lend.STATUS_OVERDUE
+            else:
+                return Lend.STATUS_ACTIVE 
+
+    # Επιστροφή περιγραφής κατάστασης
+    @property
+    def status_desc(self):
+        print(self.deadline)
+        print(timezone.now())
+        print(self.deadline < timezone.now())
+        if self.status == Lend.STATUS_ACTIVE:
+            return "Εμπρόθεσμο"
+        elif self.status == Lend.STATUS_OVERDUE:
+            return "Εκπρόθεσμο"
+        else:
+            return "Επεστράφη"
+        
+    # css καταστάσεων
+    def status_css(self):
+        if self.status == Lend.STATUS_ACTIVE:
+            return "badge badge-success"
+        elif self.status == Lend.STATUS_OVERDUE:
+            return "badge badge-danger"
+        else:
+            return "badge badge-primary"
+
+    # προθεσμία επιστροφής
+    @property
+    def deadline(self):
+        return self.lend_date + timedelta(days=self.lend_days)
+    
     def __str(self):
         return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)
     

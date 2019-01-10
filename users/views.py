@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponseNotFound, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
-from mainapp.models import Hold, HoldStatus
+from mainapp.models import Hold, HoldStatus, Lend
 
 def register(request):
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def profile(request):
     return render(request, 'users/profile.html')    
 
 
-# user hold list
+# user hold list (Οι κρατήσεις μου)
 @login_required
 def hold_list(request):
     
@@ -30,6 +30,13 @@ def hold_list(request):
     holds = Hold.objects.filter(user = request.user).order_by('created_at')
 
     return render(request, 'users/holds/list.html', {'holds': holds})
+
+
+# Ιστορικό δανεισμών
+@login_required
+def lend_history(request):
+    lends = Lend.objects.filter(user = request.user).order_by('-lend_date')
+    return render(request, 'users/lends/history.html', {'lends': lends})    
 
 
 # Ανάκληση κράτησης

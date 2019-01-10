@@ -1,0 +1,100 @@
+{% extends 'psite/base.html' %}
+{% load static %}
+
+{% block content %} 
+
+<div class="container mb-4 px-0">
+    <div class="row mt-2 min-height">
+        <div class="col-md-12 px-0">    
+
+            <div class="card" style="padding: 10px;">
+                
+                <!-- page title -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-title">
+                            <h3 class="border-bottom pb-3">Ιστορικό δανεισμών</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- table data -->
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if lends %}
+                        <table class="table table-bordered table-hover" id="lend-table">
+                            <thead>
+                                <tr>
+                                    <th>Τίτλος βιβλίου</th>
+                                    <th>Κράτηση</th>
+                                    <th>Δανεισμός</th>
+                                    <th>Διάρκεια (μέρες)</th>
+                                    <th>Προθεσμία</th>
+                                    <th>Κατάσταση</th>
+                                    <th>Επιστροφή</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lend in lends %}
+                                <tr>
+                                    <td><a href="{% url 'psite:book' lend.entry.book.id %}">{{lend.entry.book.title}}</a></td>
+                                    <td>
+                                        {% if lend.hold %}
+                                            {{lend.hold.created_at|date:'d/m/Y'}}
+                                        {% endif%}
+                                    </td>
+                                    <td>{{lend.lend_date|date:'d/m/Y'}}</td>
+                                    <td>{{lend.lend_days}}</td>
+                                    <td>{{lend.deadline|date:'d/m/Y'}}</td>
+                                    <td><span class="{{lend.status_css}}">{{lend.status_desc}}</span></td>
+                                    <td>{{lend.return_date|date:'d/m/Y'}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                            <p>Δεν έχετε δανειστεί κάποιο βιβλίο.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- return -->
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <a href="{% url 'psite:home' %}" class="btn btn-outline-info">Αρχική σελίδα</a>
+                    </div>
+                </div>
+                
+    
+            </div>
+
+        </div>
+    </div>
+</div>
+        
+    
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+$(document).ready(function() {
+    
+    setDatatable($('#lend-table'), [
+        {
+            
+        }        
+    ],
+    [
+        [2, 'desc']
+    ]);
+  
+});
+
+
+
+</script>
+
+{% endblock %}
