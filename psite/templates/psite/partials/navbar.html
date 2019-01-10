@@ -50,7 +50,7 @@
                     <div class="dropdown-menu" aria-labelledby="user-dropdown">
                         <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa fa-user"></i> Προφίλ χρήστη</a>
                         <a class="dropdown-item" href="{% url 'users:hold-list' %}"><i class="fa fa-bell"></i> Οι κρατήσεις μου</a>
-                        <a class="dropdown-item" href="{% url 'users:lend-history' %}"><i class="fa fa-bell"></i> Ιστορικό δανεισμών</a>
+                        <a class="dropdown-item" href="{% url 'users:lend-history' %}"><i class="fa fa-anchor"></i> Ιστορικό δανεισμών</a>
                         {% if user.is_superuser %}
                             <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Διαχείριση</a>
                         {% endif %}

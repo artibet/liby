@@ -4,6 +4,27 @@
 
 {% block content %} 
 
-    <h1>{{user.username}}</h1>
+<div class="container mb-4 px-0">
+    <div class="row mt-2 min-height">
+        <div class="col-md-6 offset-md-3">
+            <div class="card" style="padding: 10px;">
+                <div class="card-title">
+                    <h3 class="border-bottom pb-3">Προφίλ του χρήστη '{{user.username}}'</h3>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success" type="submit">Ενημέρωση</button>
+                        <a href="{% url 'psite:home' %}" class="btn btn-outline-info">Αρχική Σελίδα</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
+

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponseNotFound, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserProfileForm
 from mainapp.models import Hold, HoldStatus, Lend
 
 def register(request):
@@ -19,7 +19,19 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')    
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.email = form.cleaned_data['email']
+            request.user.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Τα στοιχεία του λογαριασμού σας ενημερώθηκαν με επιτυχία.')
+            return redirect('psite:home')
+    else:
+        form = UserProfileForm(instance=request.user)
+    return render(request, 'users/profile.html', {'form': form}) 
 
 
 # user hold list (Οι κρατήσεις μου)
