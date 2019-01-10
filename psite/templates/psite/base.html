@@ -30,9 +30,21 @@
 <body class="psite">
        
     {% include 'psite/partials/navbar.html' %}
+
+    <container-fluid>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flush-message alert alert-{{ message.tags }}">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </container-fluid>
     
     <div class="container mt-4">
+        
         {% block content %} {% endblock %}
+
     </div>
 
     <!-- footer -->
@@ -81,7 +93,11 @@
 
    
     <!-- custom scripts -->
-    {% block scripts %} {% endblock %}
+    {% block scripts %} 
+        
+            
+        
+    {% endblock %}
 
 
     <script>

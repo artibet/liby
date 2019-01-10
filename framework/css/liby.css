@@ -172,3 +172,8 @@ body.psite {
 .mydl dt {
     text-align: left;
 }
+
+.flush-message {
+    
+    border-radius: .25rem;
+}
