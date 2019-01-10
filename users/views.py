@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseNotFound, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserProfileForm
@@ -70,3 +72,19 @@ def revoke_hold(request, hold_id):
     hold.status = HoldStatus.canceled()
     hold.save()
     return redirect('users:hold-list')
+
+
+# Αλλαγή συνθηματικού
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            request.user.password = make_password(request.POST['new_password1'])
+            request.user.save()
+            messages.success(request, f'Το συνθηματικό του χρήστη "{request.user.username}" άλλαξε με επιτυχία. Συνδεθείτε ξανά.')
+            return redirect('login')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'users/change_password.html', {'form': form})
