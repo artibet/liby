@@ -7,6 +7,7 @@ from .class_views import category as category_views
 from .class_views import publisher as publisher_views
 from .class_views import author as author_views
 from .class_views import user as user_views
+from .class_views import book as book_views
 
 
 urlpatterns = [
@@ -14,7 +15,7 @@ urlpatterns = [
     
     # Βιβλία
     path('books/', views.BookViews.index, name='books-index'),
-    path('books/create/', views.BookViews.create, name='books-create'),
+    path('books/create/', book_views.BookCreateView.as_view(), name='books-create'),
     path('books/search', views.BookViews.search, name='books-search'),
 
     # Κατηγοριες
