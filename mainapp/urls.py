@@ -7,15 +7,16 @@ from .class_views import category as category_views
 from .class_views import publisher as publisher_views
 from .class_views import author as author_views
 from .class_views import user as user_views
-from .class_views import book as book_views
+from .views import BookViews
 
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     
     # Βιβλία
-    path('books/', views.BookViews.index, name='books-index'),
-    path('books/create/', book_views.BookCreateView.as_view(), name='books-create'),
+    path('books/', BookViews.index, name='books-index'),
+    path('books/create/', BookViews.create, name='books-create'),
+    path('books/<int:book_id>/', BookViews.details, name='book-details'),
     path('books/search', views.BookViews.search, name='books-search'),
 
     # Κατηγοριες

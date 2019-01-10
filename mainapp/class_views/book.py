@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from mainapp.lib import SuperUserMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -30,3 +30,12 @@ class BookCreateView(SuperUserMixin, SuccessMessageMixin, CreateView):
         book = form.instance
         self.success_message = f"Το βιβλίο με τίτλο '{book.title}' δημιουργήθηκε με επιτυχία!'"
         return super().form_valid(form)
+
+
+# book details vies
+def details(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    context = {
+        'book': book
+    }
+    return render(request, 'mainapp/books/details.html', context)

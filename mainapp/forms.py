@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
-from .models import Lend, Entry, Hold
+from .models import Lend, Entry, Hold, Book
 
 
 # Create user form
@@ -92,5 +92,25 @@ class HoldToLendForm(forms.Form):
 
     
 
-    
-    
+################################################################################################################
+# Book forms
+################################################################################################################  
+
+class BookCreateForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = [
+            'image',
+            'title',
+            'revision',
+            'isbn',
+            'language',
+            'publisher',
+            'published_year',
+            'published_month',
+            'pages',
+            'dimensions',
+            'weight',
+            'abstract'
+        ]
+        

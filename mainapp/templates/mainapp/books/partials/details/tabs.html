@@ -1,0 +1,59 @@
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="#info-tab" data-toggle="tab" role="tab">
+            Στοιχεία βιβλίου 
+        </a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link" href="#entry-tab" data-toggle="tab" role="tab">
+                Αντίτυπα <span class="badge badge-secondary">{{book.book_data.num_entries}}</span>
+            </a>
+        </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#hold-tab" data-toggle="tab" role="tab">
+            Κρατήσεις <span class="badge badge-secondary">{{book.holds.count}}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#lend-tab" data-toggle="tab" role="tab">
+            Δανεισμοί <span class="badge badge-secondary">{{book.book_data.total_lends}}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#comment-tab" data-toggle="tab" role="tab">
+            Κριτικές <span class="badge badge-secondary">{{book.comments.count}}</span>
+        </a>
+    </li>
+</ul>
+
+
+<!-- TABS CONTENTS -->
+
+<div class="tab-content">
+
+    <!-- Στοιχεία βιβλίου -->
+    <div id="info-tab" class='tab-pane active'>
+        {% include 'mainapp/books/partials/details/tab_info.html' %}
+    </div>
+
+    <!-- Αντίτυπα -->
+    <div id="info-tab" class='tab-pane active'>
+            {% include 'mainapp/books/partials/details/tab_entries.html' %}
+        </div>
+
+    <!-- Κρατήσεις -->
+    <div id="hold-tab" class='tab-pane'>
+        {% include 'mainapp/books/partials/details/tab_holds.html' %}
+    </div>
+
+    <!-- Δανεισμοί -->
+    <div id="lend-tab" class='tab-pane'>
+        {% include 'mainapp/books/partials/details/tab_lends.html' %}
+    </div>
+
+    <!-- Κριτικές -->
+    <div id="comment-tab" class='tab-pane'>
+        {% include 'mainapp/books/partials/details/tab_comments.html' %}
+    </div>
+
+</div>

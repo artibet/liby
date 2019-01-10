@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Hold, Lend, HoldStatus
-from .forms import HoldToLendForm
+from .models import Hold, Lend, HoldStatus, Book
+from .forms import HoldToLendForm, BookCreateForm
 
 @login_required
 def dashboard(request):
@@ -18,11 +18,34 @@ class BookViews:
     def index(request):
         return render (request, 'mainapp/books/index.html', {})
 
+    # book create
     def create(request):
-        return render (request, 'mainapp/books/create.html', {})    
+        if request.method == 'POST':
+            form = BookCreateForm(request.POST)
+            if form.is_valid():
+                book = form.save()
+                messages.success(request, f'Το βιβλίο "{book.title}" καταχωρήθηκε με επιτυχία!')
+                return redirect('book-details', book_id=book.id)
+        else:
+            form = BookCreateForm()
+
+        return render(request, 'mainapp/books/create.html', {'form': form})
+
+
+    # book details
+    def details(request, book_id):
+        book = get_object_or_404(Book, pk=book_id)
+        context = {
+            'book': book
+        }
+        return render(request, 'mainapp/books/details.html', context)  
+
+        
 
     def search(request):
-        return render (request, 'mainapp/books/search.html', {})                
+        return render (request, 'mainapp/books/search.html', {})      
+
+            
 
 
 

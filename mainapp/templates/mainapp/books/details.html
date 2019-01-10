@@ -1,1 +1,84 @@
-{{book.title}}
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Πληροφορίες βιβλίου</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'books-index' %}">Βιβλία</a></li>
+                <li class="breadcrumb-item active">{{book.title}}</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <div class="row no-gutters">
+        
+            <div class="card col-md-12" style="width: 18rem;">
+                <div class="card-header bg-primary"><h5>{{book.title}}</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <!-- sidebar -->
+                        <div class="col-md-3">
+                            {% include 'mainapp/books/partials/details/sidebar.html' %}
+                        </div>
+
+                        <!-- tabs -->
+                        <div class="col-md-9">
+                            {% include 'mainapp/books/partials/details/tabs.html' %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+       
+    
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+$(document).ready(function() {
+    $('#menu-books').addClass('menu-open'); 
+    $('#menu-books .nav-link:first').addClass('active'); 
+    // $('#menu-books-create .nav-link:first').addClass('active'); 
+});
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
