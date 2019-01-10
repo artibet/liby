@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="{% static 'owl/dist/assets/owl.carousel.min.css' %}"> 
     <link rel="stylesheet" href="{% static 'owl/dist/assets/owl.theme.default.min.css' %}"> 
 
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css"> 
+
     <!-- alertify -->
     <link rel="stylesheet" href="{% static 'alertify/css/alertify.min.css' %}">
     <link rel="stylesheet" href="{% static 'alertify/css/themes/bootstrap.min.css' %}">
@@ -34,7 +37,7 @@
     <container-fluid>
         {% if messages %}
             {% for message in messages %}
-                <div class="flush-message alert alert-{{ message.tags }}">
+                <div class="animated bounceInRight flush-message alert alert-{{ message.tags }}">
                     {{message}}
                 </div>
             {% endfor %}
