@@ -177,3 +177,7 @@ body.psite {
     
     border-radius: .25rem;
 }
+
+.datatable-actions {
+    min-width: 80px;
+}

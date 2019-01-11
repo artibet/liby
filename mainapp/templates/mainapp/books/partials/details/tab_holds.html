@@ -3,7 +3,7 @@
         <h3 class="pb-3">Κρατήσεις</h3>
     </div>
     <div class="col-md-6">
-        <a href="#" class="btn btn-success btn-sm float-right">Νέα κράτηση</a>
+        <a href="{% url 'books-new-hold' book.id %}" class="btn btn-success btn-sm float-right">Νέα κράτηση</a>
     </div>
 </div>
 
@@ -30,10 +30,10 @@
                 <td><span class="{{hold.status.css_class}}">{{hold.status.description}}</span></td>
                 <td>
                         <!-- Επεξεργασία -->
-                        <a href="#", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                        <a href="{% url 'holds-update' hold.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
                         
                         <!-- Διαγραφή -->
-                        <form id="delete-hold-{{hold.id}}" method="POST" action="#" style="display: none;">
+                        <form id="delete-hold-{{hold.id}}" method="POST" action="{% url 'holds-delete' hold.id %}" style="display: none;">
                             {% csrf_token %}
                         </form>
                         <button title="Διαγραφή" class="btn btn-outline-danger btn-sm" onclick="deleteHold('{{hold.id}}')">

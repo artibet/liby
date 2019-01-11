@@ -7,7 +7,7 @@ from .class_views import category as category_views
 from .class_views import publisher as publisher_views
 from .class_views import author as author_views
 from .class_views import user as user_views
-from .views import BookViews, EntryViews
+from .views import BookViews, EntryViews, HoldViews
 
 
 urlpatterns = [
@@ -20,10 +20,18 @@ urlpatterns = [
     path('books/<int:book_id>/', BookViews.details, name='book-details'),
     path('books/search', views.BookViews.search, name='books-search'),
     path('books/<int:book_id>/new_entry/', BookViews.new_entry, name='books-new-entry'),
+    path('books/<int:book_id>/new_hold/', BookViews.new_hold, name='books-new-hold'),
 
     # Αντίτυπα
     path('entries/<int:entry_id>/update/', EntryViews.update, name='entries-update'),
     path('entries/<int:entry_id>/delete/', EntryViews.delete, name='entries-delete'),
+
+    # Κρατήσεις
+    path('holds/', views.HoldViews.index, name='holds-index'),
+    path('holds/available/', views.HoldViews.available, name='holds-available'),
+    path('holds/<int:hold_id>/lend/', views.HoldViews.hold_to_lend, name='hold-to-lend'),
+    path('holds/<int:hold_id>/update/', HoldViews.update, name='holds-update'),
+    path('holds/<int:hold_id>/delete/', HoldViews.delete, name='holds-delete'),
 
     # Κατηγοριες
     path('categories/', category_views.CategoryListView.as_view(), name='category-list'),
@@ -62,10 +70,7 @@ urlpatterns = [
     path('users/<int:pk>/delete/', user_views.UserDeleteView.as_view(), name='user-delete'),
     path('users/<int:pk>/change_password/', user_views.change_password, name='user-change_password'),
 
-    # Κρατήσεις
-    path('holds/', views.HoldViews.index, name='holds-index'),
-    path('holds/available/', views.HoldViews.available, name='holds-available'),
-    path('holds/<int:hold_id>/lend/', views.HoldViews.hold_to_lend, name='hold-to-lend'),
+    
 
     # Δανεισμοί
     path('lends/', views.LendViews.index, name='lends-index'),

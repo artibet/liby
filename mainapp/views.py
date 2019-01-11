@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
 from .models import Hold, Lend, HoldStatus, Book, Entry
-from .forms import HoldToLendForm, BookForm, BookEntryForm, EntryForm
+from .forms import (HoldToLendForm, BookForm, BookEntryForm, EntryForm, 
+                    BookHoldForm, HoldForm)
 from .lib import SuperUserMixin
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -78,6 +79,29 @@ class BookViews:
 
         return render(request, 'mainapp/books/entries/create.html', {'form': form})
 
+
+    # create new hold for book
+    @user_passes_test(lambda u: u.is_superuser)
+    def new_hold(request, book_id):
+        book = get_object_or_404(Book, pk=book_id)
+        if request.method == 'POST':
+            form = BookHoldForm(book, request.POST)
+            if form.is_valid():
+                hold = form.save(commit=False)
+
+                # Έλεγχος αν υπάρχει ήδη ανοιχτή κράτηση για τον επιλεγμένο χρήστη
+                user_holds = Hold.objects.filter(book_id=book.id, user_id=hold.user.id, status_id=0)
+                if user_holds:
+                    messages.info(request, f'Υπάρχει ήδη κράτηση του χρήστη {hold.user.username} για το βιβλίο "{book.title}"')
+                else:
+                    hold.book = book
+                    hold.save()
+                    messages.success(request, f'Η κράτηση για το βιβλίο "{book.title}" στο χρήστη "{hold.user.username}" καταχωρήθηκε με επιτυχία!')
+                return redirect('book-details', book_id=book.id)
+        else:
+            form = BookHoldForm(book)
+
+        return render(request, 'mainapp/books/holds/create.html', {'form': form})
        
 
         
@@ -126,8 +150,8 @@ class HoldViews:
         }
         return render(request, 'mainapp/holds/available.html', context)
 
-    @user_passes_test(lambda u: u.is_superuser)
     # Μετατροπή κράτησης σε δανεισμό
+    @user_passes_test(lambda u: u.is_superuser)
     def hold_to_lend(request, hold_id):
         hold = get_object_or_404(Hold, pk=hold_id)
         
@@ -154,7 +178,42 @@ class HoldViews:
             'form': form
         }
 
-        return render(request, 'mainapp/holds/hold_to_lend.html', context)        
+        return render(request, 'mainapp/holds/hold_to_lend.html', context)    
+
+
+    # update hold
+    @user_passes_test(lambda u: u.is_superuser)
+    def update(request, hold_id):
+        hold = get_object_or_404(Hold, pk=hold_id)
+        if request.method == 'POST':
+            form = HoldForm(request.POST, instance=hold)
+            if form.is_valid():
+                hold = form.save()
+                messages.success(request, f'Η κράτηση του χρήση {hold.user.username} για το βιβλίο {hold.book.title} ενημερώθηκε με επιτυχία!')
+                return redirect('book-details', book_id=hold.book.id)
+        else:
+            form = HoldForm(instance=hold)
+
+        return render(request, 'mainapp/books/holds/update.html', {'form': form})          
+
+
+    # delete hold
+    @user_passes_test(lambda u: u.is_superuser)
+    def delete(request, hold_id):
+        
+        # Αν δεν είναι POST requst επιστροφή
+        if request.method != 'POST':
+            return HttpResponseNotFound()
+        
+        # Get hold instance
+        hold = get_object_or_404(Hold, pk=hold_id)
+        book = hold.book
+        user = hold.user
+
+        # delete and go back to book details page
+        hold.delete()
+        messages.success(request, f'Η κράτηση του χρήση {user.username} για το βιβλίο {book.title} διαγράφηκε με επιτυχία!')
+        return redirect('book-details', book.id)    
 
 
 

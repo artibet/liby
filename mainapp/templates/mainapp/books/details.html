@@ -64,6 +64,7 @@
 
 <script>
 
+// delete entry
 function deleteEntry(entry_id) {
     
     alertify.confirm(
@@ -71,6 +72,23 @@ function deleteEntry(entry_id) {
         "Να διαγραφεί το επιλεμγένο αντίτυπο βιβλίου?", 
         function() {
             $('#delete-entry-' + entry_id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
+// delete hold
+function deleteHold(hold_id) {
+    
+    alertify.confirm(
+        "Διαγραφή κράτησης",
+        "Να διαγραφεί η επιλεγμένη κράτηση?", 
+        function() {
+            $('#delete-hold-' + hold_id).submit();
             //alertify.success("Επιτυχής διαγραφή!")
         },
         function() {

@@ -309,10 +309,10 @@ class Lend(models.Model):
 # --------------------------------------------------------------------
 class Hold(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.PROTECT)
-    user            = models.ForeignKey(User, on_delete=models.PROTECT)
+    user            = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Χρήστης")
     status          = models.ForeignKey(HoldStatus, default=0, on_delete=models.PROTECT)
     lend            = models.OneToOneField(Lend, on_delete=models.PROTECT, null=True, blank=True, related_name="hold")
-    created_at      = models.DateTimeField(auto_now_add=True)
+    created_at      = models.DateTimeField(default=timezone.now, verbose_name="Ημερομηνία κράτησης")
 
     def __str(self):
         return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)

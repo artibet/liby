@@ -91,6 +91,13 @@ class HoldToLendForm(forms.Form):
         self.fields['lend_days'] = forms.IntegerField(label="Διάρκεια δανεισμού (μέρες)", initial=20)
 
     
+class HoldForm(forms.ModelForm):
+    class Meta:
+        model = Hold
+        fields = [
+            'user',
+            'created_at'
+        ]     
 
 ################################################################################################################
 # Book forms
@@ -114,6 +121,7 @@ class BookForm(forms.ModelForm):
             'abstract'
         ]
 
+# Νέο αντίτυπο μέσα από την σελίδα του βιβλίου
 class BookEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
@@ -127,6 +135,23 @@ class BookEntryForm(forms.ModelForm):
     def __init__(self, book, *args, **kwargs):
         super(BookEntryForm, self).__init__(*args, **kwargs)
         self.book = book
+
+
+# Νέα κράτηση μέσα από την σελίδα του βιβλίου
+class BookHoldForm(forms.ModelForm):
+    class Meta:
+        model = Hold
+        fields = [
+            'user',
+            'created_at'
+        ] 
+        labels = {
+            'user': 'Κράτηση για τον χρήστη'
+        }     
+
+    def __init__(self, book, *args, **kwargs):
+        super(BookHoldForm, self).__init__(*args, **kwargs)
+        self.book = book        
         
 
 ################################################################################################################
