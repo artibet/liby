@@ -16,6 +16,7 @@ urlpatterns = [
     # Βιβλία
     path('books/', BookViews.index, name='books-index'),
     path('books/create/', BookViews.create, name='books-create'),
+    path('books/<int:book_id>/update/', BookViews.update, name='book-update'),
     path('books/<int:book_id>/', BookViews.details, name='book-details'),
     path('books/search', views.BookViews.search, name='books-search'),
 

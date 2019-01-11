@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Hold, Lend, HoldStatus, Book
-from .forms import HoldToLendForm, BookCreateForm
+from .forms import HoldToLendForm, BookForm
 
 @login_required
 def dashboard(request):
@@ -21,15 +21,29 @@ class BookViews:
     # book create
     def create(request):
         if request.method == 'POST':
-            form = BookCreateForm(request.POST)
+            form = BookForm(request.POST)
             if form.is_valid():
                 book = form.save()
                 messages.success(request, f'Το βιβλίο "{book.title}" καταχωρήθηκε με επιτυχία!')
                 return redirect('book-details', book_id=book.id)
         else:
-            form = BookCreateForm()
+            form = BookForm()
 
         return render(request, 'mainapp/books/create.html', {'form': form})
+
+    # book update
+    def update(request, book_id):
+        book = get_object_or_404(Book, pk=book_id)
+        if request.method == 'POST':
+            form = BookForm(request.POST, instance=book)
+            if form.is_valid():
+                book = form.save()
+                messages.success(request, f'Το βιβλίο "{book.title}" ενημερώθηκε με επιτυχία!')
+                return redirect('book-details', book_id=book.id)
+        else:
+            form = BookForm(instance=book)
+
+        return render(request, 'mainapp/books/update.html', {'form': form})        
 
 
     # book details

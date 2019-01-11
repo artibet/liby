@@ -51,7 +51,7 @@
             <div><span class="font-weight-bold">Ενημερώθηκε: </span>{{book.updated_at|date:'d/m/Y, H:i'}}</div>
 
             <div>
-                <a href="#" class="btn btn-primary mt-3 hold-link">Επεξεργασιά στοιχείων</a>
+                <a href="{% url 'book-update' book.id %}" class="btn btn-primary mt-3 hold-link">Επεξεργασιά στοιχείων</a>
             </div>
 
         </div>

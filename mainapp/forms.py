@@ -96,7 +96,7 @@ class HoldToLendForm(forms.Form):
 # Book forms
 ################################################################################################################  
 
-class BookCreateForm(forms.ModelForm):
+class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = [
