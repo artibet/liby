@@ -33,6 +33,9 @@
 <link rel="stylesheet" href="{% static 'alertify/css/alertify.min.css' %}">
 <link rel="stylesheet" href="{% static 'alertify/css/themes/bootstrap.min.css' %}">
 
+<!-- animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css"> 
+
 <!-- datetimepicker -->
 <!-- <link rel="stylesheet" href="{% static 'gijgo/css/gijgo.min.css' %}"> -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
@@ -213,7 +216,7 @@
 
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
+                    <div class="animated bounceInRight flush-message alert alert-{{ message.tags }}">
                         {{message}}
                     </div>
                 {% endfor %}

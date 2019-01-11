@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
-from .models import Hold, Lend, HoldStatus, Book
-from .forms import HoldToLendForm, BookForm
+from .models import Hold, Lend, HoldStatus, Book, Entry
+from .forms import HoldToLendForm, BookForm, BookEntryForm, EntryForm
+from .lib import SuperUserMixin
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
     return render (request, 'mainapp/dashboard.html', {})
 
@@ -15,10 +17,12 @@ def dashboard(request):
 
 class BookViews:
 
+    @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         return render (request, 'mainapp/books/index.html', {})
 
     # book create
+    @user_passes_test(lambda u: u.is_superuser)
     def create(request):
         if request.method == 'POST':
             form = BookForm(request.POST)
@@ -32,6 +36,7 @@ class BookViews:
         return render(request, 'mainapp/books/create.html', {'form': form})
 
     # book update
+    @user_passes_test(lambda u: u.is_superuser)
     def update(request, book_id):
         book = get_object_or_404(Book, pk=book_id)
         if request.method == 'POST':
@@ -47,6 +52,7 @@ class BookViews:
 
 
     # book details
+    @user_passes_test(lambda u: u.is_superuser)
     def details(request, book_id):
         book = get_object_or_404(Book, pk=book_id)
         context = {
@@ -54,8 +60,28 @@ class BookViews:
         }
         return render(request, 'mainapp/books/details.html', context)  
 
-        
 
+    # Create new entry for book
+    @user_passes_test(lambda u: u.is_superuser)
+    def new_entry(request, book_id):
+        book = get_object_or_404(Book, pk=book_id)
+        if request.method == 'POST':
+            form = BookEntryForm(book, request.POST)
+            if form.is_valid():
+                entry = form.save(commit=False)
+                entry.book = book
+                entry.save()
+                messages.success(request, f'Το αντίτυπο με Α/Α "{entry.id}" καταχωρήθηκε με επιτυχία!')
+                return redirect('book-details', book_id=book.id)
+        else:
+            form = BookEntryForm(book)
+
+        return render(request, 'mainapp/books/entries/create.html', {'form': form})
+
+       
+
+        
+    @user_passes_test(lambda u: u.is_superuser)
     def search(request):
         return render (request, 'mainapp/books/search.html', {})      
 
@@ -71,10 +97,12 @@ class BookViews:
 
 class UserViews:
 
+    @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         users = User.objects.all()
         return render (request, 'mainapp/users/index.html', {"users": users})
 
+    @user_passes_test(lambda u: u.is_superuser)
     def create(request):
         return render (request, 'mainapp/users/create.html', {})    
 
@@ -85,9 +113,11 @@ class UserViews:
 
 class HoldViews:
 
+    @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         return render (request, 'mainapp/holds/index.html', {})   
 
+    @user_passes_test(lambda u: u.is_superuser)
     # Διαθέσιμα βιβλία κρατήσεων
     def available(request):
         holds = Hold.objects.filter(book__book_data__available__gt = 0, status_id=0)
@@ -96,6 +126,7 @@ class HoldViews:
         }
         return render(request, 'mainapp/holds/available.html', context)
 
+    @user_passes_test(lambda u: u.is_superuser)
     # Μετατροπή κράτησης σε δανεισμό
     def hold_to_lend(request, hold_id):
         hold = get_object_or_404(Hold, pk=hold_id)
@@ -133,9 +164,11 @@ class HoldViews:
 
 class LendViews:
 
+    @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         return render (request, 'mainapp/lends/index.html', {})      
-
+    
+    @user_passes_test(lambda u: u.is_superuser)
     def delays(request):
          return render (request, 'mainapp/lends/delays.html', {})  
 
@@ -147,6 +180,7 @@ class LendViews:
 
 class SuggestionViews:
 
+    @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         return render (request, 'mainapp/suggestions/index.html', {})           
 
@@ -157,5 +191,51 @@ class SuggestionViews:
 
 class CommentViews:
 
+    @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         return render (request, 'mainapp/comments/index.html', {})          
+
+
+##########################################################################
+# Entry views
+##########################################################################                
+
+class EntryViews:
+
+    # update entry
+    @user_passes_test(lambda u: u.is_superuser)
+    def update(request, entry_id):
+        entry = get_object_or_404(Entry, pk=entry_id)
+        if request.method == 'POST':
+            form = EntryForm(request.POST, instance=entry)
+            if form.is_valid():
+                entry = form.save()
+                messages.success(request, f'Το αντίτυπο {entry.id} του βιβλίου "{entry.book.title}" ενημερώθηκε με επιτυχία!')
+                return redirect('book-details', book_id=entry.book.id)
+        else:
+            form = EntryForm(instance=entry)
+
+        return render(request, 'mainapp/books/entries/update.html', {'form': form})  
+
+    # delete entry
+    @user_passes_test(lambda u: u.is_superuser)
+    def delete(request, entry_id):
+        
+        # Αν δεν είναι POST requst επιστροφή
+        if request.method != 'POST':
+            return HttpResponseNotFound()
+        
+        # Get entry instance
+        entry = get_object_or_404(Entry, pk=entry_id)
+        book = entry.book
+
+        # if connected user is not superuser
+        # return HttpResponseForbiten
+        if request.user.is_superuser == False:
+            return HttpResponseForbidden()
+
+        # delete and go back to book details page
+        entry.delete()
+        messages.success(request, f'Το αντίτυπο με Α/Α {entry_id} διαγράφηκε με επιτυχία!')
+        return redirect('book-details', book.id)
+        

@@ -171,10 +171,10 @@ class Book(models.Model):
 # --------------------------------------------------------------------
 class Entry(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.CASCADE)
-    entry_date      = models.DateTimeField(default=timezone.now)
-    classification  = models.CharField(max_length=255, blank=True)
-    cancel_date     = models.DateTimeField(null=True, blank=True)
-    notes           = models.TextField(blank=True)
+    entry_date      = models.DateTimeField(default=timezone.now, verbose_name="Ημερομηνία εισαγωγής")
+    classification  = models.CharField(max_length=255, blank=True, verbose_name="Πληροφορίες ταξινόμησης")
+    cancel_date     = models.DateTimeField(null=True, blank=True, verbose_name="Ημερομηνία ακύρωσης")
+    notes           = models.TextField(blank=True, verbose_name="Σημειώσεις")
 
     # many-to-many relationships
     lends           = models.ManyToManyField(User, related_name = "lends", through='Lend')

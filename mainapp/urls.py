@@ -7,7 +7,7 @@ from .class_views import category as category_views
 from .class_views import publisher as publisher_views
 from .class_views import author as author_views
 from .class_views import user as user_views
-from .views import BookViews
+from .views import BookViews, EntryViews
 
 
 urlpatterns = [
@@ -19,6 +19,11 @@ urlpatterns = [
     path('books/<int:book_id>/update/', BookViews.update, name='book-update'),
     path('books/<int:book_id>/', BookViews.details, name='book-details'),
     path('books/search', views.BookViews.search, name='books-search'),
+    path('books/<int:book_id>/new_entry/', BookViews.new_entry, name='books-new-entry'),
+
+    # Αντίτυπα
+    path('entries/<int:entry_id>/update/', EntryViews.update, name='entries-update'),
+    path('entries/<int:entry_id>/delete/', EntryViews.delete, name='entries-delete'),
 
     # Κατηγοριες
     path('categories/', category_views.CategoryListView.as_view(), name='category-list'),

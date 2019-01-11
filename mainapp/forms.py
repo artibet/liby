@@ -113,4 +113,34 @@ class BookForm(forms.ModelForm):
             'weight',
             'abstract'
         ]
+
+class BookEntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = [
+            'entry_date',
+            'classification',
+            'cancel_date',
+            'notes'
+        ]      
+
+    def __init__(self, book, *args, **kwargs):
+        super(BookEntryForm, self).__init__(*args, **kwargs)
+        self.book = book
         
+
+################################################################################################################
+# Entry forms
+################################################################################################################  
+
+class EntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = [
+            'entry_date',
+            'classification',
+            'cancel_date',
+            'notes'
+        ]      
+
+    

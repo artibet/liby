@@ -3,7 +3,7 @@
         <h3 class="pb-3">Αντίτυπα</h3>
     </div>
     <div class="col-md-6">
-        <a href="#" class="btn btn-success btn-sm float-right">Νέο αντίτυπο</a>
+        <a href="{% url 'books-new-entry' book.id %}" class="btn btn-success btn-sm float-right">Νέο αντίτυπο</a>
     </div>
 </div>
 
@@ -28,10 +28,10 @@
                     <td>{{entry.cancel_date|date:'d/m/Y'}}</td>
                     <td>
                         <!-- Επεξεργασία -->
-                        <a href="#", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                        <a href="{% url 'entries-update' entry.id %}" title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
                         
                         <!-- Διαγραφή -->
-                        <form id="delete-entry-{{entry.id}}" method="POST" action="#" style="display: none;">
+                        <form id="delete-entry-{{entry.id}}" method="POST" action="{%url 'entries-delete' entry.id %}" style="display: none;">
                             {% csrf_token %}
                         </form>
                         <button title="Διαγραφή" class="btn btn-outline-danger btn-sm" onclick="deleteEntry('{{entry.id}}')">

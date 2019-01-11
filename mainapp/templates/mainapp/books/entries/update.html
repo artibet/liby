@@ -10,13 +10,13 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Ενημέρωση στοιχείων βιβλίου</h1>
+            <h1 class="m-0 text-dark">Ενημέρωση στοιχείων αντιτύπου του βιβλίου '{{form.book.title}}'</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'books-index' %}">Βιβλία</a></li>
-                <li class="breadcrumb-item active">Ενημέρωση</li>
+                <li class="breadcrumb-item active">Ενημέρωση αντιτύπου</li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,14 +30,14 @@
     
         <div class="row">
             <div class="col-md-6">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
                         {{ form|crispy }}
                     </fieldset>
                     <div class="form-group">
                         <button class="btn btn-outline-success" type="submit">Ενημέρωση</button>
-                        <a href="{% url 'book-details' form.instance.id %}" class="btn btn-outline-info">Επιστροφή</a>
+                        <a href="{% url 'book-details' form.instance.book.id %}" class="btn btn-outline-info">Επιστροφή</a>
                     </div>
 
                 </form>
