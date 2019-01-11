@@ -1,9 +1,9 @@
 <div class="row pb-3">
     <div class="col-md-6">
-        <h3 class="pb-3">Δανεισμοί</h3>
+        <h3 class="pb-3">Κριτικές</h3>
     </div>
     <div class="col-md-6">
-        <a href="#" class="btn btn-success btn-sm float-right">Νέα κριτική</a>
+        <a href="{% url 'books-new-comment' book.id %}" class="btn btn-success btn-sm float-right">Νέα κριτική</a>
     </div>
 </div>
 
@@ -12,7 +12,7 @@
             <tr>
                 <th>Ενημέρωση</th>
                 <th>Χρήστης</th>
-                <th>Αστέρια</th>
+                <th style="min-width: 80px;">Αστέρια</th>
                 <th>Κριτική</th>
                 <th class="datatable-actions"></th>
             </tr>
@@ -23,14 +23,14 @@
                 <tr>
                     <td>{{comment.updated_at|date:'d/m/Y'}}</td>
                     <td>{{comment.user.username}}</td>
-                    <td>{{comment.stars}}</td>
+                    <td class="book-stars">{% include 'psite/partials/book/stars.html' with star_list=comment.star_list %}</td>
                     <td>{{comment.body}}</td>
                     <td>
                         <!-- Επεξεργασία -->
-                        <a href="#", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                        <a href="{% url 'comments-update' comment.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
                         
                         <!-- Διαγραφή -->
-                        <form id="delete-comment-{{comment.id}}" method="POST" action="#" style="display: none;">
+                        <form id="delete-comment-{{comment.id}}" method="POST" action="{% url 'comments-delete' comment.id %}" style="display: none;">
                             {% csrf_token %}
                         </form>
                         <button title="Διαγραφή" class="btn btn-outline-danger btn-sm" onclick="deleteComment('{{comment.id}}')">

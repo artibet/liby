@@ -3,9 +3,9 @@ from django.http import HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
-from .models import Hold, Lend, HoldStatus, Book, Entry
+from .models import Hold, Lend, HoldStatus, Book, Entry, Comment
 from .forms import (HoldToLendForm, BookForm, BookEntryForm, EntryForm, 
-                    BookHoldForm, HoldForm)
+                    BookHoldForm, HoldForm, BookCommentForm, CommentForm)
 from .lib import SuperUserMixin
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -102,6 +102,24 @@ class BookViews:
             form = BookHoldForm(book)
 
         return render(request, 'mainapp/books/holds/create.html', {'form': form})
+
+
+    # Create new comment for book
+    @user_passes_test(lambda u: u.is_superuser)
+    def new_comment(request, book_id):
+        book = get_object_or_404(Book, pk=book_id)
+        if request.method == 'POST':
+            form = BookCommentForm(book, request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.book = book
+                comment.save()
+                messages.success(request, f'Η κριτική του χρήστη "{comment.user.username}" για το βιβλίο "{book.title}" καταχωρήθηκε με επιτυχία!')
+                return redirect('book-details', book_id=book.id)
+        else:
+            form = BookCommentForm(book)
+
+        return render(request, 'mainapp/books/comments/create.html', {'form': form})        
        
 
         
@@ -252,7 +270,42 @@ class CommentViews:
 
     @user_passes_test(lambda u: u.is_superuser)
     def index(request):
-        return render (request, 'mainapp/comments/index.html', {})          
+        return render (request, 'mainapp/comments/index.html', {})    
+
+    # update comment
+    @user_passes_test(lambda u: u.is_superuser)
+    def update(request, comment_id):
+        comment = get_object_or_404(Comment, pk=comment_id)
+        if request.method == 'POST':
+            form = CommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                comment = form.save()
+                messages.success(request, f'Η κριτική του χρήση "{comment.user.username}" για το βιβλίο "{comment.book.title}" ενημερώθηκε με επιτυχία!')
+                return redirect('book-details', book_id=comment.book.id)
+        else:
+            form = CommentForm(instance=comment)
+
+        return render(request, 'mainapp/books/comments/update.html', {'form': form})              
+    
+    
+    # delete comment
+    @user_passes_test(lambda u: u.is_superuser)
+    def delete(request, comment_id):
+        
+        # Αν δεν είναι POST requst επιστροφή
+        if request.method != 'POST':
+            return HttpResponseNotFound()
+        
+        # Get comment instance
+        comment = get_object_or_404(Comment, pk=comment_id)
+        user = comment.user
+        book = comment.book
+
+        # delete and go back to book details page
+        comment.delete()
+        messages.success(request, f'Η κριτική του χρήστη "{user.username}" για το βιβλίο "{book.title}" διαγράφηκε με επιτυχία!')
+        return redirect('book-details', book.id)    
+
 
 
 ##########################################################################
@@ -298,3 +351,6 @@ class EntryViews:
         messages.success(request, f'Το αντίτυπο με Α/Α {entry_id} διαγράφηκε με επιτυχία!')
         return redirect('book-details', book.id)
         
+
+
+    

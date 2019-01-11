@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
-from .models import Lend, Entry, Hold, Book
+from .models import Lend, Entry, Hold, Book, Comment
 
 
 # Create user form
@@ -151,7 +151,26 @@ class BookHoldForm(forms.ModelForm):
 
     def __init__(self, book, *args, **kwargs):
         super(BookHoldForm, self).__init__(*args, **kwargs)
-        self.book = book        
+        self.book = book     
+
+
+# Νέα αξιολόγηση από τη σελίδα του βιβλίου
+class BookCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'user',
+            'created_at',
+            'stars',
+            'body'
+        ] 
+        labels = {
+            'user': 'Σχόλιο για τον χρήστη'
+        }     
+
+    def __init__(self, book, *args, **kwargs):
+        super(BookCommentForm, self).__init__(*args, **kwargs)
+        self.book = book               
         
 
 ################################################################################################################
@@ -168,4 +187,17 @@ class EntryForm(forms.ModelForm):
             'notes'
         ]      
 
-    
+
+################################################################################################################
+# Comment forms
+################################################################################################################      
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'user',
+            'created_at',
+            'stars',
+            'body'
+        ]

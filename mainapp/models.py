@@ -336,11 +336,11 @@ class Comment(models.Model):
         (5, '5 αστέρια'),
     ]
 
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Όνομα χρήστη")
     book            = models.ForeignKey(Book, on_delete=models.CASCADE)
     stars           = models.PositiveSmallIntegerField(default=0, verbose_name="Αξιολόγηση", choices=star_choices)
     body            = models.TextField(blank=True, verbose_name="Σχόλια")
-    created_at      = models.DateTimeField(auto_now_add=True, null=True)
+    created_at      = models.DateTimeField(default=timezone.now, null=True, verbose_name="Ημερομηνία καταχώρησης")
     updated_at      = models.DateTimeField(auto_now=True, null=True)
 
     # create a list for star rendering

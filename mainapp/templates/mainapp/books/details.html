@@ -98,6 +98,22 @@ function deleteHold(hold_id) {
     
 }
 
+// delete comment
+function deleteComment(comment_id) {
+    
+    alertify.confirm(
+        "Διαγραφή Κριτικής",
+        "Να διαγραφεί η επιλεγμένη κριτική?", 
+        function() {
+            $('#delete-comment-' + comment_id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
     
 $(document).ready(function() {
 
