@@ -86,14 +86,17 @@ group by
 create or replace view active_lends as
 select
     book.id as book_id,
-    count(lend.id) as lends
+    (select 
+        count(*)
+     from 
+        lend, 
+        entry
+     where
+        lend.entry_id = entry.id and
+        entry.book_id = book.id and
+        lend.return_date is null) as lends
 from
-    book    left outer join entry on book.id = entry.book_id
-            left outer join lend on entry.id = lend.entry_id
-where
-    lend.return_date is null
-group by
-    book.id
+    book 
 ;
 
 

@@ -36,7 +36,7 @@
                             <a href="{% url 'lends-update' lend.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             
                             <!-- Διαγραφή -->
-                            <form id="delete-lend-{{lend.id}}" method="POST" action="#" style="display: none;">
+                            <form id="delete-lend-{{lend.id}}" method="POST" action="{% url 'lends-delete' lend.id %}" style="display: none;">
                                 {% csrf_token %}
                             </form>
                             <button title="Διαγραφή" class="btn btn-outline-danger btn-sm" onclick="deleteLend('{{lend.id}}')">

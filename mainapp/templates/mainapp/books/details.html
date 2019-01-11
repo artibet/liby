@@ -98,6 +98,23 @@ function deleteHold(hold_id) {
     
 }
 
+// delete hold
+function deleteLend(lend_id) {
+    
+    alertify.confirm(
+        "Διαγραφή δανεισμού",
+        "Να διαγραφεί ο επιλεγμένος δανεισμός?", 
+        function() {
+            $('#delete-lend-' + lend_id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
 // delete comment
 function deleteComment(comment_id) {
     

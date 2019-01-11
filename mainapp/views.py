@@ -285,7 +285,27 @@ class LendViews:
         else:
             form = LendForm(instance=lend)
 
-        return render(request, 'mainapp/books/lends/update.html', {'form': form})           
+        return render(request, 'mainapp/books/lends/update.html', {'form': form})    
+
+
+    # delete lend
+    @user_passes_test(lambda u: u.is_superuser)
+    def delete(request, lend_id):
+        
+        # Αν δεν είναι POST requst επιστροφή
+        if request.method != 'POST':
+            return HttpResponseNotFound()
+        
+        # Get lend instance
+        lend = get_object_or_404(Lend, pk=lend_id)
+        book = lend.entry.book
+        user = lend.user
+
+        # delete and go back to book details page
+        lend.delete()
+        messages.success(request, f'Ο δανεισμός του χρήση {user.username} για το βιβλίο {book.title} διαγράφηκε με επιτυχία!')
+        return redirect('book-details', book.id)    
+       
 
 
 

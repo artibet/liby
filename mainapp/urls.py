@@ -42,6 +42,7 @@ urlpatterns = [
 
     # Δανεισμοί
     path('lends/<int:lend_id>/update/', LendViews.update, name='lends-update'),
+    path('lends/<int:lend_id>/delete/', LendViews.delete, name='lends-delete'),
        
     # Κατηγοριες
     path('categories/', category_views.CategoryListView.as_view(), name='category-list'),
