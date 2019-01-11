@@ -3,7 +3,7 @@
         <h3 class="pb-3">Δανεισμοί</h3>
     </div>
     <div class="col-md-6">
-        <a href="#" class="btn btn-success btn-sm float-right">Νέος δανεισμός</a>
+        <a href="{% url 'books-new-lend' book.id %}" class="btn btn-success btn-sm float-right">Νέος δανεισμός</a>
     </div>
 </div>
 
@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>Χρήστης</th>
-                <th>Κράτηση</th>
+                <th>Αντίτυπο</th>
                 <th>Δανεισμός</th>
                 <th>Διάρκεια</th>
                 <th>Προθεσμία</th>
@@ -25,11 +25,7 @@
                 {% for lend in entry.lend_set.all %}
                     <tr>
                         <td>{{lend.user.username}}</td>
-                        <td>
-                            {% if lend.hold %}
-                                {{lend.hold.created_at|date:'d/m/Y'}}
-                            {% endif%}
-                        </td>
+                        <td>{{lend.entry.id}}</td>
                         <td>{{lend.lend_date|date:'d/m/Y'}}</td>
                         <td>{{lend.lend_days}}</td>
                         <td>{{lend.deadline|date:'d/m/Y'}}</td>
@@ -37,7 +33,7 @@
                         <td>{{lend.return_date|date:'d/m/Y'}}</td>
                         <td>
                             <!-- Επεξεργασία -->
-                            <a href="#", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <a href="{% url 'lends-update' lend.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             
                             <!-- Διαγραφή -->
                             <form id="delete-lend-{{lend.id}}" method="POST" action="#" style="display: none;">

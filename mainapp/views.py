@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
 from .models import Hold, Lend, HoldStatus, Book, Entry, Comment
 from .forms import (HoldToLendForm, BookForm, BookEntryForm, EntryForm, 
-                    BookHoldForm, HoldForm, BookCommentForm, CommentForm)
+                    BookHoldForm, HoldForm, BookCommentForm, CommentForm,
+                    BookLendForm, LendForm)
 from .lib import SuperUserMixin
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -121,6 +122,28 @@ class BookViews:
 
         return render(request, 'mainapp/books/comments/create.html', {'form': form})        
        
+
+    # Create new lend for book
+    @user_passes_test(lambda u: u.is_superuser)
+    def new_lend(request, book_id):
+        
+        book = get_object_or_404(Book, pk=book_id)
+        
+        # Ελεγχος αν υπάρχουν διαθέσιμα αντίτυπα
+        if book.book_data.available == 0:
+            messages.info(request, f'Δεν υπάρχουν διαθέσιμα αντίτυπα του βιβλίου "{book.title}" για δανεισμό!')
+            return redirect('book-details', book_id=book.id)
+        
+        if request.method == 'POST':
+            form = BookLendForm(book, request.POST)
+            if form.is_valid():
+                lend = form.save()
+                messages.success(request, f'Ο δανεισμός του βιβλίου "{book.title}" στον χρήστη "{lend.user.username}" καταχωρήθηκε με επιτυχία!')
+                return redirect('book-details', book_id=book.id)
+        else:
+            form = BookLendForm(book)
+
+        return render(request, 'mainapp/books/lends/create.html', {'form': form})        
 
         
     @user_passes_test(lambda u: u.is_superuser)
@@ -247,7 +270,22 @@ class LendViews:
     
     @user_passes_test(lambda u: u.is_superuser)
     def delays(request):
-         return render (request, 'mainapp/lends/delays.html', {})  
+         return render (request, 'mainapp/lends/delays.html', {}) 
+
+    # update lend
+    @user_passes_test(lambda u: u.is_superuser)
+    def update(request, lend_id):
+        lend = get_object_or_404(Lend, pk=lend_id)
+        if request.method == 'POST':
+            form = LendForm(request.POST, instance=lend)
+            if form.is_valid():
+                lend = form.save()
+                messages.success(request, f'Τα στοιχεία δανεισμού του αντιτύπου {lend.entry.id} του βιβλίου "{lend.entry.book.title}" ενημερώθηκε με επιτυχία!')
+                return redirect('book-details', book_id=lend.entry.book_id)
+        else:
+            form = LendForm(instance=lend)
+
+        return render(request, 'mainapp/books/lends/update.html', {'form': form})           
 
 
 

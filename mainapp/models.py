@@ -245,11 +245,11 @@ class HoldStatus(models.Model):
 # lend
 # --------------------------------------------------------------------
 class Lend(models.Model):
-    entry           = models.ForeignKey(Entry, on_delete=models.PROTECT)
-    user            = models.ForeignKey(User, on_delete=models.PROTECT)
-    lend_date       = models.DateTimeField(default=timezone.now)
-    lend_days       = models.PositiveSmallIntegerField(default=20)
-    return_date     = models.DateTimeField(blank=True, null=True)
+    entry           = models.ForeignKey(Entry, on_delete=models.PROTECT, verbose_name="Αριθμός αντιτύπου")
+    user            = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Όνομα χρήστη")
+    lend_date       = models.DateTimeField(default=timezone.now, verbose_name="Ημερομηνία δανεισμού")
+    lend_days       = models.PositiveSmallIntegerField(default=20, verbose_name="Διάρκεια δανεισμού (μέρες)")
+    return_date     = models.DateTimeField(blank=True, null=True, verbose_name="Ημερομηνία επιστροφής")
 
     # Κωδικοποίηση καταστάσεων δανεισμού (class variables)
     STATUS_ACTIVE = 0
@@ -270,9 +270,6 @@ class Lend(models.Model):
     # Επιστροφή περιγραφής κατάστασης
     @property
     def status_desc(self):
-        print(self.deadline)
-        print(timezone.now())
-        print(self.deadline < timezone.now())
         if self.status == Lend.STATUS_ACTIVE:
             return "Εμπρόθεσμο"
         elif self.status == Lend.STATUS_OVERDUE:

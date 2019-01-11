@@ -7,7 +7,7 @@ from .class_views import category as category_views
 from .class_views import publisher as publisher_views
 from .class_views import author as author_views
 from .class_views import user as user_views
-from .views import BookViews, EntryViews, HoldViews, CommentViews
+from .views import BookViews, EntryViews, HoldViews, CommentViews, LendViews
 
 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
     path('books/<int:book_id>/new_entry/', BookViews.new_entry, name='books-new-entry'),
     path('books/<int:book_id>/new_hold/', BookViews.new_hold, name='books-new-hold'),
     path('books/<int:book_id>/new_comment/', BookViews.new_comment, name='books-new-comment'),
+    path('books/<int:book_id>/new_lend/', BookViews.new_lend, name='books-new-lend'),
 
     # Αντίτυπα
     path('entries/<int:entry_id>/update/', EntryViews.update, name='entries-update'),
@@ -38,6 +39,9 @@ urlpatterns = [
     path('comments/', views.CommentViews.index, name='comments-index'),
     path('comments/<int:comment_id>/update/', CommentViews.update, name='comments-update'),
     path('comments/<int:comment_id>/delete/', CommentViews.delete, name='comments-delete'),
+
+    # Δανεισμοί
+    path('lends/<int:lend_id>/update/', LendViews.update, name='lends-update'),
        
     # Κατηγοριες
     path('categories/', category_views.CategoryListView.as_view(), name='category-list'),

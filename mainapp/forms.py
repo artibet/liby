@@ -170,8 +170,35 @@ class BookCommentForm(forms.ModelForm):
 
     def __init__(self, book, *args, **kwargs):
         super(BookCommentForm, self).__init__(*args, **kwargs)
-        self.book = book               
+        self.book = book     
+
+
+# Νέος δανεισμός από τη σελίδα του βιβλίου
+class BookLendForm(forms.ModelForm):
+    class Meta:
+        model = Lend
+        fields = [
+            'entry',
+            'user',
+            'lend_date',
+            'lend_days',
+            'return_date'
+        ] 
+        labels = {
+            'user': 'Δανεισμός στον χρήστη'
+        }     
+
+    def __init__(self, book, *args, **kwargs):
+        super(BookLendForm, self).__init__(*args, **kwargs)
+        self.book = book 
         
+        reserved_entry_list = Lend.objects.filter(entry__book_id=book.id, return_date__isnull=True).values_list('entry_id', flat=True)
+        available_entry_list = Entry.objects.filter(book_id=book.id).exclude(id__in=reserved_entry_list).values_list('id', flat=True)
+        choices = []
+        for n in available_entry_list:
+            choices.append((n,n))    
+
+        self.fields['entry'].choices = choices
 
 ################################################################################################################
 # Entry forms
@@ -201,3 +228,31 @@ class CommentForm(forms.ModelForm):
             'stars',
             'body'
         ]
+
+
+################################################################################################################
+# Lend forms
+################################################################################################################  
+
+class LendForm(forms.ModelForm):
+    class Meta:
+        model = Lend
+        fields = [
+            'entry',
+            'user',
+            'lend_date',
+            'lend_days',
+            'return_date'
+        ] 
+   
+
+    def __init__(self, *args, **kwargs):
+        super(LendForm, self).__init__(*args, **kwargs)
+        lend = self.instance
+        reserved_entry_list = Lend.objects.filter(entry__book_id=lend.entry.book_id, return_date__isnull=True).values_list('entry_id', flat=True)
+        available_entry_list = Entry.objects.filter(book_id=lend.entry.book_id).exclude(id__in=reserved_entry_list).values_list('id', flat=True)
+        choices = []
+        for n in available_entry_list:
+            choices.append((n,n))    
+        choices.append((lend.entry_id, lend.entry_id))   # add current entry from reserve list
+        self.fields['entry'].choices = choices         
