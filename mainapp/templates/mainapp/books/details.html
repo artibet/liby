@@ -64,7 +64,64 @@
 
 <script>
 
+    
 $(document).ready(function() {
+
+    setDatatable($('#hold-table'), 
+        [
+            {
+                "targets": 6,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        [
+            [0,'desc'],
+            [1,'desc']
+        ]
+    ); 
+
+    setDatatable($('#lend-table'), 
+        [
+            {
+                "targets": 7,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        [
+            [2,'desc'],
+        ]
+    ); 
+
+    setDatatable($('#comment-table'), 
+        [
+            {
+                "targets": 4,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        [
+            [0,'desc'],
+        ]
+    ); 
+
+    setDatatable($('#entry-table'), 
+        [
+            {
+                "targets": 4,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        [
+            [0,'desc'],
+        ]
+    ); 
+
+
+
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 
     // $('#menu-books-create .nav-link:first').addClass('active'); 

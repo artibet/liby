@@ -1,0 +1,60 @@
+<div class="row no-gutters book-details-card">
+    
+    <div class="col-auto">
+        <img src="{{book.image.url}}" class="img-fluid" alt="Εξώφυλλο">
+        <div class="book-details-data text-muted">
+            <div class="book-stars">
+                {% include 'psite/partials/book/stars.html' with star_list=book.book_data.star_list %}
+                <span class="text-muted">
+                    {{book.book_data.grade}}
+                    ({{book.book_data.num_comments}} κριτικές)
+                </span>
+            </div>
+
+            <div>
+                <span class="font-weight-bold">
+                    {% if book.authors.count > 1%}
+                        Συγγραφείς:
+                    {% else %}
+                       Συγγραφέας:
+                    {% endif %}
+                </span>
+                {% for author in book.authors.all %}
+                    {{author.author_name}}&nbsp;
+                {% endfor %}
+            </div>
+
+            <div><span class="font-weight-bold">ISBN: </span>{{book.isbn}}</div>
+            <div><span class="font-weight-bold">Έκδοση: </span>{{book.revision}}η</div>
+            <div><span class="font-weight-bold">Γλώσσα: </span>{{book.language.description}}</div>
+            <div><span class="font-weight-bold">Εκδότης: </span>{{book.publisher.pub_name}}</div>
+            <div><span class="font-weight-bold">Σελίδες: </span>{{book.pages}}</div>
+            <div><span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}</div>
+            <div><span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.</div>
+            <div><span class="font-weight-bold">Έτος έκδοσης: </span>{{book.published_year}}</div>
+            <div><span class="font-weight-bold">Μήνας έκδοσης: </span>{{book.published_month_desc}}</div>
+
+            <div>
+                <span class="font-weight-bold">
+                    {% if book.categories.count > 1%}
+                        Κατηγορίες:
+                    {% else %}
+                        Κατηγορία:
+                    {% endif %}
+                </span>
+                {% for category in book.categories.all %}
+                    {{category.description}}
+                {% endfor %}
+            </div>
+           
+            <div><span class="font-weight-bold">Δημιουργήθηκε: </span>{{book.created_at|date:'d/m/Y, H:i'}}</div>
+            <div><span class="font-weight-bold">Ενημερώθηκε: </span>{{book.updated_at|date:'d/m/Y, H:i'}}</div>
+
+            <div>
+                <a href="#" class="btn btn-primary mt-3 hold-link">Επεξεργασιά στοιχείων</a>
+            </div>
+
+        </div>
+    </div>
+
+</div>

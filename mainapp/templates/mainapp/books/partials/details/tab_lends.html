@@ -1,0 +1,55 @@
+<div class="row pb-3">
+    <div class="col-md-6">
+        <h3 class="pb-3">Δανεισμοί</h3>
+    </div>
+    <div class="col-md-6">
+        <a href="#" class="btn btn-success btn-sm float-right">Νέος δανεισμός</a>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover" id="lend-table">
+        <thead>
+            <tr>
+                <th>Χρήστης</th>
+                <th>Κράτηση</th>
+                <th>Δανεισμός</th>
+                <th>Διάρκεια</th>
+                <th>Προθεσμία</th>
+                <th>Κατάσταση</th>
+                <th>Επιστροφή</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in book.entry_set.all %}
+                {% for lend in entry.lend_set.all %}
+                    <tr>
+                        <td>{{lend.user.username}}</td>
+                        <td>
+                            {% if lend.hold %}
+                                {{lend.hold.created_at|date:'d/m/Y'}}
+                            {% endif%}
+                        </td>
+                        <td>{{lend.lend_date|date:'d/m/Y'}}</td>
+                        <td>{{lend.lend_days}}</td>
+                        <td>{{lend.deadline|date:'d/m/Y'}}</td>
+                        <td><span class="{{lend.status_css}}">{{lend.status_desc}}</span></td>
+                        <td>{{lend.return_date|date:'d/m/Y'}}</td>
+                        <td>
+                            <!-- Επεξεργασία -->
+                            <a href="#", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            
+                            <!-- Διαγραφή -->
+                            <form id="delete-lend-{{lend.id}}" method="POST" action="#" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                            <button title="Διαγραφή" class="btn btn-outline-danger btn-sm" onclick="deleteLend('{{lend.id}}')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+    
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>

@@ -1,0 +1,46 @@
+<div class="row pb-3">
+    <div class="col-md-6">
+        <h3 class="pb-3">Αντίτυπα</h3>
+    </div>
+    <div class="col-md-6">
+        <a href="#" class="btn btn-success btn-sm float-right">Νέο αντίτυπο</a>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover" id="entry-table">
+        <thead>
+            <tr>
+                <th>Καταχώρηση</th>
+                <th>Αριθμός</th>
+                <th>Ταξινόμηση</th>
+                <th>Κατάσταση</th>
+                <th>Ημ/νία διαγραφής</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in book.entry_set.all %}
+                <tr>
+                    <td>{{entry.entry_date|date:'d/m/Y'}}</td>
+                    <td>{{entry.id}}</td>
+                    <td>{{entry.classification}}</td>
+                    <td><span class="{{entry.status_css}}">{{entry.status}}</span></td>
+                    <td>{{entry.cancel_date|date:'d/m/Y'}}</td>
+                    <td>
+                        <!-- Επεξεργασία -->
+                        <a href="#", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                        
+                        <!-- Διαγραφή -->
+                        <form id="delete-entry-{{entry.id}}" method="POST" action="#" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                        <button title="Διαγραφή" class="btn btn-outline-danger btn-sm" onclick="deleteEntry('{{entry.id}}')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    

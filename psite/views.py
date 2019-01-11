@@ -197,8 +197,7 @@ def search(request):
     
     # Ανάκτηση βιβλίων ανάλογα με το κριτήριο
     book_list = Book.objects.filter(q_clause)
-    print(book_list)
-    
+      
     # paginate book_list
     paginator = Paginator(book_list, PAGE_SIZE)
     page = request.GET.get('page')

@@ -179,6 +179,20 @@ class Entry(models.Model):
     # many-to-many relationships
     lends           = models.ManyToManyField(User, related_name = "lends", through='Lend')
 
+    # entry status
+    def status(self):
+        if self.cancel_date:
+            return "Διεγραμμένο"
+        else:
+            return "Ενεργό"
+
+    # status css
+    def status_css(self):
+        if self.cancel_date:
+            return "badge badge-danger"
+        else:
+            return "badge badge-success"
+
     def __str__(self):
         return self.book.title
     
