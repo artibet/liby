@@ -50,21 +50,24 @@
             <div><span class="font-weight-bold">Δημιουργήθηκε: </span>{{book.created_at|date:'d/m/Y, H:i'}}</div>
             <div><span class="font-weight-bold">Ενημερώθηκε: </span>{{book.updated_at|date:'d/m/Y, H:i'}}</div>
 
-            <!-- Επεξεργασία  -->
+           
             <div class="mt-3">
                 
+                <!-- Επεξεργασία  -->
                 <a href="{% url 'book-update' book.id %}" class="btn btn-primary" style="display: inline-block;">
                     Επεξεργασιά
                 </a>
-                <button class="btn btn-danger" onclick="deleteBook('{{book.id}}', '{{book.title}}')">
+
+                <!-- Διαγραφή -->
+                <form id="delete-book-form" method="POST" action="{% url 'books-delete' book.id %}" style="display: none;">
+                    {% csrf_token %}
+                </form>
+                <button class="btn btn-danger" onclick="deleteBook('{{book.title}}')">
                     Διαγραφή</i>
                 </button>
             </div>
 
-            <!-- Διαγραφή -->
-            <form id="delete-book" method="POST" action="{% url 'books-delete' book.id %}" style="display: none;">
-                {% csrf_token %}
-            </form>
+            
             
 
         </div>

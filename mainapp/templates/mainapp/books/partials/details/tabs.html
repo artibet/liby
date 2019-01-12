@@ -1,11 +1,11 @@
 <ul class="nav nav-tabs nav-justified">
     <li class="nav-item">
-        <a class="nav-link active" href="#abstract-tab" data-toggle="tab" role="tab">
+        <a class="nav-link {% if tab == 'abstract' %} active {% endif %}" href="#abstract-tab" data-toggle="tab" role="tab">
             Περίληψη 
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#entry-tab" data-toggle="tab" role="tab">
+        <a class="nav-link {% if tab == 'entries' %} active {% endif %}" href="#entry-tab" data-toggle="tab" role="tab">
             Αντίτυπα&nbsp;&nbsp;
             {% if book.book_data.num_entries > 0%}
                 <span class="badge badge-danger">{{book.book_data.num_entries}}</span>
@@ -15,7 +15,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hold-tab" data-toggle="tab" role="tab">
+        <a class="nav-link {% if tab == 'holds' %} active {% endif %}" href="#hold-tab" data-toggle="tab" role="tab">
             Κρατήσεις&nbsp;&nbsp;
             {% if book.holds.count > 0%}
                 <span class="badge badge-danger">{{book.holds.count}}</span>
@@ -25,7 +25,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lend-tab" data-toggle="tab" role="tab">
+        <a class="nav-link {% if tab == 'lends' %} active {% endif %}" href="#lend-tab" data-toggle="tab" role="tab">
             Δανεισμοί&nbsp;&nbsp;
             {% if book.book_data.total_lends > 0%}
                 <span class="badge badge-danger">{{book.book_data.total_lends}}</span>
@@ -35,7 +35,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#comment-tab" data-toggle="tab" role="tab">
+        <a class="nav-link {% if tab == 'comments' %} active {% endif %}" href="#comment-tab" data-toggle="tab" role="tab">
             Κριτικές&nbsp;&nbsp;
             {% if book.comments.count > 0%}
                 <span class="badge badge-danger">{{book.comments.count}}</span>
@@ -52,27 +52,27 @@
 <div class="tab-content pt-4">
 
     <!-- Στοιχεία βιβλίου -->
-    <div id="abstract-tab" class='tab-pane active'>
+    <div id="abstract-tab" class="tab-pane {% if tab == 'abstract' %} active {% endif %}">
         {% include 'mainapp/books/partials/details/tab_abstract.html' %}
     </div>
 
     <!-- Αντίτυπα -->
-    <div id="entry-tab" class='tab-pane'>
+    <div id="entry-tab" class="tab-pane {% if tab == 'entries' %} active {% endif %}">
             {% include 'mainapp/books/partials/details/tab_entries.html' %}
         </div>
 
     <!-- Κρατήσεις -->
-    <div id="hold-tab" class='tab-pane'>
+    <div id="hold-tab" class="tab-pane {% if tab == 'holds' %} active {% endif %}">
         {% include 'mainapp/books/partials/details/tab_holds.html' %}
     </div>
 
     <!-- Δανεισμοί -->
-    <div id="lend-tab" class='tab-pane'>
+    <div id="lend-tab" class="tab-pane {% if tab == 'lends' %} active {% endif %}">
         {% include 'mainapp/books/partials/details/tab_lends.html' %}
     </div>
 
     <!-- Κριτικές -->
-    <div id="comment-tab" class='tab-pane'>
+    <div id="comment-tab" class="tab-pane {% if tab == 'comments' %} active {% endif %}">
         {% include 'mainapp/books/partials/details/tab_comments.html' %}
     </div>
 

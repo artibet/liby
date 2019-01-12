@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -27,12 +27,14 @@ class BookViews:
     # book create
     @user_passes_test(lambda u: u.is_superuser)
     def create(request):
+        
+
         if request.method == 'POST':
             form = BookForm(request.POST)
             if form.is_valid():
                 book = form.save()
                 messages.success(request, f'Το βιβλίο "{book.title}" καταχωρήθηκε με επιτυχία!')
-                return redirect('book-details', book_id=book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=abstract")
         else:
             form = BookForm()
 
@@ -47,7 +49,7 @@ class BookViews:
             if form.is_valid():
                 book = form.save()
                 messages.success(request, f'Το βιβλίο "{book.title}" ενημερώθηκε με επιτυχία!')
-                return redirect('book-details', book_id=book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=abstract")
         else:
             form = BookForm(instance=book)
 
@@ -65,6 +67,12 @@ class BookViews:
         book = get_object_or_404(Book, pk=book_id)
         title = book.title
 
+        # Ελεγχος αν μπορεί να γίνει η διαγραφή
+        status, msg = book.can_deleted()
+        if not status:
+            messages.error(request, msg)
+            return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=abstract")
+
         # delete and go back to book index page
         book.delete()
         messages.success(request, f'Το βιβλίο με τίτλο "{title}" διαγράφηκε με επιτυχία!')
@@ -75,8 +83,15 @@ class BookViews:
     @user_passes_test(lambda u: u.is_superuser)
     def details(request, book_id):
         book = get_object_or_404(Book, pk=book_id)
+        
+        if 'tab' in request.GET:
+            tab = request.GET['tab']
+        else:
+            tab = 'abstract'
+                
         context = {
-            'book': book
+            'book': book,
+            'tab': tab
         }
         return render(request, 'mainapp/books/details.html', context)  
 
@@ -92,7 +107,7 @@ class BookViews:
                 entry.book = book
                 entry.save()
                 messages.success(request, f'Το αντίτυπο με Α/Α "{entry.id}" καταχωρήθηκε με επιτυχία!')
-                return redirect('book-details', book_id=book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=entries")
         else:
             form = BookEntryForm(book)
 
@@ -111,12 +126,13 @@ class BookViews:
                 # Έλεγχος αν υπάρχει ήδη ανοιχτή κράτηση για τον επιλεγμένο χρήστη
                 user_holds = Hold.objects.filter(book_id=book.id, user_id=hold.user.id, status_id=0)
                 if user_holds:
-                    messages.info(request, f'Υπάρχει ήδη κράτηση του χρήστη {hold.user.username} για το βιβλίο "{book.title}"')
+                    messages.error(request, f'Υπάρχει ήδη κράτηση του χρήστη {hold.user.username} για το βιβλίο "{book.title}"')
                 else:
                     hold.book = book
                     hold.save()
                     messages.success(request, f'Η κράτηση για το βιβλίο "{book.title}" στο χρήστη "{hold.user.username}" καταχωρήθηκε με επιτυχία!')
-                return redirect('book-details', book_id=book.id)
+
+                return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=holds")
         else:
             form = BookHoldForm(book)
 
@@ -134,7 +150,7 @@ class BookViews:
                 comment.book = book
                 comment.save()
                 messages.success(request, f'Η κριτική του χρήστη "{comment.user.username}" για το βιβλίο "{book.title}" καταχωρήθηκε με επιτυχία!')
-                return redirect('book-details', book_id=book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=comments")
         else:
             form = BookCommentForm(book)
 
@@ -149,15 +165,15 @@ class BookViews:
         
         # Ελεγχος αν υπάρχουν διαθέσιμα αντίτυπα
         if book.book_data.available == 0:
-            messages.info(request, f'Δεν υπάρχουν διαθέσιμα αντίτυπα του βιβλίου "{book.title}" για δανεισμό!')
-            return redirect('book-details', book_id=book.id)
+            messages.error(request, f'Δεν υπάρχουν διαθέσιμα αντίτυπα του βιβλίου "{book.title}" για δανεισμό!')
+            return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=lends")
         
         if request.method == 'POST':
             form = BookLendForm(book, request.POST)
             if form.is_valid():
                 lend = form.save()
                 messages.success(request, f'Ο δανεισμός του βιβλίου "{book.title}" στον χρήστη "{lend.user.username}" καταχωρήθηκε με επιτυχία!')
-                return redirect('book-details', book_id=book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=lends")
         else:
             form = BookLendForm(book)
 
@@ -249,7 +265,7 @@ class HoldViews:
             if form.is_valid():
                 hold = form.save()
                 messages.success(request, f'Η κράτηση του χρήση {hold.user.username} για το βιβλίο {hold.book.title} ενημερώθηκε με επιτυχία!')
-                return redirect('book-details', book_id=hold.book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':hold.book.id})+"?tab=holds")
         else:
             form = HoldForm(instance=hold)
 
@@ -272,7 +288,7 @@ class HoldViews:
         # delete and go back to book details page
         hold.delete()
         messages.success(request, f'Η κράτηση του χρήση {user.username} για το βιβλίο {book.title} διαγράφηκε με επιτυχία!')
-        return redirect('book-details', book.id)    
+        return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=holds")    
 
 
 
@@ -299,7 +315,7 @@ class LendViews:
             if form.is_valid():
                 lend = form.save()
                 messages.success(request, f'Τα στοιχεία δανεισμού του αντιτύπου {lend.entry.id} του βιβλίου "{lend.entry.book.title}" ενημερώθηκε με επιτυχία!')
-                return redirect('book-details', book_id=lend.entry.book_id)
+                return redirect(reverse('book-details', kwargs={'book_id':lend.entry.book.id})+"?tab=lends")
         else:
             form = LendForm(instance=lend)
 
@@ -322,7 +338,7 @@ class LendViews:
         # delete and go back to book details page
         lend.delete()
         messages.success(request, f'Ο δανεισμός του χρήση {user.username} για το βιβλίο {book.title} διαγράφηκε με επιτυχία!')
-        return redirect('book-details', book.id)    
+        return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=lends")  
        
 
 
@@ -357,7 +373,7 @@ class CommentViews:
             if form.is_valid():
                 comment = form.save()
                 messages.success(request, f'Η κριτική του χρήση "{comment.user.username}" για το βιβλίο "{comment.book.title}" ενημερώθηκε με επιτυχία!')
-                return redirect('book-details', book_id=comment.book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':comment.book.id})+"?tab=comments")
         else:
             form = CommentForm(instance=comment)
 
@@ -380,7 +396,7 @@ class CommentViews:
         # delete and go back to book details page
         comment.delete()
         messages.success(request, f'Η κριτική του χρήστη "{user.username}" για το βιβλίο "{book.title}" διαγράφηκε με επιτυχία!')
-        return redirect('book-details', book.id)    
+        return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=comments")   
 
 
 
@@ -399,7 +415,7 @@ class EntryViews:
             if form.is_valid():
                 entry = form.save()
                 messages.success(request, f'Το αντίτυπο {entry.id} του βιβλίου "{entry.book.title}" ενημερώθηκε με επιτυχία!')
-                return redirect('book-details', book_id=entry.book.id)
+                return redirect(reverse('book-details', kwargs={'book_id':entry.book.id})+"?tab=entries")
         else:
             form = EntryForm(instance=entry)
 
@@ -417,16 +433,16 @@ class EntryViews:
         entry = get_object_or_404(Entry, pk=entry_id)
         book = entry.book
 
-        # if connected user is not superuser
-        # return HttpResponseForbiten
-        if request.user.is_superuser == False:
-            return HttpResponseForbidden()
+        # Έλεγχος αν μπορεί να γίνει ο δανεισμός
+        status, msg = entry.can_deleted()
+        if not status:
+            messages.error(request, msg)
+        else:
+            entry.delete()
+            messages.success(request, f'Το αντίτυπο με Α/Α {entry_id} διαγράφηκε με επιτυχία!')
 
-        # delete and go back to book details page
-        entry.delete()
-        messages.success(request, f'Το αντίτυπο με Α/Α {entry_id} διαγράφηκε με επιτυχία!')
-        return redirect('book-details', book.id)
-        
+        return redirect(reverse('book-details', kwargs={'book_id':book.id})+"?tab=entries")
+
 
 
     

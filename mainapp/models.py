@@ -131,6 +131,21 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    # Έλεγχος αν το βιβλίο μπορεί να διαγραφεί
+    def can_deleted(self):
+        if self.entry_set.all():
+            status = False
+            msg = f'Υπάρχουν καταχωρημένα αντίτυπα στο βιβλίο "{self.title}". Διαγραφή αδύνατη!'
+        elif self.hold_set.all():
+            status = False
+            msg = f'Υπάρχουν καταχωρημένες κρατήσεις για το βιβλίο "{self.title}". Διαγραφή αδύνατη!'
+        else:
+            status = True
+            msg = ''
+
+        return status, msg
+
+
     def published_month_desc(self):
         if self.published_month == 1:
             return 'Ιανουάριος'
@@ -185,6 +200,17 @@ class Entry(models.Model):
             return "Διεγραμμένο"
         else:
             return "Ενεργό"
+
+    # Έλεγχος αν το αντίτυπο μπορεί να διαγραφεί
+    def can_deleted(self):
+        if self.lend_set.all():
+            status = False
+            msg = f'Υπάρχουν καταχωρημένοι δανεισμοί αυτού του αντιτύπου. Διαγραφή αδύνατη!'
+        else:
+            status = True
+            msg = ''
+
+        return status, msg            
 
     # status css
     def status_css(self):

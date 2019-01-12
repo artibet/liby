@@ -64,13 +64,13 @@
 
 <script>
 
-function deleteBook(id, title) {
+function deleteBook(title) {
     
     alertify.confirm(
         "Διαγραφή Βιβλίου",
         "Να διαγραφεί το βιβλίο με τίτλο '" + title + "'?", 
         function() {
-            $('#delete-book-' + id).submit();
+            $('#delete-book-form').submit();
             //alertify.success("Επιτυχής διαγραφή!")
         },
         function() {
