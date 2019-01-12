@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django.forms.widgets import CheckboxSelectMultiple
 from django import forms
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -112,6 +113,8 @@ class BookForm(forms.ModelForm):
             'revision',
             'isbn',
             'language',
+            'authors',
+            'categories',
             'publisher',
             'published_year',
             'published_month',
@@ -119,7 +122,10 @@ class BookForm(forms.ModelForm):
             'dimensions',
             'weight',
             'abstract'
+
         ]
+
+    
 
 # Νέο αντίτυπο μέσα από την σελίδα του βιβλίου
 class BookEntryForm(forms.ModelForm):

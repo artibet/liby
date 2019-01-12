@@ -120,7 +120,7 @@ text-align: center;
 }
 
 body.psite {
-    background-color:  cadetblue;
+    background-color:  silver;
 }
 
 .book-details-card img {
@@ -180,4 +180,10 @@ body.psite {
 
 .datatable-actions {
     min-width: 80px;
+}
+
+.alert-success {
+    color: #fff !important;
+    background-color: #28a745 !important;
+    border-color: #23923d;
 }

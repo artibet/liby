@@ -123,11 +123,12 @@ class Book(models.Model):
     updated_at      = models.DateTimeField(auto_now=True, null=True, verbose_name='Τροποποίηση')
 
     # many-to-many relationships
-    authors         = models.ManyToManyField(Author, related_name = "books")
-    categories      = models.ManyToManyField(Category, related_name = "books")
+    authors         = models.ManyToManyField(Author, related_name = "books", verbose_name='Συγγραφείς')
+    categories      = models.ManyToManyField(Category, related_name = "books", verbose_name='Κατηγορίες')
     comments        = models.ManyToManyField(User, related_name = "user_comments", through='Comment')
     holds           = models.ManyToManyField(User, related_name = "user_holds", through='Hold')
 
+        
     def __str__(self):
         return self.title
 
@@ -194,6 +195,7 @@ class Entry(models.Model):
     # many-to-many relationships
     lends           = models.ManyToManyField(User, related_name = "lends", through='Lend')
 
+    
     # entry status
     def status(self):
         if self.cancel_date:

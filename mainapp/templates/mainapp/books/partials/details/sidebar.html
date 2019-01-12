@@ -1,6 +1,6 @@
 <div class="row no-gutters book-details-card">
     
-    <div class="col-auto">
+    <div>
         <img src="{{book.image.url}}" class="img-fluid" alt="Εξώφυλλο">
         <div class="book-details-data text-muted">
             <div class="book-stars">
@@ -19,9 +19,7 @@
                        Συγγραφέας:
                     {% endif %}
                 </span>
-                {% for author in book.authors.all %}
-                    {{author.author_name}}&nbsp;
-                {% endfor %}
+                {{book.book_data.authors}}
             </div>
 
             <div><span class="font-weight-bold">ISBN: </span>{{book.isbn}}</div>
@@ -42,9 +40,7 @@
                         Κατηγορία:
                     {% endif %}
                 </span>
-                {% for category in book.categories.all %}
-                    {{category.description}}
-                {% endfor %}
+                {{book.book_data.categories}}
             </div>
            
             <div><span class="font-weight-bold">Δημιουργήθηκε: </span>{{book.created_at|date:'d/m/Y, H:i'}}</div>
