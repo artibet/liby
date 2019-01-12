@@ -21,7 +21,8 @@ class BookViews:
 
     @user_passes_test(lambda u: u.is_superuser)
     def index(request):
-        return render (request, 'mainapp/books/index.html', {})
+        book_list = Book.objects.all()
+        return render (request, 'mainapp/books/index.html', {'books': book_list})
 
     # book create
     @user_passes_test(lambda u: u.is_superuser)
@@ -50,7 +51,24 @@ class BookViews:
         else:
             form = BookForm(instance=book)
 
-        return render(request, 'mainapp/books/update.html', {'form': form})        
+        return render(request, 'mainapp/books/update.html', {'form': form})      
+
+    # book delete
+    @user_passes_test(lambda u: u.is_superuser)
+    def delete(request, book_id):
+        
+        # Αν δεν είναι POST requst επιστροφή
+        if request.method != 'POST':
+            return HttpResponseNotFound()
+        
+        # Get entry instance
+        book = get_object_or_404(Book, pk=book_id)
+        title = book.title
+
+        # delete and go back to book index page
+        book.delete()
+        messages.success(request, f'Το βιβλίο με τίτλο "{title}" διαγράφηκε με επιτυχία!')
+        return redirect('books-index')
 
 
     # book details

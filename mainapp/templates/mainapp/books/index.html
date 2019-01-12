@@ -10,12 +10,12 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Βιβλία</h1>
+            <h1 class="m-0 text-dark">Κατάλογος βιβλίων</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
-                <li class="breadcrumb-item active">Βιβλία</li>
+                <li class="breadcrumb-item active">Κατάλογος βιβλίων</li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,9 +26,50 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-    
 
-    
+        <div class="card">
+            
+            <div class="card-header">
+                <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'books-create' %}" class="btn btn-outline-success btn-sm" >
+                                <i class="fa fa-plus"></i> Προσθήκη Νέου βιβλίου
+                            </a>
+                        </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="book-table">
+                    <thead>
+                        <tr>
+                            <th>Τίτλος</th>
+                            <th>Έκδοση</th>
+                            <th>Συγγραφέας</th>
+                            <th>Κατηγορίες</th>
+                            <th>Αντίτυπα</th>
+                            <th>Κρατήσεις</th>
+                            <th>Δανεισμένα</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <td><a href="{% url 'book-details' book.id %}">{{book.title}}</a></td>
+                                <td>{{book.revision}}</td>
+                                <td>{{book.book_data.authors}}</td>
+                                <td>{{book.book_data.categories}}</td>
+                                <td>{{book.book_data.num_entries}}</td>
+                                <td>{{book.book_data.active_holds}}</td>
+                                <td>{{book.book_data.active_lends}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
@@ -42,9 +83,14 @@
 <script>
 
 $(document).ready(function() {
+    
+    setDatatable($('#book-table'));
+    
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 
     $('#menu-books-index .nav-link:first').addClass('active'); 
+
+
 });
 
 </script>

@@ -64,6 +64,22 @@
 
 <script>
 
+function deleteBook(id, title) {
+    
+    alertify.confirm(
+        "Διαγραφή Βιβλίου",
+        "Να διαγραφεί το βιβλίο με τίτλο '" + title + "'?", 
+        function() {
+            $('#delete-book-' + id).submit();
+            //alertify.success("Επιτυχής διαγραφή!")
+        },
+        function() {
+            //alertify.error("Ακύρωση διαγραφής")
+        }
+    );
+    
+}
+
 // delete entry
 function deleteEntry(entry_id) {
     

@@ -130,6 +130,16 @@ class BookData(models.Model):
     num_stars5      = models.PositiveIntegerField(default=0)
     sum_stars       = models.PositiveIntegerField(default=0)
 
+    # returns a comma-separated list of book authors
+    @property
+    def authors(self):
+        return ', '.join([str(a) for a in self.book.authors.all()])
+
+    # returns a comma-separated list of book categories
+    @property
+    def categories(self):
+        return ', '.join([str(a) for a in self.book.categories.all()])        
+
 
     def status(self):
         if self.num_entries > self.active_lends + self.active_holds:
