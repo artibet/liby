@@ -47,7 +47,7 @@
     </div><!-- /.container-fluid -->
 </section>
 
-{% include 'mainapp/books/partials/modal_add_author.html' %}
+{% include 'api/author/modal_create.html' %}
 <!-- /.content -->
 
 {% endblock %}
@@ -71,6 +71,12 @@ $(document).ready(function() {
         modalAddAuthor({
             onSuccess: function(result) {
                 
+                // Add to list and make selected
+                var newAuthor = new Option(result.author_name, result.id, false, false);
+                $('#id_authors').append(newAuthor);
+                var selected = $('#id_authors').val();
+                selected.push(result.id);
+                $('#id_authors').val(selected);
             }
         });
     });
@@ -83,11 +89,8 @@ $(document).ready(function() {
     publisher_select.parentNode.appendChild(btn_add_publisher);
     btn_add_publisher.addEventListener('click', function(event) {
         event.preventDefault();
-        modalAddPublisher({
-            onSuccess: function(result) {
-                
-            }
-        });
+        
+        
         
     });
 

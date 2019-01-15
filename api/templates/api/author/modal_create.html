@@ -1,0 +1,102 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-add-author">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title">Νέος Συγγραφέας</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+
+            <div class="alert alert-danger" id="messages"></div>
+            
+            <form onsubmit="return false;">
+                <div class="form-group">
+                    <label for="name">Επωνυμία συγγραφέα*</label>
+                    <input id="author_name" type="text" class="form-control" required name="author_name"> 
+                </div>
+                <div class="form-group">
+                    <label for="name">Email</label>
+                    <input id="author_email" type="text" class="form-control" name="email"> 
+                </div>
+                <div id="div_id_bio" class="form-group"> 
+                    <label for="author_bio" class="col-form-label ">Βιογραφικό/Πληροφορίες</label>
+                    <textarea name="author_bio" cols="40" rows="10" class="textarea form-control" id="author_bio"></textarea> 
+                </div>
+                
+            </form>
+           
+        </div>
+        
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary dlg-ok">Καταχώρηση</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Επιστροφή</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+<script>
+
+
+    // Modal για προσθήκη νέου συγγραφέα
+    function modalAddAuthor(options) {
+        
+        // Reset modal
+        $('#messages').addClass('d-none');
+        $('#messages').val('');
+        $('#modal-add-author form')[0].reset();
+        $('#modal-add-author .dlg-ok').off();
+
+        
+        // Callback for ok button
+        $('#modal-add-author .dlg-ok').click(function(event) {
+            
+            event.preventDefault();
+
+            // check form validity
+            if (!$('#modal-add-author form')[0].checkValidity()) {
+                $('#messages').html("Δεν έχετε συμπληρώσει όλα τα απαραίτητα πεδία.");
+                $('#messages').removeClass('d-none');
+                return;
+            }
+    
+            // Send ajax request to store new author
+            $.ajax({
+                url: "{% url 'api:create-author' %}",
+                method: "post",
+                data: {
+                    "author_name": $('#author_name').val(),
+                    "email": $('#author_email').val(),
+                    "bio": $('#author_bio').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (options.onSuccess) {
+                        options.onSuccess(data);
+                    }
+                },
+                error: function (xhr, status, err) {
+                    if (options.onError) {
+                        options.onError(xhr, status, err);
+                    }
+                }
+            });
+    
+            // dismish modal
+            $('#modal-add-author').modal('hide');
+    
+        });
+    
+        // display modal
+        $('#modal-add-author').modal('show');
+    }
+    
+    
+</script>

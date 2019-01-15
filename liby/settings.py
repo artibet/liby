@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'mainapp',
     'psite',
+    'api',
     'users.apps.UsersConfig',
     'django_cool_paginator',
 

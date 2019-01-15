@@ -17,7 +17,9 @@ urlpatterns = [
     
     path('', include('psite.urls')),            # public site
 
-    path('user/', include('users.urls'))        
+    path('user/', include('users.urls')),     
+
+    path('api/', include('api.urls'))           # api urls
 
     
 ]
