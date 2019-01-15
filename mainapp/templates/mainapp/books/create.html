@@ -48,6 +48,7 @@
 </section>
 
 {% include 'api/author/modal_create.html' %}
+{% include 'api/publisher/modal_create.html' %}
 <!-- /.content -->
 
 {% endblock %}
@@ -89,7 +90,15 @@ $(document).ready(function() {
     publisher_select.parentNode.appendChild(btn_add_publisher);
     btn_add_publisher.addEventListener('click', function(event) {
         event.preventDefault();
-        
+        modalAddPublisher({
+            onSuccess: function(result) {
+                
+                // Add to list and make selected
+                var newPublisher = new Option(result.pub_name, result.id, true, true);
+                $('#id_publisher').append(newPublisher);
+                $('#id_authors').val(newPublisher);
+            }
+        });
         
         
     });

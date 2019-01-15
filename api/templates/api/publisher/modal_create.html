@@ -1,0 +1,122 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-add-publisher">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title">Νέος Εκδότης</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+
+            <div class="alert alert-danger messages" id="messages"></div>
+            
+            <form onsubmit="return false;">
+                <div class="form-group">
+                    <label for="publisher_name">Επωνυμία*</label>
+                    <input id="publisher_name" type="text" class="form-control" required name="publisher_name"> 
+                </div>
+                <div class="form-group">
+                    <label for="publisher_country">Χώρα</label>
+                    <select id="publisher_country" class="form-control" required name="publisher_country"> 
+                        <option value selected>---------</option>
+                        {% for country in countries %}
+                            <option value="{{country.id}}">{{country.description}} ({{country.code}})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="publisher_city">Πόλη</label>
+                    <input id="publisher_city" type="text" class="form-control" name="publisher_city"> 
+                </div>
+                <div class="form-group">
+                    <label for="publisher_address">Διεύθυνση</label>
+                    <input id="publisher_address" type="text" class="form-control" name="publisher_address"> 
+                </div>
+                <div class="form-group">
+                    <label for="publisher_zip">Ταχυδρομικός κώδικας</label>
+                    <input id="publisher_zip" type="text" class="form-control" name="publisher_zip"> 
+                </div>
+                <div class="form-group">
+                    <label for="publisher_phone">Τηλέφωνο</label>
+                    <input id="publisher_phone" type="text" class="form-control" name="publisher_phone"> 
+                </div>
+                
+            </form>
+           
+        </div>
+        
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary dlg-ok">Καταχώρηση</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Επιστροφή</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+<script>
+
+
+    // Modal για προσθήκη νέου εκδοτικού οίκου
+    function modalAddPublisher(options) {
+        
+        // Reset modal
+        $('#modal-add-publisher .messages').addClass('d-none');
+        $('#messages').val('');
+        $('#modal-add-publisher form')[0].reset();
+        $('#modal-add-publisher .dlg-ok').off();
+
+        
+        // Callback for ok button
+        $('#modal-add-publisher .dlg-ok').click(function(event) {
+            
+            event.preventDefault();
+
+            // check form validity
+            if (!$('#modal-add-publisher form')[0].checkValidity()) {
+                $('#modal-add-publisher .messages').html("Δεν έχετε συμπληρώσει όλα τα απαραίτητα πεδία.");
+                $('#modal-add-publisher .messages').removeClass('d-none');
+                return;
+            }
+    
+            // Send ajax request to store new author
+            $.ajax({
+                url: "{% url 'api:create-publisher' %}",
+                method: "post",
+                data: {
+                    "pub_name": $('#publisher_name').val(),
+                    "country_id": $('#publisher_country').val(),
+                    "city": $('#publisher_city').val(),
+                    "address": $('#publisher_address').val(),
+                    "zip": $('#publisher_zip').val(),
+                    "phone": $('#publisher_phone').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (options.onSuccess) {
+                        options.onSuccess(data);
+                    }
+                },
+                error: function (xhr, status, err) {
+                    if (options.onError) {
+                        options.onError(xhr, status, err);
+                    }
+                }
+            });
+    
+            // dismish modal
+            $('#modal-add-publisher').modal('hide');
+    
+        });
+    
+        // display modal
+        $('#modal-add-publisher').modal('show');
+    }
+    
+    
+</script>

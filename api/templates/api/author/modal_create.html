@@ -11,7 +11,7 @@
         
         <div class="modal-body">
 
-            <div class="alert alert-danger" id="messages"></div>
+            <div class="alert alert-danger messages" id="messages"></div>
             
             <form onsubmit="return false;">
                 <div class="form-group">
@@ -49,7 +49,7 @@
     function modalAddAuthor(options) {
         
         // Reset modal
-        $('#messages').addClass('d-none');
+        $('#modal-add-author .messages').addClass('d-none');
         $('#messages').val('');
         $('#modal-add-author form')[0].reset();
         $('#modal-add-author .dlg-ok').off();
@@ -62,8 +62,8 @@
 
             // check form validity
             if (!$('#modal-add-author form')[0].checkValidity()) {
-                $('#messages').html("Δεν έχετε συμπληρώσει όλα τα απαραίτητα πεδία.");
-                $('#messages').removeClass('d-none');
+                $('#modal-add-author .messages').html("Δεν έχετε συμπληρώσει όλα τα απαραίτητα πεδία.");
+                $('#modal-add-author .messages').removeClass('d-none');
                 return;
             }
     

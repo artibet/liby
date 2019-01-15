@@ -3,7 +3,7 @@ from django.http import HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
-from .models import Hold, Lend, HoldStatus, Book, Entry, Comment
+from .models import Hold, Lend, HoldStatus, Book, Entry, Comment, Country
 from .forms import (HoldToLendForm, BookForm, BookEntryForm, EntryForm, 
                     BookHoldForm, HoldForm, BookCommentForm, CommentForm,
                     BookLendForm, LendForm)
@@ -38,7 +38,12 @@ class BookViews:
         else:
             form = BookForm()
 
-        return render(request, 'mainapp/books/create.html', {'form': form})
+        context = {
+            "form": form,
+            "countries": Country.objects.all()  # for publisher modal
+        }
+
+        return render(request, 'mainapp/books/create.html', context)
 
     # book update
     @user_passes_test(lambda u: u.is_superuser)
