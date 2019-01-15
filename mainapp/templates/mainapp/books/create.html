@@ -46,6 +46,8 @@
     
     </div><!-- /.container-fluid -->
 </section>
+
+{% include 'mainapp/books/partials/modal_add_author.html' %}
 <!-- /.content -->
 
 {% endblock %}
@@ -57,6 +59,39 @@
 <script>
 
 $(document).ready(function() {
+
+    // New author button
+    authors_select = document.getElementById('id_authors');
+    btn_add_author = document.createElement('button');
+    btn_add_author.innerText = "Νέος Συγγραφέας"
+    btn_add_author.classList.add('btn', 'btn-success', 'btn-sm', 'mt-2');
+    authors_select.parentNode.appendChild(btn_add_author);
+    btn_add_author.addEventListener('click', function(event) {
+        event.preventDefault();
+        modalAddAuthor({
+            onSuccess: function(result) {
+                
+            }
+        });
+    });
+
+    // New publisher button
+    publisher_select = document.getElementById('id_publisher');
+    btn_add_publisher = document.createElement('button');
+    btn_add_publisher.innerText = "Νέος εκδότης"
+    btn_add_publisher.classList.add('btn', 'btn-success', 'btn-sm', 'mt-2');
+    publisher_select.parentNode.appendChild(btn_add_publisher);
+    btn_add_publisher.addEventListener('click', function(event) {
+        event.preventDefault();
+        modalAddPublisher({
+            onSuccess: function(result) {
+                
+            }
+        });
+        
+    });
+
+
     $('#menu-books').addClass('menu-open'); 
     $('#menu-books .nav-link:first').addClass('active'); 
     $('#menu-books-create .nav-link:first').addClass('active'); 

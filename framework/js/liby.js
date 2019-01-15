@@ -27,4 +27,50 @@ function setDatatable(element, columnDefs=[], order=[[0, 'asc']]) {
 }
 
 
+// Modal για προσθήκη νέου συγγραφέα
+function modalAddAuthor(options) {
+    
+    // Reset modal
+    $('#modal-add-author form')[0].reset();
+    $('#modal-add-author .dlg-ok').off();
 
+    // Callback for ok button
+    $('#modal-add-author .dlg-ok').click(function(event) {
+        //event.preventDefault();
+
+        // Send ajax request to store new author
+        $.ajax({
+            url: "{% url 'api-store-author' %}",
+            method: "post",
+            data: {
+                "author_name": $('#author_name').val(),
+                "email": $('#author_email').val(),
+                "bio": $('#author_bio').val(),
+                "_token" : "{% csrf_token %}"
+            },
+            success: function (data) {
+                if (options.onsuccess) {
+                    options.onsuccess(data);
+                }
+            },
+            error: function (xhr, status, err) {
+                if (options.onError) {
+                    options.error(xhr, status, err);
+                }
+            }
+        });
+
+        // dismish modal
+        $('#modal-add-author').modal('hide');
+
+    });
+
+    // display modal
+    $('#modal-add-author').modal('show');
+}
+
+// Modal για προσθήκη νέου συγγραφέα
+function modalAddPublisher(e) {
+    e.preventDefault();
+    
+}
