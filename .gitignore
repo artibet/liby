@@ -13,6 +13,9 @@ psite/migrations/__pycache__/
 users/__pycache__/
 users/migrations/__pycache__/
 
+api/__pycache__/
+api/migrations/__pycache__/
+
 
 mysql.conf
 liby.sock
