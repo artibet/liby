@@ -9,9 +9,28 @@ from .forms import (HoldToLendForm, BookForm, BookEntryForm, EntryForm,
                     BookLendForm, LendForm)
 from .lib import SuperUserMixin
 
+
+##########################################################################
+# Dashboard
+##########################################################################
+
 @user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
-    return render (request, 'mainapp/dashboard.html', {})
+    cbooks = Book.objects.count()
+    cholds = Hold.objects.count()
+    clends = Lend.objects.count()
+    cusers = User.objects.count()
+
+    context = {
+        'cbooks': cbooks,
+        'cholds': cholds,
+        'clends': clends,
+        'cusers': cusers
+    }
+    
+    return render (request, 'mainapp/dashboard.html', context)
+
+
 
 ##########################################################################
 # Book views

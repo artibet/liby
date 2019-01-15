@@ -27,7 +27,241 @@
 <section class="content">
     <div class="container-fluid">
     
+        <div class="row">
+            
+            <!-- Βιβλία -->            
+            <div class="col-md-3 col-sm-6 col-xs-12">  
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{cbooks}}</h3>
+                        <h4>Βιβλία</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <a href="{% url 'books-index' %}" class="small-box-footer">Προβολή όλων <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+       
+            <!-- Κρατήσεις -->
+            <div class="col-md-3 col-sm-6 col-xs-12">  
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{cholds}}</h3>
+                        <h4>Κρατήσεις</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-bell"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Προβολή όλων <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        
+            <!-- Δανεισμοί -->
+            <div class="col-md-3 col-sm-6 col-xs-12">  
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{clends}}</h3>
+                        <h4>Δανεισμοί</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-anchor"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Προβολή όλων <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        
+            <!-- Χρήστες -->
+            <div class="col-md-3 col-sm-6 col-xs-12">  
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{cusers}}</h3>
+                        <h4>Χρήστες</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <a href="{% url 'user-list' %}" class="small-box-footer">Προβολή όλων <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
 
+        </div>
+
+        <div class="row">
+
+            <!-- Τελευταίες παραλαβές -->
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Τελευταίες παραλαβές</h3>
+        
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0" style="display: block;">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Item</th>
+                                        <th>Status</th>
+                                        <th>Popularity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix" style="display: block;">
+                        <a href="#" class="btn btn-sm btn-secondary float-right">Προβολή όλων</a>
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+            </div>
+
+            <!-- Πρόσφατες κρατήσεις -->
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Πρόσφατες κρατήσεις</h3>
+        
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0" style="display: block;">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Item</th>
+                                        <th>Status</th>
+                                        <th>Popularity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix" style="display: block;">
+                        <a href="#" class="btn btn-sm btn-secondary float-right">Προβολή όλων</a>
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Πρόσφατοι δανεισμοί -->
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Πρόσφατοι δανεισμοί</h3>
+        
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0" style="display: block;">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Item</th>
+                                        <th>Status</th>
+                                        <th>Popularity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix" style="display: block;">
+                        <a href="#" class="btn btn-sm btn-secondary float-right">Προβολή όλων</a>
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+            </div>
+    
+            <!-- Νέοι χρήστες -->
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Νέοι χρήστες</h3>
+        
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0" style="display: block;">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Item</th>
+                                        <th>Status</th>
+                                        <th>Popularity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix" style="display: block;">
+                        <a href="#" class="btn btn-sm btn-secondary float-right">Προβολή όλων</a>
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+            </div>
+    
+        </div>
     
     </div><!-- /.container-fluid -->
 </section>
