@@ -19,7 +19,6 @@ urlpatterns = [
     path('books/<int:book_id>/update/', BookViews.update, name='book-update'),
     path('books/<int:book_id>/delete/', BookViews.delete, name='books-delete'),
     path('books/<int:book_id>/', BookViews.details, name='book-details'),
-    path('books/search', views.BookViews.search, name='books-search'),
     path('books/<int:book_id>/new_entry/', BookViews.new_entry, name='books-new-entry'),
     path('books/<int:book_id>/new_hold/', BookViews.new_hold, name='books-new-hold'),
     path('books/<int:book_id>/new_comment/', BookViews.new_comment, name='books-new-comment'),
