@@ -21,11 +21,14 @@ def dashboard(request):
     clends = Lend.objects.count()
     cusers = User.objects.count()
 
+    users = User.objects.order_by('-date_joined')[:5]
+
     context = {
         'cbooks': cbooks,
         'cholds': cholds,
         'clends': clends,
-        'cusers': cusers
+        'cusers': cusers,
+        'users': users
     }
     
     return render (request, 'mainapp/dashboard.html', context)

@@ -240,14 +240,21 @@
                             <table class="table m-0">
                                 <thead>
                                     <tr>
-                                        <th>Order ID</th>
-                                        <th>Item</th>
-                                        <th>Status</th>
-                                        <th>Popularity</th>
+                                        <th>Όνομα χρήστη</th>
+                                        <th>Επώνυμο</th>
+                                        <th>Όνομα</th>
+                                        <th>Εγγραφή</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                            
+                                    {% for user in users %}
+                                        <tr>
+                                            <td>{{user.username}}</td>
+                                            <td>{{user.last_name}}</td>
+                                            <td>{{user.first_name}}</td>
+                                            <td>{{user.date_joined|date:'d/m/Y, H:i'}}</td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -255,7 +262,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix" style="display: block;">
-                        <a href="#" class="btn btn-sm btn-secondary float-right">Προβολή όλων</a>
+                        <a href="{% url 'user-list' %}" class="btn btn-sm btn-secondary float-right">Προβολή όλων</a>
                     </div>
                     <!-- /.card-footer -->
                 </div>
