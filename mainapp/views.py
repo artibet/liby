@@ -24,6 +24,7 @@ def dashboard(request):
     latest_users = User.objects.order_by('-date_joined')[:5]
     latest_books = Book.objects.order_by('-created_at')[:5]
     latest_holds = Hold.objects.order_by('-created_at')[:5]
+    latest_lends = Lend.objects.order_by('-lend_date')[:5]
 
     context = {
         'cbooks': cbooks,
@@ -32,7 +33,8 @@ def dashboard(request):
         'cusers': cusers,
         'latest_users': latest_users,
         'latest_books': latest_books,
-        'latest_holds': latest_holds
+        'latest_holds': latest_holds,
+        'latest_lends': latest_lends
     }
     
     return render (request, 'mainapp/dashboard.html', context)
