@@ -22,13 +22,15 @@ def dashboard(request):
     cusers = User.objects.count()
 
     users = User.objects.order_by('-date_joined')[:5]
+    latest_books = Book.objects.order_by('-created_at')[:5]
 
     context = {
         'cbooks': cbooks,
         'cholds': cholds,
         'clends': clends,
         'cusers': cusers,
-        'users': users
+        'users': users,
+        'latest_books': latest_books
     }
     
     return render (request, 'mainapp/dashboard.html', context)

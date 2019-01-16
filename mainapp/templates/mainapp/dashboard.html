@@ -110,14 +110,19 @@
                             <table class="table m-0">
                                 <thead>
                                     <tr>
-                                        <th>Order ID</th>
-                                        <th>Item</th>
-                                        <th>Status</th>
-                                        <th>Popularity</th>
+                                        <th>Τίτλος βιβλίου</th>
+                                        <th>Έκδοση</th>
+                                        <th>Παραλαβή</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                            
+                                    {% for book in latest_books %}
+                                        <tr>
+                                            <td><a href="{% url 'book-details' book.id %}">{{book.title}}</a></td>
+                                            <td>{{book.revision}}η</td>
+                                            <td>{{book.created_at|date:'d/m/Y'}}</td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
