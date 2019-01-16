@@ -58,7 +58,7 @@ class BookViews:
         
 
         if request.method == 'POST':
-            form = BookForm(request.POST)
+            form = BookForm(request.POST, request.FILES)
             if form.is_valid():
                 book = form.save()
                 messages.success(request, f'Το βιβλίο "{book.title}" καταχωρήθηκε με επιτυχία!')
@@ -78,7 +78,7 @@ class BookViews:
     def update(request, book_id):
         book = get_object_or_404(Book, pk=book_id)
         if request.method == 'POST':
-            form = BookForm(request.POST, instance=book)
+            form = BookForm(request.POST, request.FILES, instance=book)
             if form.is_valid():
                 book = form.save()
                 messages.success(request, f'Το βιβλίο "{book.title}" ενημερώθηκε με επιτυχία!')
