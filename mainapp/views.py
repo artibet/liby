@@ -21,16 +21,18 @@ def dashboard(request):
     clends = Lend.objects.count()
     cusers = User.objects.count()
 
-    users = User.objects.order_by('-date_joined')[:5]
+    latest_users = User.objects.order_by('-date_joined')[:5]
     latest_books = Book.objects.order_by('-created_at')[:5]
+    latest_holds = Hold.objects.order_by('-created_at')[:5]
 
     context = {
         'cbooks': cbooks,
         'cholds': cholds,
         'clends': clends,
         'cusers': cusers,
-        'users': users,
-        'latest_books': latest_books
+        'latest_users': latest_users,
+        'latest_books': latest_books,
+        'latest_holds': latest_holds
     }
     
     return render (request, 'mainapp/dashboard.html', context)
