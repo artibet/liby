@@ -62,8 +62,7 @@ select
     id as user_id,
     (select count(*) from lend where lend.id = auth_user.id) as lends,
     (select count(*) from comment where comment.user_id = auth_user.id) as comments,
-    (select count(*) from hold where hold.user_id = auth_user.id) as holds,
-    (select count(*) from suggestion where suggestion.user_id = auth_user.id) as suggestions
+    (select count(*) from hold where hold.user_id = auth_user.id) as holds
 from auth_user
 ;
 

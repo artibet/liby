@@ -51,7 +51,6 @@
                             <th>Δανεισμοί</th>
                             <th>Κρατήσεις</th>
                             <th>Σχόλια</th>
-                            <th>Προτάσεις</th>
                             <th style="min-width: 100px;"></th>
                         </tr>
                     </thead>
@@ -80,7 +79,6 @@
                                 <td>{{user.user_data.lends}}</td>
                                 <td>{{user.user_data.holds}}</td>
                                 <td>{{user.user_data.comments}}</td>
-                                <td>{{user.user_data.suggestions}}</td>
                                 <td>
                                         <!-- Επεξεργασία -->
                                         <a href="{% url 'user-update' user.id %}", title="Επεξεργασία", class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
@@ -137,7 +135,7 @@ $(document).ready(function() {
     
     setDatatable($('#user-table'), [
         {
-            "targets": 9,
+            "targets": 8,
             "searchable": false,
             "orderable": false
         }

@@ -102,7 +102,6 @@ class UserData(models.Model):
     lends           = models.PositiveIntegerField(default=0)
     comments        = models.PositiveIntegerField(default=0)
     holds           = models.PositiveIntegerField(default=0)
-    suggestions     = models.PositiveIntegerField(default=0)
     
     class Meta:
         managed = False
