@@ -335,6 +335,7 @@ class HoldViews:
 
 class LendViews:
 
+    # index
     @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         lends = Lend.objects.all()
@@ -347,6 +348,21 @@ class LendViews:
     @user_passes_test(lambda u: u.is_superuser)
     def delays(request):
          return render (request, 'mainapp/lends/delays.html', {}) 
+
+
+    # overdue lends
+    @user_passes_test(lambda u: u.is_superuser)
+    def overdue(request):
+        lends = Lend.objects.filter(lend_data__delay__gt = 0)
+        context = {
+            'lends': lends
+        }
+        return render (request, 'mainapp/lends/overdue.html', context)   
+
+    
+    @user_passes_test(lambda u: u.is_superuser)
+    def delays(request):
+         return render (request, 'mainapp/lends/delays.html', {})          
 
     # update lend
     @user_passes_test(lambda u: u.is_superuser)

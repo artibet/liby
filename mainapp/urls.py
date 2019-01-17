@@ -42,6 +42,7 @@ urlpatterns = [
 
     # Δανεισμοί
     path('lends/', LendViews.index, name='lends-index'),
+    path('lends/overdue', LendViews.overdue, name='lends-overdue'),
     path('lends/<int:lend_id>/update/', LendViews.update, name='lends-update'),
     path('lends/<int:lend_id>/delete/', LendViews.delete, name='lends-delete'),
        

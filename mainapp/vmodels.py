@@ -2,8 +2,8 @@
 from django.db import models
 from django.utils import timezone
 from .models import (
-    Country, Language, Publisher, Author,
-    Category, User, Book)
+    Country, Language, Publisher, Author, 
+    Category, User, Book, Lend)
 
 
 # --------------------------------------------------------------------
@@ -260,3 +260,14 @@ class BookTopPicks(models.Model):
     class Meta:
         managed = False
         db_table = 'book_best_choices'             
+
+
+# lend data
+class LendData(models.Model):
+    lend            = models.OneToOneField(Lend, on_delete=models.DO_NOTHING, primary_key=True, related_name="lend_data") 
+    delay           = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        managed = False
+        db_table = 'lend_data'    
+

@@ -162,3 +162,13 @@ where
 order by
     total_lends desc
 ;
+
+
+# Δεδομένα δανεισμών
+create or replace view lend_data as
+select
+    id as lend_id,
+    datediff(curdate(), date_add(lend_date, interval lend_days day)) as delay
+from
+    lend
+;

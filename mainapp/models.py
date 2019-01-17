@@ -321,6 +321,10 @@ class Lend(models.Model):
     
     def __str(self):
         return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)
+
+    
+    def __str(self):
+        return "{0} ({1} {2})".format(self.book.title, self.user.lastname, self.user.first_name)        
     
     class Meta:
         db_table = 'lend'
