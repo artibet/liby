@@ -337,7 +337,12 @@ class LendViews:
 
     @user_passes_test(lambda u: u.is_superuser)
     def index(request):
-        return render (request, 'mainapp/lends/index.html', {})      
+        lends = Lend.objects.all()
+        context = {
+            'lends': lends
+        }
+        return render (request, 'mainapp/lends/index.html', context)   
+
     
     @user_passes_test(lambda u: u.is_superuser)
     def delays(request):

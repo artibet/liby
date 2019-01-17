@@ -10,12 +10,12 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Δανεισμοί Βιβλίων</h1>
+            <h1 class="m-0 text-dark">Ιστορικό δανεισμών</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Liby</a></li>
-                <li class="breadcrumb-item active">Δανεισμοί</li>
+                <li class="breadcrumb-item active">Ιστορικό δανεισμών</li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,7 +27,38 @@
 <section class="content">
     <div class="container-fluid">
     
+        <div class="card">
+            
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="lend-table">
+                    <thead>
+                        <tr>
+                            <th>Ημερομηνία</th>
+                            <th>Όνομα χρήστη</th>
+                            <th>Τίτλος βιβλίου</th>
+                            <th>Διάρκεια</th> 
+                            <th>Προθεσμία</th>
+                            <th>Κατάσταση</th>
+                            <th>Επιστροφή</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lend in lends %}
+                            <tr>
+                                <td>{{lend.lend_date|date:'d/m/Y'}}</td>
+                                <td>{{lend.user.username}}</td>
+                                <td><a href="{% url 'book-details' lend.entry.book_id %}">{{lend.entry.book.title}}</a></td>
+                                <td>{{lend.lend_days}}</td>
+                                <td>{{lend.deadline|date:'d/m/Y'}}</td>
+                                <td><span class="{{lend.status_css}}">{{lend.status_desc}}</span></td>
+                                <td>{{lend.return_date|date:'d/m/Y'}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     
     </div><!-- /.container-fluid -->
 </section>
@@ -42,9 +73,12 @@
 <script>
 
 $(document).ready(function() {
-    $('#menu-views').addClass('menu-open'); 
-    $('#menu-views .nav-link:first').addClass('active'); 
-    $('#menu-views-lends .nav-link:first').addClass('active'); 
+
+    setDatatable($('#lend-table'), columnDefs=[], order=[[0, 'desc']]);
+
+    $('#menu-lends').addClass('menu-open'); 
+    $('#menu-lends .nav-link:first').addClass('active'); 
+    $('#menu-lends-index .nav-link:first').addClass('active'); 
 });
 
 </script>

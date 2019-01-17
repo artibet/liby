@@ -41,6 +41,7 @@ urlpatterns = [
     path('comments/<int:comment_id>/delete/', CommentViews.delete, name='comments-delete'),
 
     # Δανεισμοί
+    path('lends/', LendViews.index, name='lends-index'),
     path('lends/<int:lend_id>/update/', LendViews.update, name='lends-update'),
     path('lends/<int:lend_id>/delete/', LendViews.delete, name='lends-delete'),
        
