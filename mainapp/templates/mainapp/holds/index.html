@@ -54,7 +54,7 @@
                                 <td>{{hold.book.book_data.available}}</td>
                                 <td><span class="{{hold.status.css_class}}">{{hold.status.description}}</span></td>
                                 <td>
-                                    {% if hold.book.book_data.available > 0 %}
+                                    {% if hold.book.book_data.available > 0 and hold.status_id == 0 %}
                                         <!-- Δανεισμός -->
                                         <a href="{% url 'hold-to-lend' hold.id %}", title="Δανεισμός", class="btn btn-outline-primary btn-sm"><i class="fa fa-anchor"></i></a>
                                     {% endif %}
