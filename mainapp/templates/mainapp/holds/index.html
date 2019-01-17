@@ -27,7 +27,45 @@
 <section class="content">
     <div class="container-fluid">
     
+        <div class="card">
+            
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="hold-table">
+                    <thead>
+                        <tr>
+                            <th>Καταχώρηση</th>
+                            <th>Όνομα χρήστη</th>
+                            <th>Τίτλος βιβλίου</th>
+                            <th>Αντύτυπα</th> 
+                            <th>Δανεισμένα</th>
+                            <th>Διαθέσιμα</th>
+                            <th>Κατάσταση</th>
+                            <th>Δανεισμός</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hold in holds %}
+                            <tr>
+                                <td>{{hold.created_at|date:'d/m/Y, H:i'}}</td>
+                                <td>{{hold.user.username}}</td>
+                                <td><a href="{% url 'book-details' hold.book_id %}">{{hold.book.title}}</a></td>
+                                <td>{{hold.book.book_data.num_entries}}</td>
+                                <td>{{hold.book.book_data.active_lends}}</td>
+                                <td>{{hold.book.book_data.available}}</td>
+                                <td><span class="{{hold.status.css_class}}">{{hold.status.description}}</span></td>
+                                <td>
+                                    {% if hold.book.book_data.available > 0 %}
+                                        <!-- Δανεισμός -->
+                                        <a href="{% url 'hold-to-lend' hold.id %}", title="Δανεισμός", class="btn btn-outline-primary btn-sm"><i class="fa fa-anchor"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     
     </div><!-- /.container-fluid -->
 </section>
@@ -42,9 +80,19 @@
 <script>
 
 $(document).ready(function() {
-    $('#menu-views').addClass('menu-open'); 
-    $('#menu-views .nav-link:first').addClass('active'); 
-    $('#menu-views-holds .nav-link:first').addClass('active'); 
+    
+    setDatatable($('#hold-table'), [
+        {
+            "targets": 7,
+            "searchable": false,
+            "orderable": false
+        }
+    ]);
+
+    $('#menu-holds').addClass('menu-open'); 
+    $('#menu-holds .nav-link:first').addClass('active'); 
+    $('#menu-holds-index .nav-link:first').addClass('active'); 
+
 });
 
 </script>

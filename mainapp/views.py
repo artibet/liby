@@ -247,7 +247,11 @@ class HoldViews:
 
     @user_passes_test(lambda u: u.is_superuser)
     def index(request):
-        return render (request, 'mainapp/holds/index.html', {})   
+        holds = Hold.objects.order_by('-created_at')
+        context = {
+            'holds': holds
+        }
+        return render (request, 'mainapp/holds/index.html', context)   
 
     @user_passes_test(lambda u: u.is_superuser)
     # Διαθέσιμα βιβλία κρατήσεων
