@@ -47,7 +47,7 @@
                             <tr>
                                 <td>{{hold.created_at|date:'d/m/Y, H:i'}}</td>
                                 <td>{{hold.user.username}}</td>
-                                <td>{{hold.book.title}}</td>
+                                <td><a href="{% url 'book-details' hold.book_id %}">{{hold.book.title}}</a></td>
                                 <td>{{hold.book.book_data.num_entries}}</td>
                                 <td>{{hold.book.book_data.active_lends}}</td>
                                 <td>{{hold.book.book_data.available}}</td>
