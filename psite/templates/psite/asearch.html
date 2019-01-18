@@ -13,13 +13,14 @@
                 <div class="card-title">
                     <h3 class="border-bottom pb-3">Σύνθετη αναζήτηση</h3>
                 </div>
-                <form method="GET" action="{% url 'psite:asearch-results' %}">
+                <form id='search-form' method="GET" action="{% url 'psite:asearch-results' %}">
                     <fieldset class="form-group">
                         {{ form|crispy }}
                     </fieldset>
                     <div class="form-group">
                         <button class="btn btn-outline-success" type="submit">Αναζήτηση</button>
                         <a href="{% url 'psite:home' %}" class="btn btn-outline-info">Αρχική Σελίδα</a>
+                        <button type="reset" class="btn btn-warning float-right">Καθαρισμός φόρμας</button>
                     </div>
                 </form>
             </div>
@@ -31,3 +32,4 @@
 </div>
 
 {% endblock %}
+
