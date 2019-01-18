@@ -15,7 +15,9 @@ urlpatterns = [
     path('publisher/<int:publisher_id>/', views.publisher, name='publisher'),
     path('category/<int:category_id>/', views.category, name='category'),
     path('search/', views.search, name='search'),
-    
+    path('asearch_form/', views.asearch_form, name='asearch-form'),
+    path('asearch_results/', views.asearch_results, name='asearch-results'),
+        
     path('comment/<int:comment_id>/update/', views.update_comment, name='update-comment'),
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete-comment'),
     

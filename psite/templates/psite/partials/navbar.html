@@ -28,6 +28,7 @@
             </div>
             <!-- <input name="search-text" id="search-text" style="width: 350px;" class="form-control mr-2" type="search" placeholder="Τίτλος, περιγραφή, συγγραφέας ή ISBN" aria-label="Αναζήτηση βιβλίων">                         -->
             <button class="btn btn-success my-2" onclick="event.preventDefault();submitSearch()">Αναζήτηση</button>
+            <a href="{% url 'psite:asearch-form' %}" class="btn btn-outline-success my-2 ml-2">Σύνθετη αναζήτηση</a>
             <!-- <button class="btn btn-outline-success my-2 ml-2" onclick="event.preventDefault()">Σύνθετη αναζήτηση</button> -->
         </form>
     

@@ -40,9 +40,15 @@
     <container-fluid>
         {% if messages %}
             {% for message in messages %}
-                <div class="animated bounceInRight flush-message alert alert-{{ message.tags }}">
-                    {{message}}
-                </div>
+                {% if message.tags == 'error' %}
+                    <div class="animated bounceInRight flush-message alert alert-danger">
+                        {{message}}
+                    </div>
+                {% else %}
+                    <div class="animated bounceInRight flush-message alert alert-{{ message.tags }}">
+                        {{message}}
+                    </div>
+                {% endif%}
             {% endfor %}
         {% endif %}
     </container-fluid>

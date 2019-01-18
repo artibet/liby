@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
 from mainapp.models import Book, Author, Publisher, Category, Comment, Hold, HoldStatus
-from .forms import CommentForm
+from .forms import CommentForm, ASearchForm
 
 PAGE_SIZE = 8   # pagination
 
@@ -215,6 +215,129 @@ def search(request):
     } 
 
     return render (request, 'psite/browse.html', context)   
+
+
+# Σύνθετη αναζήτηση
+def asearch_form(request):
+    form = ASearchForm()
+    return render(request, 'psite/asearch.html', {"form":form})  
+
+
+def asearch_results(request):
+    
+    form = ASearchForm(request.GET)
+    
+    if form.is_valid():
+
+        title = form.cleaned_data['title']
+        abstract = form.cleaned_data['abstract']
+        language = form.cleaned_data['language']
+        category = form.cleaned_data['category']
+        author = form.cleaned_data['author']
+        publisher = form.cleaned_data['publisher']
+        country = form.cleaned_data['country']
+        published_year = form.cleaned_data['published_year']   
+
+        # q_clauses
+        q_title = Q(title__icontains = title)
+        q_abstract = Q(abstract__icontains = abstract)
+        q_language = Q(language_id = language)
+        q_category = Q(categories__id = category)
+        q_author = Q(authors__id = author)
+        q_publisher = Q(publisher_id = publisher)
+        q_country = Q(publisher__country_id = country)
+        q_published_year = Q(published_year = published_year)
+        
+
+        # check if there is at least one criterium
+        if not title and not abstract and not language and not category and not author and not publisher and not country and not published_year:
+            messages.error(request, f'Θα πρέπει αν δώσετε τουλάχιστον ένα κριτήριο αναζήτησης!')
+            return render(request, 'psite/asearch.html', {"form":form})  
+        
+        else:
+            
+            q_clause = None
+
+            # title
+            if title:
+                q_clause = q_title
+
+            # abstract
+            if abstract:
+                if q_clause:
+                    q_clause = q_clause & q_abstract
+                else:
+                    q_clause = q_abstract
+
+            # language
+            if language:
+                if q_clause:
+                    q_clause = q_clause & q_language
+                else:
+                    q_clause = q_language
+
+            # category
+            if category:
+                if q_clause:
+                    q_clause = q_clause & q_category
+                else:
+                    q_clause = q_category
+
+            # author
+            if author:
+                if q_clause:
+                    q_clause = q_clause & q_author
+                else:
+                    q_clause = q_author
+
+            # publisher
+            if publisher:
+                if q_clause:
+                    q_clause = q_clause & q_publisher
+                else:
+                    q_clause = q_publisher
+
+            # country
+            if country:
+                if q_clause:
+                    q_clause = q_clause & q_country
+                else:
+                    q_clause = q_country     
+
+            # published_year
+            if published_year:
+                if q_clause:
+                    q_clause = q_clause & q_published_year
+                else:
+                    q_clause = q_published_year            
+
+            
+            
+            # Ανάκτηση βιβλίων ανάλογα με το κριτήριο
+            # book_list = Book.objects.filter(q_clause)
+            book_list = Book.objects.filter(q_clause)
+            
+            # paginate book_list
+            paginator = Paginator(book_list, PAGE_SIZE)
+            page = request.GET.get('page')
+            books = paginator.get_page(page)
+            num_books = paginator.count
+
+            if num_books > 0:
+                title = f"Bρέθηκαν {num_books} βιβλία"
+            else:
+                title = 'Δεν βρέθηκαν βιβλία'
+            
+            context = {
+                'books': books,
+                'title': title
+            } 
+            
+            return render (request, 'psite/browse.html', context)
+
+    
+    return render(request, 'psite/asearch.html', {"form":form})  
+
     
 
 # Καταχώρηση αξιολόγησης (comment) για βιβλίο
