@@ -4,9 +4,9 @@
         <img src="{{book.image.url}}" class="img-fluid" alt="Εξώφυλλο">
         <div class="book-details-data text-muted">
             <div><span class="font-weight-bold">ISBN: </span>{{book.isbn}}</div>
-            <div><span class="font-weight-bold">Σελίδες: </span>{{book.pages}}</div>
-            <div><span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}</div>
-            <div><span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.</div>
+            {% if book.pages %}<div><span class="font-weight-bold">Σελίδες: </span>{{book.pages}}</div>{% endif %}
+            {% if book.dimensions %}<div><span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}</div>{% endif %}
+            {% if book.weight %}<div><span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.</div>{% endif %}
 
             <div class="mt-3"><span class="font-weight-bold">Σύνολο δανεισμών: </span>{{book.book_data.total_lends}}</div>
             <div><span class="font-weight-bold">Αντίτυπα: </span>{{book.book_data.num_entries}}</div>
