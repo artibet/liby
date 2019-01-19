@@ -75,9 +75,10 @@ $(document).ready(function() {
                 // Add to list and make selected
                 var newAuthor = new Option(result.author_name, result.id, true, true);
                 $('#id_authors').append(newAuthor);
-                var selected = $('#id_authors').val();
-                selected.push(result.id);
-                $('#id_authors').val(selected);
+                // var selected = $('#id_authors').val();
+                // //selected.push(result.id);
+                // $('#id_authors').val(selected);
+                console.log($('#id_authors').val());
             }
         });
     });
