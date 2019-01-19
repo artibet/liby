@@ -26,11 +26,11 @@
             <div><span class="font-weight-bold">Έκδοση: </span>{{book.revision}}η</div>
             <div><span class="font-weight-bold">Γλώσσα: </span>{{book.language.description}}</div>
             <div><span class="font-weight-bold">Εκδότης: </span>{{book.publisher.pub_name}}</div>
-            <div><span class="font-weight-bold">Σελίδες: </span>{{book.pages}}</div>
-            <div><span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}</div>
-            <div><span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.</div>
-            <div><span class="font-weight-bold">Έτος έκδοσης: </span>{{book.published_year}}</div>
-            <div><span class="font-weight-bold">Μήνας έκδοσης: </span>{{book.published_month_desc}}</div>
+            {% if book.pages %}<div><span class="font-weight-bold">Σελίδες: </span>{{book.pages}}</div>{% endif %}
+            {% if book.dimensions %}<div><span class="font-weight-bold">Διαστάσεις: </span>{{book.dimensions}}</div>{% endif %}
+            {% if book.weight %}<div><span class="font-weight-bold">Βάρος: </span>{{book.weight}} γρ.</div>{% endif %}
+            {% if book.published_year %}<div><span class="font-weight-bold">Έτος έκδοσης: </span>{{book.published_year}}</div>{% endif %}
+            {% if book.published_month %}<div><span class="font-weight-bold">Μήνας έκδοσης: </span>{{book.published_month_desc}}</div>{% endif %}
 
             <div>
                 <span class="font-weight-bold">
