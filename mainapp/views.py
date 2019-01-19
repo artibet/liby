@@ -401,16 +401,6 @@ class LendViews:
 
 
 
-##########################################################################
-# Suggestion views
-##########################################################################           
-
-class SuggestionViews:
-
-    @user_passes_test(lambda u: u.is_superuser)
-    def index(request):
-        return render (request, 'mainapp/suggestions/index.html', {})           
-
 
 ##########################################################################
 # Comment views

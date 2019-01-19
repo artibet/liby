@@ -89,10 +89,6 @@ urlpatterns = [
     # Δανεισμοί
     path('lends/', views.LendViews.index, name='lends-index'),
     path('lends/delays', views.LendViews.delays, name='lends-delays'),
-
-     # Προτάσεις
-    path('suggestions/', views.SuggestionViews.index, name='suggestions-index'),
-
     
     
 ]

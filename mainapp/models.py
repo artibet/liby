@@ -386,25 +386,6 @@ class Comment(models.Model):
 
 
 
-# --------------------------------------------------------------------
-# suggestion
-# --------------------------------------------------------------------        
-class Suggestion(models.Model):
-    user            = models.ForeignKey(User, on_delete="models.PROTECT")
-    title           = models.CharField(max_length=255)
-    author          = models.CharField(max_length=255, blank=True)
-    publisher       = models.CharField(max_length=255, blank=True)
-    isbn            = models.CharField(max_length=50, blank=True)
-    created_at      = models.DateTimeField(auto_now_add=True, null=True)
-    updated_at      = models.DateTimeField(auto_now=True, null=True)
-
-    def __str(self):
-        return "{0} ({1} {2})".format(self.title, self.user.lastname, self.user.first_name)
-
-    class Meta:
-        db_table = 'suggestion'
-        verbose_name = 'Πρόταση'
-        verbose_name_plural = 'Προτάσεις' 
-        ordering = ['-created_at']          
+       
 
     
