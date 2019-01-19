@@ -73,7 +73,7 @@ $(document).ready(function() {
             onSuccess: function(result) {
                 
                 // Add to list and make selected
-                var newAuthor = new Option(result.author_name, result.id, false, false);
+                var newAuthor = new Option(result.author_name, result.id, true, true);
                 $('#id_authors').append(newAuthor);
                 var selected = $('#id_authors').val();
                 selected.push(result.id);
