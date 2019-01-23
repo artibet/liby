@@ -231,12 +231,13 @@ def asearch_results(request):
 
         title = form.cleaned_data['title']
         abstract = form.cleaned_data['abstract']
-        language = form.cleaned_data['language']
-        category = form.cleaned_data['category']
-        author = form.cleaned_data['author']
-        publisher = form.cleaned_data['publisher']
-        country = form.cleaned_data['country']
+        language = request.GET['language']
+        category = request.GET['category']
+        author = request.GET['author']
+        publisher = request.GET['publisher']
+        country = request.GET['country']
         published_year = form.cleaned_data['published_year']   
+        
 
         # q_clauses
         q_title = Q(title__icontains = title)
