@@ -1,4 +1,5 @@
 [client]
+host = localhost
 database = liby
 user = root
 password = 

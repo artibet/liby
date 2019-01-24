@@ -33,8 +33,9 @@
                     ({{book.book_data.num_comments}} κριτικές)
                 </span>
             </div>
-            <div>
-                <span class="font-weight-bold">Γλώσσα: </span>{{book.language.description}}
+            <div class="book-language">
+                <span class="font-weight-bold">Γλώσσα: </span>
+                <a href="{% url 'psite:language' book.language_id %}">{{book.language.description}}</a>
             </div>
             <div class="book-author">
                 {% if book.authors.count > 1%}

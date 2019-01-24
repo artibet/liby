@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from mainapp.vmodels import BookNewest, BookTopTitles, BookTopPicks
-from mainapp.models import Book, Author, Publisher, Category, Comment, Hold, HoldStatus
+from mainapp.models import Book, Author, Publisher, Category, Comment, Hold, HoldStatus, Language
 from .forms import CommentForm, ASearchForm
 
 PAGE_SIZE = 8   # pagination
@@ -163,6 +163,24 @@ def category(request, category_id):
     }
     
     return render (request, 'psite/browse.html', context)        
+
+
+# Language page
+def language(request, language_id):
+    language = get_object_or_404(Language, pk=language_id)
+
+    # paginate book_list
+    book_list = language.books.all()
+    paginator = Paginator(book_list, PAGE_SIZE)
+    page = request.GET.get('page')
+    books = paginator.get_page(page)
+
+    context = {
+        'books': books,
+        'title': f"{language.description} ({paginator.count})",
+    }
+    
+    return render (request, 'psite/browse.html', context)    
 
 
 # Αναζήτηση

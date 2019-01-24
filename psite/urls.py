@@ -14,6 +14,7 @@ urlpatterns = [
     path('author/<int:author_id>/', views.author, name='author'),
     path('publisher/<int:publisher_id>/', views.publisher, name='publisher'),
     path('category/<int:category_id>/', views.category, name='category'),
+    path('language/<int:language_id>/', views.language, name='language'),
     path('search/', views.search, name='search'),
     path('asearch_form/', views.asearch_form, name='asearch-form'),
     path('asearch_results/', views.asearch_results, name='asearch-results'),
